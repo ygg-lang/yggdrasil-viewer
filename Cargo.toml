@@ -2,7 +2,8 @@
 resolver = "2"
 members = ["projects/*"]
 default-members = [
-    "projects/sub_projects",
+    "projects/tree-layout",
+    "projects/tree-viewer",
 ]
 exclude = [
     "projects/.DS_Store",
