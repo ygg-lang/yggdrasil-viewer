@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use yggdrasil_rt::{TokenPair, TokenTree, YggdrasilRule};
 
-use tree_layout::{layout_position, NodeInfo, Point, Rectangle};
+use tree_layout::{layout, layout_position, NodeInfo, Point, Rectangle, TreeData, TreeNode};
 
 #[derive(Debug)]
 pub struct SvgTree<'i, R> where R:YggdrasilRule {
@@ -41,9 +41,9 @@ impl SvgPlotter {
 }
 
 impl<'i, R> SvgTree<'i, R> where R: YggdrasilRule {
-    pub fn position(&self) -> HashMap<TokenPair<'i, R>, Point> {
+    pub fn position(&self) -> Vec<TreeNode<TreeData<TokenPair<'i, R>>>> {
         let root = self.cst.clone().into_iter().next().unwrap();
-        let layout = layout_position(self, &root);
+        let layout = layout(self, &root);
         layout.into_iter().collect()
     }
 }

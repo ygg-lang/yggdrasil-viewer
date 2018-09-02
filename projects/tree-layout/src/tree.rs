@@ -17,11 +17,11 @@ pub struct TreeLayout<D> {
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct TreeNode<D> {
-    pub data: D,
-    pub order: usize,
-    pub depth: usize,
-    pub parent: Option<usize>,
-    pub children: Vec<usize>,
+    data: D,
+    order: usize,
+    depth: usize,
+    parent: Option<usize>,
+    children: Vec<usize>,
 }
 
 #[derive(Clone, Debug)]
@@ -70,12 +70,12 @@ impl<D> TreeNode<D> {
     }
 }
 
-pub fn layout<N, T>(tree: &T, root: &N) -> TreeLayout<TreeData<<T as NodeInfo<N>>::Index>>
+pub fn layout<N, T>(tree: &T, root: N) -> TreeLayout<TreeData<<T as NodeInfo<N>>::Index>>
     where
         T: NodeInfo<N>,
         N: Clone,
 {
-    let mut tree = TreeLayout::new(tree, root.clone(), |t, n| TreeData {
+    let mut tree = TreeLayout::new(tree, root, |t, n| TreeData {
         key: t.query(n.clone()),
         position: Point::new(0.0, 0.0),
         module: 0.0,
@@ -93,7 +93,8 @@ pub fn layout<N, T>(tree: &T, root: &N) -> TreeLayout<TreeData<<T as NodeInfo<N>
     }
 }
 
-pub fn layout_position<N, T>(tree: &T, root: &N) -> HashMap<T::Index, Point<f64>>
+/// root = root node
+pub fn layout_position<N, T>(tree: &T, root: N) -> HashMap<T::Index, Point<f64>>
     where
         T: NodeInfo<N>,
         N: Clone

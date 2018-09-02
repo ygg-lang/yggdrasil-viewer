@@ -118,7 +118,7 @@ impl Node {
 #[test]
 fn ptc() {
     let root = Node::new();
-    let layout = layout_position(&Tree, &root);
+    let layout = layout_position(&Tree, &&root);
     let expected = [
         (0, Point { x: 18.0, y: 2.0 }),
         (1, Point { x: 18.0, y: 6.0 }),

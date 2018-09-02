@@ -8,6 +8,7 @@ pub use crate::tree::{layout, layout_position};
 
 mod tree;
 
+pub use crate::tree::{TreeData, TreeNode};
 pub type Rectangle = shape_core::Rectangle<f64>;
 pub type Point = shape_core::Point<f64>;
 
