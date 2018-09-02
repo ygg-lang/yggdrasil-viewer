@@ -11,3 +11,4 @@ pub use crate::errors::{Error, Result};
 mod errors;
 
 mod plot_svg;
+pub use crate::plot_svg::{SvgPlotter, SvgTree};

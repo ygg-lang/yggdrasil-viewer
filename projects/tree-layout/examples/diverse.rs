@@ -1,5 +1,6 @@
 use std::slice::Iter;
 use shape_core::Rectangle;
+use tree_layout::layout_position;
 use tree_view::{layout, NodeInfo};
 
 #[derive(Debug, Clone)]
@@ -121,6 +122,6 @@ fn tree() -> Node {
 
 fn main() {
     let root = tree();
-    let layout = layout(&Tree, &root);
+    let layout = layout_position(&Tree, &root);
     println!("{:?}", layout)
 }
