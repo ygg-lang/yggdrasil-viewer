@@ -12,13 +12,10 @@ pub use crate::tree::{TreeData, TreeNode};
 pub type Rectangle = shape_core::Rectangle<f64>;
 pub type Point = shape_core::Point<f64>;
 
-
-
 #[allow(unused_variables)]
 pub trait NodeInfo<N>
 where
     Self::Index: Eq + Hash,
-    // N: Clone,
 {
     type Index;
     type Children: IntoIterator<Item = N>;

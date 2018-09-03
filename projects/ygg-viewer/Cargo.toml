@@ -11,6 +11,12 @@ edition = "2021"
 exclude = ["package.json", "tests/**"]
 
 [dependencies]
+svg = "0.14.0"
+
+[dependencies.shape-svg]
+version = "0.0.*"
+path = 'C:\Users\Dell\CLionProjects\shape-rs\projects\shape-svg'
+
 
 [dependencies.tree-layout]
 version = "0.0.*"
