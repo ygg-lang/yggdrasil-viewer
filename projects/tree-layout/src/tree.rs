@@ -6,7 +6,7 @@ use alloc::{
 use core::ops::{Index, IndexMut};
 
 use hashbrown::HashMap;
-use shape_core::{Point, Rectangle, Shape2D};
+use shape_core::{Point, Rectangle};
 
 use crate::NodeInfo;
 
@@ -118,8 +118,12 @@ fn initialise_y<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
         let mut max = f64::NEG_INFINITY;
         for node in &row {
             let node = *node;
-            tree[node].data.position.y = if let Some(parent) = tree[node].parent { tree[parent].data.bottom() } else { 0.0 }
-                + tree[node].data.top_space();
+            tree[node].data.position.y = if let Some(parent) = tree[node].parent {
+                tree[parent].data.bottom() + tree[node].data.top_space()
+            }
+            else {
+                tree[node].data.top_space()
+            };
             if tree[node].data.position.y > max {
                 max = tree[node].data.position.y;
             }
@@ -134,15 +138,17 @@ fn initialise_y<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
 fn initialise_x<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
     for node in tree.post_order(root) {
         if tree[node].is_leaf() {
-            tree[node].data.position.x =
-                if let Some(sibling) = tree.previous_sibling(node) { tree[sibling].data.right() } else { 0.0 }
-                    + tree[node].data.left_space();
+            tree[node].data.position.x = if let Some(sibling) = tree.previous_sibling(node) {
+                tree[node].data.left_space() + tree[sibling].data.right()
+            }
+            else {
+                tree[node].data.left_space()
+            };
         }
         else {
             let mid = {
                 let first = tree[*tree[node].children.first().expect("Only leaf nodes have no children.")].data.position.x;
                 let last = tree[*tree[node].children.last().expect("Only leaf nodes have no children.")].data.position.x;
-
                 (first + last) / 2.0
             };
             if let Some(sibling) = tree.previous_sibling(node) {
