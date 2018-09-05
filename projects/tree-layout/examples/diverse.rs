@@ -11,23 +11,23 @@ pub struct Node {
     pub children: Vec<Node>,
 }
 
-impl<'n> reingold_tilford::NodeInfo<&'n Node> for Tree {
+impl<'n> NodeInfo<&'n Node> for Tree {
     type Key = usize;
 
     fn key(&self, node: &'n Node) -> Self::Key {
         node.id
     }
 
-    fn children(&self, node: &'n Node) -> reingold_tilford::SmallVec<&'n Node> {
+    fn children(&self, node: &'n Node) -> SmallVec<&'n Node> {
         node.children.iter().collect()
     }
 
-    fn dimensions(&self, _: &'n Node) -> reingold_tilford::Dimensions {
-        reingold_tilford::Dimensions::all(0.5)
+    fn dimensions(&self, _: &'n Node) -> Dimensions {
+        Dimensions::all(0.5)
     }
 
-    fn border(&self, _: &'n Node) -> reingold_tilford::Dimensions {
-        reingold_tilford::Dimensions { top: 1.5, right: 3.5, bottom: 1.5, left: 3.5 }
+    fn border(&self, _: &'n Node) -> Dimensions {
+        Dimensions { top: 1.5, right: 3.5, bottom: 1.5, left: 3.5 }
     }
 }
 
@@ -121,6 +121,6 @@ fn tree() -> Node {
 
 fn main() {
     let root = tree();
-    let layout = reingold_tilford::layout(&Tree, &root);
+    let layout = layout(&Tree, &root);
     utils::display(&Tree, &root, &layout, labeller);
 }

@@ -2,12 +2,12 @@ use std::cmp::max;
 
 use shape_svg::ToSVG;
 use svg::{
-    node::element::{Text, SVG},
+    node::element::{Rectangle, Text, SVG},
     Document,
 };
 use yggdrasil_rt::{TokenPair, TokenTree, YggdrasilRule};
 
-use tree_layout::{layout, NodeInfo, Rectangle, TreeData, TreeNode};
+use tree_layout::{layout, NodeInfo, TreeBox, TreeData, TreeNode};
 
 #[derive(Debug)]
 pub struct SvgTree<'i, R>
@@ -26,23 +26,22 @@ impl<'i, R> NodeInfo<TokenPair<'i, R>> for SvgTree<'i, R>
 where
     R: YggdrasilRule,
 {
-    type Index = TokenPair<'i, R>;
-    type Children = Vec<TokenPair<'i, R>>;
+    type Key = TokenPair<'i, R>;
 
-    fn query(&self, node: TokenPair<'i, R>) -> Self::Index {
+    fn key(&self, node: TokenPair<'i, R>) -> Self::Key {
         node
     }
 
-    fn children(&self, node: TokenPair<'i, R>) -> Self::Children {
-        let v: Vec<_> = node.into_inner().filter(|s| !s.get_rule().is_ignore()).collect();
-        v
+    fn children(&self, node: TokenPair<'i, R>) -> impl Iterator<Item = TokenPair<'i, R>> {
+        node.into_inner().filter(|s| !s.get_rule().is_ignore())
     }
-    fn dimensions(&self, node: TokenPair<'i, R>) -> Rectangle {
+
+    fn dimensions(&self, node: TokenPair<'i, R>) -> TreeBox {
         let chars = width_hint(node);
-        Rectangle::from_origin(chars * 16.0, 32.0)
+        TreeBox::rectangle(chars * 16.0, 32.0)
     }
-    fn border(&self, _: TokenPair<'i, R>) -> Rectangle {
-        Rectangle::from_origin(20.0, 20.0)
+    fn border(&self, _: TokenPair<'i, R>) -> TreeBox {
+        TreeBox::square(20.0)
     }
 }
 

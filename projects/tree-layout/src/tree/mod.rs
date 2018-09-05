@@ -1,5 +1,6 @@
 /// A vector backed tree implementation used to essentially cache the user's tree.
 use crate::NodeInfo;
+use std::vec::IntoIter;
 
 #[cfg(test)]
 mod test;
@@ -35,17 +36,19 @@ impl<D> TreeNode<D> {
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub struct Tree<D>(pub Vec<TreeNode<D>>);
+pub struct TreeLayout<D> {
+    arena: Vec<TreeNode<D>>,
+}
 
-impl<D> Tree<D> {
+impl<D> TreeLayout<D> {
     pub fn new<F, N, T>(user_tree: &T, root: N, data: F) -> Self
     where
         F: Fn(&T, N) -> D,
-        N: Copy,
+        N: Clone,
         T: NodeInfo<N>,
     {
-        let mut tree = MediumVec::new();
-        tree.push(TreeNode { data: data(user_tree, root), order: 0, depth: 0, parent: None, children: SmallVec::new() });
+        let mut tree = Vec::new();
+        tree.push(TreeNode { data: data(user_tree, root.clone()), order: 0, depth: 0, parent: None, children: Vec::new() });
 
         let mut queue = std::collections::VecDeque::new();
         queue.push_back((0, root));
@@ -60,24 +63,24 @@ impl<D> Tree<D> {
                 tree[parent].children.push(index);
 
                 tree.push(TreeNode {
-                    data: data(user_tree, child),
+                    data: data(user_tree, child.clone()),
 
                     order: i,
                     depth,
 
                     parent: Some(parent),
-                    children: SmallVec::new(),
+                    children: Vec::new(),
                 });
 
                 queue.push_back((index, child));
             }
         }
 
-        Tree(tree)
+        TreeLayout { arena: tree }
     }
 
     pub fn root(&self) -> Option<usize> {
-        if self.0.is_empty() { None } else { Some(0) }
+        if self.arena.is_empty() { None } else { Some(0) }
     }
 
     pub fn breadth_first(&self, node: usize) -> Vec<usize> {
@@ -146,16 +149,25 @@ impl<D> Tree<D> {
     }
 }
 
-impl<D> std::ops::Index<usize> for Tree<D> {
-    type Output = TreeNode<D>;
+impl<D> IntoIterator for TreeLayout<D> {
+    type Item = TreeNode<D>;
+    type IntoIter = IntoIter<TreeNode<D>>;
 
-    fn index(&self, index: usize) -> &Self::Output {
-        &self.0[index]
+    fn into_iter(self) -> Self::IntoIter {
+        self.arena.into_iter()
     }
 }
 
-impl<D> std::ops::IndexMut<usize> for Tree<D> {
+impl<D> std::ops::Index<usize> for TreeLayout<D> {
+    type Output = TreeNode<D>;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.arena[index]
+    }
+}
+
+impl<D> std::ops::IndexMut<usize> for TreeLayout<D> {
     fn index_mut(&mut self, index: usize) -> &mut Self::Output {
-        &mut self.0[index]
+        &mut self.arena[index]
     }
 }
