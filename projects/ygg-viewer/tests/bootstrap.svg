@@ -1,402 +1,432 @@
-<svg viewBox="0 0 3000 3000" xmlns="http://www.w3.org/2000/svg">
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="1756.0375000000001" y="10"/>
-<text x="1772.0375000000001" y="34">
+<svg viewBox="0 0 2919.0666666666666 904" xmlns="http://www.w3.org/2000/svg">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="1718.6333333333334" y="8"/>
+<text class="node" x="1750.6333333333334" y="24">
 Root
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="144" x="736.3583333333333" y="62"/>
-<text x="772.3583333333333" y="86">
+<rect class="node" height="32" rx="5" ry="5" width="144" x="718.2" y="56"/>
+<text class="node" x="790.2" y="72">
 Statement
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="144" x="2176.2166666666667" y="62"/>
-<text x="2212.2166666666667" y="86">
+<rect class="node" height="32" rx="5" ry="5" width="144" x="2129.7333333333336" y="56"/>
+<text class="node" x="2201.7333333333336" y="72">
 Statement
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="144" x="2695.716666666667" y="62"/>
-<text x="2731.716666666667" y="86">
+<rect class="node" height="32" rx="5" ry="5" width="144" x="2639.0666666666666" y="56"/>
+<text class="node" x="2711.0666666666666" y="72">
 Statement
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="224" x="696.3583333333333" y="114"/>
-<text x="752.3583333333333" y="138">
+<rect class="node" height="32" rx="5" ry="5" width="224" x="678.2" y="104"/>
+<text class="node" x="790.2" y="120">
 ClassStatement
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="224" x="2136.2166666666667" y="114"/>
-<text x="2192.2166666666667" y="138">
+<rect class="node" height="32" rx="5" ry="5" width="224" x="2089.7333333333336" y="104"/>
+<text class="node" x="2201.7333333333336" y="120">
 ClassStatement
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="224" x="2655.716666666667" y="114"/>
-<text x="2711.716666666667" y="138">
+<rect class="node" height="32" rx="5" ry="5" width="224" x="2599.0666666666666" y="104"/>
+<text class="node" x="2711.0666666666666" y="120">
 GroupStatement
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="80" x="576.3583333333333" y="166"/>
-<text x="596.3583333333333" y="190">
+<rect class="leaf" height="32" rx="5" ry="5" width="80" x="562.2" y="152"/>
+<text class="leaf" x="602.2" y="168">
 class
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="224" x="676.3583333333333" y="166"/>
-<text x="732.3583333333333" y="190">
+<rect class="leaf" height="32" rx="5" ry="5" width="224" x="658.2" y="152"/>
+<text class="leaf" x="770.2" y="168">
 ClassStatement
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="160" x="920.3583333333333" y="166"/>
-<text x="960.3583333333333" y="190">
+<rect class="node" height="32" rx="5" ry="5" width="160" x="898.2" y="152"/>
+<text class="node" x="978.2" y="168">
 ClassBlock
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="80" x="2048.2166666666667" y="166"/>
-<text x="2068.2166666666667" y="190">
+<rect class="leaf" height="32" rx="5" ry="5" width="80.00000000000023" x="2005.7333333333333" y="152"/>
+<text class="leaf" x="2045.7333333333336" y="168">
 class
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="160" x="2148.2166666666667" y="166"/>
-<text x="2188.2166666666667" y="190">
+<rect class="leaf" height="32" rx="5" ry="5" width="160" x="2101.7333333333336" y="152"/>
+<text class="leaf" x="2181.7333333333336" y="168">
 ClassBlock
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="160" x="2328.2166666666667" y="166"/>
-<text x="2368.2166666666667" y="190">
+<rect class="node" height="32" rx="5" ry="5" width="160" x="2277.7333333333336" y="152"/>
+<text class="node" x="2357.7333333333336" y="168">
 ClassBlock
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="80" x="2657.716666666667" y="166"/>
-<text x="2677.716666666667" y="190">
+<rect class="leaf" height="32" rx="5" ry="5" width="80" x="2603.0666666666666" y="152"/>
+<text class="leaf" x="2643.0666666666666" y="168">
 token
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="160" x="2757.716666666667" y="166"/>
-<text x="2797.716666666667" y="190">
+<rect class="node" height="32" rx="5" ry="5" width="160" x="2699.0666666666666" y="152"/>
+<text class="node" x="2779.0666666666666" y="168">
 GroupBlock
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="160" x="920.3583333333333" y="218"/>
-<text x="960.3583333333333" y="242">
+<rect class="node" height="32" rx="5" ry="5" width="160" x="898.2" y="200"/>
+<text class="node" x="978.2" y="216">
 Expression
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="160" x="2328.2166666666667" y="218"/>
-<text x="2368.2166666666667" y="242">
+<rect class="node" height="32" rx="5" ry="5" width="160" x="2277.7333333333336" y="200"/>
+<text class="node" x="2357.7333333333336" y="216">
 Expression
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="144" x="2765.716666666667" y="218"/>
-<text x="2801.716666666667" y="242">
+<rect class="node" height="32" rx="5" ry="5" width="144" x="2707.0666666666666" y="200"/>
+<text class="node" x="2779.0666666666666" y="216">
 GroupPair
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="224" x="888.3583333333333" y="270"/>
-<text x="944.3583333333333" y="294">
+<rect class="node" height="32" rx="5" ry="5" width="224" x="866.2" y="248"/>
+<text class="node" x="978.2" y="264">
 ExpressionHard
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="224" x="2296.2166666666667" y="270"/>
-<text x="2352.2166666666667" y="294">
+<rect class="node" height="32" rx="5" ry="5" width="224" x="2245.7333333333336" y="248"/>
+<text class="node" x="2357.7333333333336" y="264">
 ExpressionHard
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="144" x="2695.716666666667" y="270"/>
-<text x="2731.716666666667" y="294">
+<rect class="leaf" height="32" rx="5" ry="5" width="144" x="2639.0666666666666" y="248"/>
+<text class="leaf" x="2711.0666666666666" y="264">
 OP_REMARK
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="2859.716666666667" y="270"/>
-<text x="2883.716666666667" y="294">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="2799.0666666666666" y="248"/>
+<text class="node" x="2847.0666666666666" y="264">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="224" x="888.3583333333333" y="322"/>
-<text x="944.3583333333333" y="346">
+<rect class="node" height="32" rx="5" ry="5" width="224" x="866.2" y="296"/>
+<text class="node" x="978.2" y="312">
 ExpressionSoft
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="224" x="2296.2166666666667" y="322"/>
-<text x="2352.2166666666667" y="346">
+<rect class="node" height="32" rx="5" ry="5" width="224" x="2245.7333333333336" y="296"/>
+<text class="node" x="2357.7333333333336" y="312">
 ExpressionSoft
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="144" x="2835.716666666667" y="322"/>
-<text x="2871.716666666667" y="346">
+<rect class="node" height="32" rx="5" ry="5" width="144" x="2775.0666666666666" y="296"/>
+<text class="node" x="2847.0666666666666" y="312">
 StringRaw
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="68" y="374"/>
-<text x="120" y="398">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="64" y="344"/>
+<text class="node" x="168" y="360">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="415.6833333333333" y="374"/>
-<text x="467.6833333333333" y="398">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="404.1333333333333" y="344"/>
+<text class="node" x="508.1333333333333" y="360">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="740.5666666666666" y="374"/>
-<text x="792.5666666666666" y="398">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="721.8666666666668" y="344"/>
+<text class="node" x="825.8666666666668" y="360">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="1036.9499999999998" y="374"/>
-<text x="1088.9499999999998" y="398">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="1011.6000000000001" y="344"/>
+<text class="node" x="1115.6000000000001" y="360">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="1295.3333333333333" y="374"/>
-<text x="1347.3333333333333" y="398">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="1264.0000000000002" y="344"/>
+<text class="node" x="1368.0000000000002" y="360">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="1496.7166666666667" y="374"/>
-<text x="1548.7166666666667" y="398">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="1460.4" y="344"/>
+<text class="node" x="1564.4" y="360">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="1724.7166666666667" y="374"/>
-<text x="1776.7166666666667" y="398">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="1684.4" y="344"/>
+<text class="node" x="1788.4" y="360">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="1952.7166666666667" y="374"/>
-<text x="2004.7166666666667" y="398">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="1908.4" y="344"/>
+<text class="node" x="2012.4" y="360">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="2218.7166666666667" y="374"/>
-<text x="2270.7166666666667" y="398">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="2169.7333333333336" y="344"/>
+<text class="node" x="2273.7333333333336" y="360">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="2427.7166666666667" y="374"/>
-<text x="2479.7166666666667" y="398">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="2375.0666666666666" y="344"/>
+<text class="node" x="2479.0666666666666" y="360">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="2655.7166666666667" y="374"/>
-<text x="2707.7166666666667" y="398">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="2599.0666666666666" y="344"/>
+<text class="node" x="2703.0666666666666" y="360">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="48" x="2883.716666666667" y="374"/>
-<text x="2895.716666666667" y="398">
+<rect class="leaf" height="32" rx="5" ry="5" width="48" x="2823.0666666666666" y="344"/>
+<text class="leaf" x="2847.0666666666666" y="360">
 ^
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="140" y="426"/>
-<text x="156" y="450">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="136" y="392"/>
+<text class="node" x="168" y="408">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="487.6833333333333" y="426"/>
-<text x="503.6833333333333" y="450">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="476.1333333333333" y="392"/>
+<text class="node" x="508.1333333333333" y="408">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="812.5666666666666" y="426"/>
-<text x="828.5666666666666" y="450">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="793.8666666666668" y="392"/>
+<text class="node" x="825.8666666666668" y="408">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="1108.9499999999998" y="426"/>
-<text x="1124.9499999999998" y="450">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="1083.6000000000001" y="392"/>
+<text class="node" x="1115.6000000000001" y="408">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="1367.3333333333333" y="426"/>
-<text x="1383.3333333333333" y="450">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="1336.0000000000002" y="392"/>
+<text class="node" x="1368.0000000000002" y="408">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="1568.7166666666667" y="426"/>
-<text x="1584.7166666666667" y="450">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="1532.4" y="392"/>
+<text class="node" x="1564.4" y="408">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="1796.7166666666667" y="426"/>
-<text x="1812.7166666666667" y="450">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="1756.4" y="392"/>
+<text class="node" x="1788.4" y="408">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="2024.7166666666667" y="426"/>
-<text x="2040.7166666666667" y="450">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="1980.4" y="392"/>
+<text class="node" x="2012.4" y="408">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="2290.7166666666667" y="426"/>
-<text x="2306.7166666666667" y="450">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="2241.7333333333336" y="392"/>
+<text class="node" x="2273.7333333333336" y="408">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="2499.7166666666667" y="426"/>
-<text x="2515.7166666666667" y="450">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="2447.0666666666666" y="392"/>
+<text class="node" x="2479.0666666666666" y="408">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="2727.7166666666667" y="426"/>
-<text x="2743.7166666666667" y="450">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="2671.0666666666666" y="392"/>
+<text class="node" x="2703.0666666666666" y="408">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="66" y="478"/>
-<text x="90" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="64" y="440"/>
+<text class="node" x="112" y="456">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="182" y="478"/>
-<text x="206" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="176" y="440"/>
+<text class="node" x="224" y="456">
 Suffix
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="413.6833333333333" y="478"/>
-<text x="437.6833333333333" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="404.1333333333333" y="440"/>
+<text class="node" x="452.1333333333333" y="456">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="529.6833333333333" y="478"/>
-<text x="553.6833333333333" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="516.1333333333333" y="440"/>
+<text class="node" x="564.1333333333333" y="456">
 Suffix
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="738.5666666666666" y="478"/>
-<text x="762.5666666666666" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="721.8666666666668" y="440"/>
+<text class="node" x="769.8666666666668" y="456">
 Prefix
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="854.5666666666666" y="478"/>
-<text x="878.5666666666666" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="833.8666666666668" y="440"/>
+<text class="node" x="881.8666666666668" y="456">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="1092.9499999999998" y="478"/>
-<text x="1116.9499999999998" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="1067.6000000000001" y="440"/>
+<text class="node" x="1115.6000000000001" y="456">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="1293.3333333333333" y="478"/>
-<text x="1317.3333333333333" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="1264.0000000000002" y="440"/>
+<text class="node" x="1312.0000000000002" y="456">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="1409.3333333333333" y="478"/>
-<text x="1433.3333333333333" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="1376.0000000000002" y="440"/>
+<text class="node" x="1424.0000000000002" y="456">
 Suffix
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="1494.7166666666667" y="478"/>
-<text x="1518.7166666666667" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="1460.4" y="440"/>
+<text class="node" x="1508.4" y="456">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="1610.7166666666667" y="478"/>
-<text x="1634.7166666666667" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="1572.4" y="440"/>
+<text class="node" x="1620.4" y="456">
 Suffix
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="1780.7166666666667" y="478"/>
-<text x="1804.7166666666667" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="1740.4" y="440"/>
+<text class="node" x="1788.4" y="456">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="2008.7166666666667" y="478"/>
-<text x="2032.7166666666667" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="1964.4" y="440"/>
+<text class="node" x="2012.4" y="456">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="2216.7166666666667" y="478"/>
-<text x="2240.7166666666667" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="2169.7333333333336" y="440"/>
+<text class="node" x="2217.7333333333336" y="456">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="2332.7166666666667" y="478"/>
-<text x="2356.7166666666667" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="2281.7333333333336" y="440"/>
+<text class="node" x="2329.7333333333336" y="456">
 Suffix
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="2483.7166666666667" y="478"/>
-<text x="2507.7166666666667" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="2431.0666666666666" y="440"/>
+<text class="node" x="2479.0666666666666" y="456">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="2711.7166666666667" y="478"/>
-<text x="2735.7166666666667" y="502">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="2655.0666666666666" y="440"/>
+<text class="node" x="2703.0666666666666" y="456">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="10" y="530"/>
-<text x="62" y="554">
+<rect class="leaf" height="32" rx="5" ry="5" width="208" x="8" y="488"/>
+<text class="leaf" x="112" y="504">
 DecoratorCall
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="192" x="365.6833333333333" y="530"/>
-<text x="413.6833333333333" y="554">
+<rect class="leaf" height="32" rx="5" ry="5" width="192" x="356.1333333333333" y="488"/>
+<text class="leaf" x="452.1333333333333" y="504">
 ModifierCall
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="128" x="838.5666666666666" y="530"/>
-<text x="870.5666666666666" y="554">
+<rect class="leaf" height="32" rx="5" ry="5" width="128" x="817.8666666666668" y="488"/>
+<text class="leaf" x="881.8666666666668" y="504">
 KW_CLASS
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="240" x="1020.9499999999998" y="530"/>
-<text x="1080.9499999999998" y="554">
+<rect class="node" height="32" rx="5" ry="5" width="240" x="995.6000000000001" y="488"/>
+<text class="node" x="1115.6000000000001" y="504">
 GroupExpression
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="240" x="1221.3333333333333" y="530"/>
-<text x="1281.3333333333333" y="554">
+<rect class="node" height="32" rx="5" ry="5" width="240" x="1192.0000000000002" y="488"/>
+<text class="node" x="1312.0000000000002" y="504">
 GroupExpression
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="144" x="1470.7166666666667" y="530"/>
-<text x="1506.7166666666667" y="554">
+<rect class="leaf" height="32" rx="5" ry="5" width="144" x="1436.4" y="488"/>
+<text class="leaf" x="1508.4" y="504">
 OP_REMARK
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="160" x="1748.7166666666667" y="530"/>
-<text x="1788.7166666666667" y="554">
+<rect class="leaf" height="32" rx="5" ry="5" width="160" x="1708.4" y="488"/>
+<text class="leaf" x="1788.4" y="504">
 ClassBlock
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="144" x="1984.7166666666667" y="530"/>
-<text x="2020.7166666666667" y="554">
+<rect class="node" height="32" rx="5" ry="5" width="144" x="1940.4" y="488"/>
+<text class="node" x="2012.4" y="504">
 StringRaw
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="144" x="2192.7166666666667" y="530"/>
-<text x="2228.7166666666667" y="554">
+<rect class="node" height="32" rx="5" ry="5" width="144" x="2145.7333333333336" y="488"/>
+<text class="node" x="2217.7333333333336" y="504">
 StringRaw
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="160" x="2451.7166666666667" y="530"/>
-<text x="2491.7166666666667" y="554">
+<rect class="leaf" height="32" rx="5" ry="5" width="160" x="2399.0666666666666" y="488"/>
+<text class="leaf" x="2479.0666666666666" y="504">
 Expression
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="144" x="2687.7166666666667" y="530"/>
-<text x="2723.7166666666667" y="554">
+<rect class="node" height="32" rx="5" ry="5" width="144" x="2631.0666666666666" y="488"/>
+<text class="node" x="2703.0666666666666" y="504">
 StringRaw
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="160" x="1060.9499999999998" y="582"/>
-<text x="1100.9499999999998" y="606">
+<rect class="node" height="32" rx="5" ry="5" width="160" x="1035.6000000000001" y="536"/>
+<text class="node" x="1115.6000000000001" y="552">
 Expression
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="160" x="1261.3333333333333" y="582"/>
-<text x="1301.3333333333333" y="606">
+<rect class="node" height="32" rx="5" ry="5" width="160" x="1232.0000000000002" y="536"/>
+<text class="node" x="1312.0000000000002" y="552">
 Expression
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="48" x="2032.7166666666667" y="582"/>
-<text x="2044.7166666666667" y="606">
+<rect class="leaf" height="32" rx="5" ry="5" width="48" x="1988.4" y="536"/>
+<text class="leaf" x="2012.4" y="552">
 {
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="48" x="2240.7166666666667" y="582"/>
-<text x="2252.7166666666667" y="606">
+<rect class="leaf" height="32" rx="5" ry="5" width="48" x="2193.7333333333336" y="536"/>
+<text class="leaf" x="2217.7333333333336" y="552">
 |
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="48" x="2735.7166666666667" y="582"/>
-<text x="2747.7166666666667" y="606">
+<rect class="leaf" height="32" rx="5" ry="5" width="48" x="2679.0666666666666" y="536"/>
+<text class="leaf" x="2703.0666666666666" y="552">
 }
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="224" x="1028.9499999999998" y="634"/>
-<text x="1084.9499999999998" y="658">
+<rect class="node" height="32" rx="5" ry="5" width="224" x="1003.6000000000001" y="584"/>
+<text class="node" x="1115.6000000000001" y="600">
 ExpressionHard
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="224" x="1229.3333333333333" y="634"/>
-<text x="1285.3333333333333" y="658">
+<rect class="node" height="32" rx="5" ry="5" width="224" x="1200.0000000000002" y="584"/>
+<text class="node" x="1312.0000000000002" y="600">
 ExpressionHard
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="224" x="1028.9499999999998" y="686"/>
-<text x="1084.9499999999998" y="710">
+<rect class="node" height="32" rx="5" ry="5" width="224" x="1003.6000000000001" y="632"/>
+<text class="node" x="1115.6000000000001" y="648">
 ExpressionSoft
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="224" x="1229.3333333333333" y="686"/>
-<text x="1285.3333333333333" y="710">
+<rect class="node" height="32" rx="5" ry="5" width="224" x="1200.0000000000002" y="632"/>
+<text class="node" x="1312.0000000000002" y="648">
 ExpressionSoft
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="1036.9499999999998" y="738"/>
-<text x="1088.9499999999998" y="762">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="1011.6000000000001" y="680"/>
+<text class="node" x="1115.6000000000001" y="696">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="1123.3333333333333" y="738"/>
-<text x="1175.3333333333333" y="762">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="1096.0000000000002" y="680"/>
+<text class="node" x="1200.0000000000002" y="696">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="208" x="1351.3333333333333" y="738"/>
-<text x="1403.3333333333333" y="762">
+<rect class="node" height="32" rx="5" ry="5" width="208" x="1320.0000000000002" y="680"/>
+<text class="node" x="1424.0000000000002" y="696">
 ExpressionTag
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="1066.9499999999998" y="790"/>
-<text x="1082.9499999999998" y="814">
+<rect class="leaf" height="32" rx="5" ry="5" width="64" x="1043.6000000000001" y="728"/>
+<text class="leaf" x="1075.6000000000001" y="744">
 name
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="1150.9499999999998" y="790"/>
-<text x="1166.9499999999998" y="814">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="1123.6000000000001" y="728"/>
+<text class="node" x="1155.6000000000001" y="744">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="1195.3333333333333" y="790"/>
-<text x="1211.3333333333333" y="814">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="1168.0000000000002" y="728"/>
+<text class="node" x="1200.0000000000002" y="744">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="1381.3333333333333" y="790"/>
-<text x="1397.3333333333333" y="814">
+<rect class="leaf" height="32" rx="5" ry="5" width="64" x="1352.0000000000002" y="728"/>
+<text class="leaf" x="1384.0000000000002" y="744">
 cast
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="64" x="1465.3333333333333" y="790"/>
-<text x="1481.3333333333333" y="814">
+<rect class="node" height="32" rx="5" ry="5" width="64" x="1432.0000000000002" y="728"/>
+<text class="node" x="1464.0000000000002" y="744">
 Term
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="1134.9499999999998" y="842"/>
-<text x="1158.9499999999998" y="866">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="1107.6000000000001" y="776"/>
+<text class="node" x="1155.6000000000001" y="792">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="1179.3333333333333" y="842"/>
-<text x="1203.3333333333333" y="866">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="1152.0000000000002" y="776"/>
+<text class="node" x="1200.0000000000002" y="792">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="96" x="1449.3333333333333" y="842"/>
-<text x="1473.3333333333333" y="866">
+<rect class="node" height="32" rx="5" ry="5" width="96" x="1416.0000000000002" y="776"/>
+<text class="node" x="1464.0000000000002" y="792">
 Atomic
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="160" x="1102.9499999999998" y="894"/>
-<text x="1142.9499999999998" y="918">
+<rect class="leaf" height="32" rx="5" ry="5" width="160" x="1075.6000000000001" y="824"/>
+<text class="leaf" x="1155.6000000000001" y="840">
 Identifier
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="144" x="1155.3333333333333" y="894"/>
-<text x="1191.3333333333333" y="918">
+<rect class="node" height="32" rx="5" ry="5" width="144" x="1128.0000000000002" y="824"/>
+<text class="node" x="1200.0000000000002" y="840">
 StringRaw
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="160" x="1417.3333333333333" y="894"/>
-<text x="1457.3333333333333" y="918">
+<rect class="leaf" height="32" rx="5" ry="5" width="160" x="1384.0000000000002" y="824"/>
+<text class="leaf" x="1464.0000000000002" y="840">
 Identifier
 </text>
-<rect fill="none" height="32" stroke="black" stroke-width="0.1" width="48" x="1203.3333333333333" y="946"/>
-<text x="1215.3333333333333" y="970">
+<rect class="leaf" height="32" rx="5" ry="5" width="48" x="1176.0000000000002" y="872"/>
+<text class="leaf" x="1200.0000000000002" y="888">
 ->
 </text>
+<style>
+svg text {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Adjusted", "Segoe UI", "Liberation Sans", sans-serif;
+    color: aliceblue;
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+svg text.node {
+
+}
+
+svg text.leaf {
+
+}
+
+svg rect {
+    /*fill: none;*/
+    stroke: none;
+    /*stroke-width: 0.2;*/
+}
+
+svg rect.node {
+    fill: #ff5246
+}
+
+svg rect.leaf {
+    fill: #77c63d
+}
+</style>
 </svg>

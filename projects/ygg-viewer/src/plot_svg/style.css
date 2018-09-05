@@ -1,0 +1,28 @@
+svg text {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Adjusted", "Segoe UI", "Liberation Sans", sans-serif;
+    color: aliceblue;
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+svg text.node {
+
+}
+
+svg text.leaf {
+
+}
+
+svg rect {
+    /*fill: none;*/
+    stroke: none;
+    /*stroke-width: 0.2;*/
+}
+
+svg rect.node {
+    fill: #ff5246
+}
+
+svg rect.leaf {
+    fill: #77c63d
+}

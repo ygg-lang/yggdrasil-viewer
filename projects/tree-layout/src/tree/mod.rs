@@ -40,6 +40,12 @@ pub struct TreeLayout<D> {
     arena: Vec<TreeNode<D>>,
 }
 
+impl<D> Default for TreeLayout<D> {
+    fn default() -> Self {
+        Self { arena: vec![] }
+    }
+}
+
 impl<D> TreeLayout<D> {
     pub fn new<F, N, T>(user_tree: &T, root: N, data: F) -> Self
     where
