@@ -1,6 +1,8 @@
+use shape_core::{Line, Point};
+use std::vec::IntoIter;
+
 /// A vector backed tree implementation used to essentially cache the user's tree.
 use crate::NodeInfo;
-use std::vec::IntoIter;
 
 #[cfg(test)]
 mod test;
@@ -152,6 +154,10 @@ impl<D> TreeLayout<D> {
         let parent = self[node].parent.expect("Nodes where `order != 0` always have parents.");
 
         Some(self[parent].children[order - 1])
+    }
+
+    pub fn find_parent(&self, node: &TreeNode<D>) -> Option<&TreeNode<D>> {
+        self.arena.get(node.parent?)
     }
 }
 

@@ -1,9 +1,13 @@
 #![feature(return_position_impl_trait_in_trait)]
-mod tree;
+
+use std::{collections::HashMap, hash::Hash};
+
+pub use shape_core::{Line, Point, Rectangle};
 
 pub use crate::tree::{TreeLayout, TreeNode};
-use shape_core::Rectangle;
-use std::{collections::HashMap, hash::Hash};
+
+mod tree;
+
 #[derive(Clone, Copy, Debug)]
 pub struct TreeBox {
     pub top: f64,
@@ -11,7 +15,6 @@ pub struct TreeBox {
     pub bottom: f64,
     pub left: f64,
 }
-pub use shape_core::Point;
 
 impl TreeBox {
     pub fn square(size: f64) -> TreeBox {
@@ -22,6 +25,7 @@ impl TreeBox {
     }
 }
 
+#[allow(unused_variables)]
 pub trait NodeInfo<N>
 where
     Self::Key: Eq + Hash,
@@ -77,16 +81,14 @@ pub struct TreeData<K> {
     border: TreeBox,
 }
 
+#[allow(dead_code)]
 impl<K> TreeData<K> {
     fn top_space(&self) -> f64 {
         self.dimensions.top + self.border.top
     }
-
-    #[allow(dead_code)]
     fn top(&self) -> f64 {
         self.y - self.top_space()
     }
-
     fn bottom_space(&self) -> f64 {
         self.dimensions.bottom + self.border.bottom
     }
@@ -143,22 +145,17 @@ where
 {
     let mut tree = TreeLayout::new(tree, root, |t, n| TreeData {
         key: t.key(n.clone()),
-
         x: 0.0,
         y: 0.0,
         modifier: 0.0,
-
         dimensions: t.dimensions(n.clone()),
         border: t.border(n.clone()),
     });
-
     if let Some(root) = tree.root() {
         initialise_y(&mut tree, root);
-
         initialise_x(&mut tree, root);
         ensure_positive_x(&mut tree, root);
         finalise_x(&mut tree, root);
-
         tree
     }
     else {
@@ -168,22 +165,17 @@ where
 
 fn initialise_y<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
     let mut next_row = vec![root];
-
     while !next_row.is_empty() {
         let row = next_row;
         next_row = Vec::new();
-
-        let mut max = -std::f64::INFINITY;
+        let mut max = f64::NEG_INFINITY;
         for node in &row {
             let node = *node;
-
             tree[node].data.y = if let Some(parent) = tree[node].parent { tree[parent].data.bottom() } else { 0.0 }
                 + tree[node].data.top_space();
-
             if tree[node].data.y > max {
                 max = tree[node].data.y;
             }
-
             next_row.extend_from_slice(&tree[node].children);
         }
 
@@ -203,10 +195,8 @@ fn initialise_x<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
             let mid = {
                 let first = tree[*tree[node].children.first().expect("Only leaf nodes have no children.")].data.x;
                 let last = tree[*tree[node].children.last().expect("Only leaf nodes have no children.")].data.x;
-
                 (first + last) / 2.0
             };
-
             if let Some(sibling) = tree.previous_sibling(node) {
                 tree[node].data.x = tree[sibling].data.right() + tree[node].data.left_space();
                 tree[node].data.modifier = tree[node].data.x - mid;
@@ -214,7 +204,6 @@ fn initialise_x<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
             else {
                 tree[node].data.x = mid;
             }
-
             fix_overlaps(tree, node);
         }
     }
@@ -227,26 +216,20 @@ fn fix_overlaps<K>(tree: &mut TreeLayout<TreeData<K>>, right: usize) {
                 return std::cmp::min(*l, *r);
             }
         }
-
         0
     }
-
     let right_node_contour = left_contour(tree, right);
-
     for left in tree.left_siblings(right) {
         let left_node_contour = right_contour(tree, left);
         let mut shift = 0.0;
-
         for depth in tree[right].depth..=max_depth(&right_node_contour, &left_node_contour) {
             let gap = right_node_contour[&depth] - left_node_contour[&depth];
             if gap + shift < 0.0 {
                 shift = -gap;
             }
         }
-
         tree[right].data.x += shift;
         tree[right].data.modifier += shift;
-
         centre_nodes_between(tree, left, right);
     }
 }
@@ -274,17 +257,14 @@ where
 {
     let mut stack = vec![(0.0, node)];
     let mut contour = HashMap::new();
-
     while let Some((mod_, node)) = stack.pop() {
         let depth = tree[node].depth;
         let shifted = edge(&tree[node]) + mod_;
         let new = if let Some(current) = contour.get(&depth) { cmp(*current, shifted) } else { shifted };
         let mod_ = mod_ + tree[node].data.modifier;
-
         contour.insert(depth, new);
         stack.extend(tree[node].children.iter().map(|c| (mod_, *c)));
     }
-
     contour
 }
 
@@ -313,7 +293,7 @@ fn ensure_positive_x<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
     let shift = -contour
         .values()
         .fold(None, |acc, curr| {
-            let acc = acc.unwrap_or(std::f64::INFINITY);
+            let acc = acc.unwrap_or(f64::INFINITY);
             let curr = *curr;
             Some(if curr < acc { curr } else { acc })
         })
@@ -326,7 +306,6 @@ fn ensure_positive_x<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
 fn finalise_x<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
     for node in tree.breadth_first(root) {
         let shift = if let Some(parent) = tree[node].parent { tree[parent].data.modifier } else { 0.0 };
-
         tree[node].data.x += shift;
         tree[node].data.modifier += shift;
     }

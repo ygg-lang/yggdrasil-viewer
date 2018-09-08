@@ -1,408 +1,391 @@
-<svg viewBox="0 0 2919.0666666666666 904" xmlns="http://www.w3.org/2000/svg">
-<rect class="node" height="32" rx="5" ry="5" width="64" x="1718.6333333333334" y="8"/>
-<text class="node" x="1750.6333333333334" y="24">
+<svg viewBox="0 0 1691.3333333333333 856" xmlns="http://www.w3.org/2000/svg">
+<rect class="node" height="32" rx="5" ry="5" width="48" x="872.8333333333333" y="8"/>
+<text class="node" x="896.8333333333333" y="24">
 Root
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="144" x="718.2" y="56"/>
-<text class="node" x="790.2" y="72">
+<line x1="896.8333333333333" x2="278.3333333333333" y1="40" y2="56"/>
+<rect class="node" height="32" rx="5" ry="5" width="108" x="224.33333333333331" y="56"/>
+<text class="node" x="278.3333333333333" y="72">
 Statement
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="144" x="2129.7333333333336" y="56"/>
-<text class="node" x="2201.7333333333336" y="72">
+<line x1="896.8333333333333" x2="1082.4999999999998" y1="40" y2="56"/>
+<rect class="node" height="32" rx="5" ry="5" width="108" x="1028.4999999999998" y="56"/>
+<text class="node" x="1082.4999999999998" y="72">
 Statement
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="144" x="2639.0666666666666" y="56"/>
-<text class="node" x="2711.0666666666666" y="72">
+<line x1="896.8333333333333" x2="1515.3333333333333" y1="40" y2="56"/>
+<rect class="node" height="32" rx="5" ry="5" width="108" x="1461.3333333333333" y="56"/>
+<text class="node" x="1515.3333333333333" y="72">
 Statement
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="224" x="678.2" y="104"/>
-<text class="node" x="790.2" y="120">
+<line x1="278.3333333333333" x2="278.3333333333333" y1="88" y2="104"/>
+<rect class="node" height="32" rx="5" ry="5" width="168" x="194.33333333333331" y="104"/>
+<text class="node" x="278.3333333333333" y="120">
 ClassStatement
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="224" x="2089.7333333333336" y="104"/>
-<text class="node" x="2201.7333333333336" y="120">
+<line x1="1082.4999999999998" x2="1082.4999999999998" y1="88" y2="104"/>
+<rect class="node" height="32" rx="5" ry="5" width="168" x="998.4999999999998" y="104"/>
+<text class="node" x="1082.4999999999998" y="120">
 ClassStatement
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="224" x="2599.0666666666666" y="104"/>
-<text class="node" x="2711.0666666666666" y="120">
+<line x1="1515.3333333333333" x2="1515.3333333333333" y1="88" y2="104"/>
+<rect class="node" height="32" rx="5" ry="5" width="168" x="1431.3333333333333" y="104"/>
+<text class="node" x="1515.3333333333333" y="120">
 GroupStatement
 </text>
-<rect class="leaf" height="32" rx="5" ry="5" width="80" x="562.2" y="152"/>
-<text class="leaf" x="602.2" y="168">
+<line x1="278.3333333333333" x2="117.33333333333331" y1="136" y2="152"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="60" x="87.33333333333331" y="152"/>
+<text class="leaf" x="117.33333333333331" y="168">
 class
 </text>
-<rect class="leaf" height="32" rx="5" ry="5" width="224" x="658.2" y="152"/>
-<text class="leaf" x="770.2" y="168">
+<line x1="278.3333333333333" x2="263.3333333333333" y1="136" y2="152"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="168" x="179.33333333333331" y="152"/>
+<text class="leaf" x="263.3333333333333" y="168">
 ClassStatement
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="160" x="898.2" y="152"/>
-<text class="node" x="978.2" y="168">
+<line x1="278.3333333333333" x2="439.3333333333333" y1="136" y2="152"/>
+<rect class="node" height="32" rx="5" ry="5" width="120" x="379.3333333333333" y="152"/>
+<text class="node" x="439.3333333333333" y="168">
 ClassBlock
 </text>
-<rect class="leaf" height="32" rx="5" ry="5" width="80.00000000000023" x="2005.7333333333333" y="152"/>
-<text class="leaf" x="2045.7333333333336" y="168">
+<line x1="1082.4999999999998" x2="945.4999999999998" y1="136" y2="152"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="60" x="915.4999999999998" y="152"/>
+<text class="leaf" x="945.4999999999998" y="168">
 class
 </text>
-<rect class="leaf" height="32" rx="5" ry="5" width="160" x="2101.7333333333336" y="152"/>
-<text class="leaf" x="2181.7333333333336" y="168">
+<line x1="1082.4999999999998" x2="1067.4999999999998" y1="136" y2="152"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="120" x="1007.4999999999998" y="152"/>
+<text class="leaf" x="1067.4999999999998" y="168">
 ClassBlock
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="160" x="2277.7333333333336" y="152"/>
-<text class="node" x="2357.7333333333336" y="168">
+<line x1="1082.4999999999998" x2="1219.4999999999998" y1="136" y2="152"/>
+<rect class="node" height="32" rx="5" ry="5" width="120" x="1159.4999999999998" y="152"/>
+<text class="node" x="1219.4999999999998" y="168">
 ClassBlock
 </text>
-<rect class="leaf" height="32" rx="5" ry="5" width="80" x="2603.0666666666666" y="152"/>
-<text class="leaf" x="2643.0666666666666" y="168">
+<line x1="1515.3333333333333" x2="1454.3333333333333" y1="136" y2="152"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="60" x="1424.3333333333333" y="152"/>
+<text class="leaf" x="1454.3333333333333" y="168">
 token
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="160" x="2699.0666666666666" y="152"/>
-<text class="node" x="2779.0666666666666" y="168">
+<line x1="1515.3333333333333" x2="1576.3333333333333" y1="136" y2="152"/>
+<rect class="node" height="32" rx="5" ry="5" width="120" x="1516.3333333333333" y="152"/>
+<text class="node" x="1576.3333333333333" y="168">
 GroupBlock
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="160" x="898.2" y="200"/>
-<text class="node" x="978.2" y="216">
+<line x1="439.3333333333333" x2="439.3333333333333" y1="184" y2="200"/>
+<rect class="node" height="32" rx="5" ry="5" width="120" x="379.3333333333333" y="200"/>
+<text class="node" x="439.3333333333333" y="216">
 Expression
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="160" x="2277.7333333333336" y="200"/>
-<text class="node" x="2357.7333333333336" y="216">
+<line x1="1219.4999999999998" x2="1219.4999999999998" y1="184" y2="200"/>
+<rect class="node" height="32" rx="5" ry="5" width="120" x="1159.4999999999998" y="200"/>
+<text class="node" x="1219.4999999999998" y="216">
 Expression
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="144" x="2707.0666666666666" y="200"/>
-<text class="node" x="2779.0666666666666" y="216">
+<line x1="1576.3333333333333" x2="1576.3333333333333" y1="184" y2="200"/>
+<rect class="node" height="32" rx="5" ry="5" width="108" x="1522.3333333333333" y="200"/>
+<text class="node" x="1576.3333333333333" y="216">
 GroupPair
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="224" x="866.2" y="248"/>
-<text class="node" x="978.2" y="264">
+<line x1="439.3333333333333" x2="439.33333333333326" y1="232" y2="248"/>
+<rect class="node" height="32" rx="5" ry="5" width="167.99999999999994" x="355.3333333333333" y="248"/>
+<text class="node" x="439.33333333333326" y="264">
 ExpressionHard
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="224" x="2245.7333333333336" y="248"/>
-<text class="node" x="2357.7333333333336" y="264">
+<line x1="1219.4999999999998" x2="1219.4999999999998" y1="232" y2="248"/>
+<rect class="node" height="32" rx="5" ry="5" width="168" x="1135.4999999999998" y="248"/>
+<text class="node" x="1219.4999999999998" y="264">
 ExpressionHard
 </text>
-<rect class="leaf" height="32" rx="5" ry="5" width="144" x="2639.0666666666666" y="248"/>
-<text class="leaf" x="2711.0666666666666" y="264">
+<line x1="1576.3333333333333" x2="1515.3333333333333" y1="232" y2="248"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="108" x="1461.3333333333333" y="248"/>
+<text class="leaf" x="1515.3333333333333" y="264">
 OP_REMARK
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="2799.0666666666666" y="248"/>
-<text class="node" x="2847.0666666666666" y="264">
+<line x1="1576.3333333333333" x2="1637.3333333333333" y1="232" y2="248"/>
+<rect class="node" height="32" rx="5" ry="5" width="72" x="1601.3333333333333" y="248"/>
+<text class="node" x="1637.3333333333333" y="264">
 Atomic
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="224" x="866.2" y="296"/>
-<text class="node" x="978.2" y="312">
+<line x1="439.33333333333326" x2="439.33333333333326" y1="280" y2="296"/>
+<rect class="node" height="32" rx="5" ry="5" width="167.99999999999994" x="355.3333333333333" y="296"/>
+<text class="node" x="439.33333333333326" y="312">
 ExpressionSoft
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="224" x="2245.7333333333336" y="296"/>
-<text class="node" x="2357.7333333333336" y="312">
+<line x1="1219.4999999999998" x2="1219.4999999999998" y1="280" y2="296"/>
+<rect class="node" height="32" rx="5" ry="5" width="168" x="1135.4999999999998" y="296"/>
+<text class="node" x="1219.4999999999998" y="312">
 ExpressionSoft
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="144" x="2775.0666666666666" y="296"/>
-<text class="node" x="2847.0666666666666" y="312">
+<line x1="1637.3333333333333" x2="1637.3333333333333" y1="280" y2="296"/>
+<rect class="node" height="32" rx="5" ry="5" width="108" x="1583.3333333333333" y="296"/>
+<text class="node" x="1637.3333333333333" y="312">
 StringRaw
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="64" y="344"/>
-<text class="node" x="168" y="360">
+<line x1="439.33333333333326" x2="137" y1="328" y2="344"/>
+<rect class="node" height="32" rx="5" ry="5" width="156" x="59" y="344"/>
+<text class="node" x="137" y="360">
 ExpressionTag
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="404.1333333333333" y="344"/>
-<text class="node" x="508.1333333333333" y="360">
+<line x1="439.33333333333326" x2="356.3333333333333" y1="328" y2="344"/>
+<rect class="node" height="32" rx="5" ry="5" width="156" x="278.3333333333333" y="344"/>
+<text class="node" x="356.3333333333333" y="360">
 ExpressionTag
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="721.8666666666668" y="344"/>
-<text class="node" x="825.8666666666668" y="360">
+<line x1="439.33333333333326" x2="528.6666666666666" y1="328" y2="344"/>
+<rect class="node" height="32" rx="5" ry="5" width="156" x="450.66666666666663" y="344"/>
+<text class="node" x="528.6666666666666" y="360">
 ExpressionTag
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="1011.6000000000001" y="344"/>
-<text class="node" x="1115.6000000000001" y="360">
+<line x1="439.33333333333326" x2="741.6666666666666" y1="328" y2="344"/>
+<rect class="node" height="32" rx="5" ry="5" width="156" x="663.6666666666666" y="344"/>
+<text class="node" x="741.6666666666666" y="360">
 ExpressionTag
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="1264.0000000000002" y="344"/>
-<text class="node" x="1368.0000000000002" y="360">
+<line x1="1219.4999999999998" x2="929.6666666666665" y1="328" y2="344"/>
+<rect class="node" height="32" rx="5" ry="5" width="156" x="851.6666666666665" y="344"/>
+<text class="node" x="929.6666666666665" y="360">
 ExpressionTag
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="1460.4" y="344"/>
-<text class="node" x="1564.4" y="360">
+<line x1="1219.4999999999998" x2="1148.9999999999998" y1="328" y2="344"/>
+<rect class="node" height="32" rx="5" ry="5" width="156" x="1070.9999999999998" y="344"/>
+<text class="node" x="1148.9999999999998" y="360">
 ExpressionTag
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="1684.4" y="344"/>
-<text class="node" x="1788.4" y="360">
+<line x1="1219.4999999999998" x2="1321.333333333333" y1="328" y2="344"/>
+<rect class="node" height="32" rx="5" ry="5" width="156" x="1243.333333333333" y="344"/>
+<text class="node" x="1321.333333333333" y="360">
 ExpressionTag
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="1908.4" y="344"/>
-<text class="node" x="2012.4" y="360">
+<line x1="1219.4999999999998" x2="1509.333333333333" y1="328" y2="344"/>
+<rect class="node" height="32" rx="5" ry="5" width="156" x="1431.333333333333" y="344"/>
+<text class="node" x="1509.333333333333" y="360">
 ExpressionTag
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="2169.7333333333336" y="344"/>
-<text class="node" x="2273.7333333333336" y="360">
-ExpressionTag
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="2375.0666666666666" y="344"/>
-<text class="node" x="2479.0666666666666" y="360">
-ExpressionTag
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="2599.0666666666666" y="344"/>
-<text class="node" x="2703.0666666666666" y="360">
-ExpressionTag
-</text>
-<rect class="leaf" height="32" rx="5" ry="5" width="48" x="2823.0666666666666" y="344"/>
-<text class="leaf" x="2847.0666666666666" y="360">
+<line x1="1637.3333333333333" x2="1637.3333333333333" y1="328" y2="344"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="36" x="1619.3333333333333" y="344"/>
+<text class="leaf" x="1637.3333333333333" y="360">
 ^
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="136" y="392"/>
-<text class="node" x="168" y="408">
+<line x1="137" x2="137" y1="376" y2="392"/>
+<rect class="node" height="32" rx="5" ry="5" width="48" x="113" y="392"/>
+<text class="node" x="137" y="408">
 Term
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="476.1333333333333" y="392"/>
-<text class="node" x="508.1333333333333" y="408">
+<line x1="356.3333333333333" x2="356.3333333333333" y1="376" y2="392"/>
+<rect class="node" height="32" rx="5" ry="5" width="48" x="332.3333333333333" y="392"/>
+<text class="node" x="356.3333333333333" y="408">
 Term
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="793.8666666666668" y="392"/>
-<text class="node" x="825.8666666666668" y="408">
+<line x1="528.6666666666666" x2="528.6666666666666" y1="376" y2="392"/>
+<rect class="node" height="32" rx="5" ry="5" width="48" x="504.66666666666663" y="392"/>
+<text class="node" x="528.6666666666666" y="408">
 Term
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="1083.6000000000001" y="392"/>
-<text class="node" x="1115.6000000000001" y="408">
+<line x1="741.6666666666666" x2="741.6666666666666" y1="376" y2="392"/>
+<rect class="node" height="32" rx="5" ry="5" width="48" x="717.6666666666666" y="392"/>
+<text class="node" x="741.6666666666666" y="408">
 Term
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="1336.0000000000002" y="392"/>
-<text class="node" x="1368.0000000000002" y="408">
+<line x1="929.6666666666665" x2="929.6666666666665" y1="376" y2="392"/>
+<rect class="node" height="32" rx="5" ry="5" width="48" x="905.6666666666665" y="392"/>
+<text class="node" x="929.6666666666665" y="408">
 Term
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="1532.4" y="392"/>
-<text class="node" x="1564.4" y="408">
+<line x1="1148.9999999999998" x2="1148.9999999999998" y1="376" y2="392"/>
+<rect class="node" height="32" rx="5" ry="5" width="48" x="1124.9999999999998" y="392"/>
+<text class="node" x="1148.9999999999998" y="408">
 Term
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="1756.4" y="392"/>
-<text class="node" x="1788.4" y="408">
+<line x1="1321.333333333333" x2="1321.333333333333" y1="376" y2="392"/>
+<rect class="node" height="32" rx="5" ry="5" width="48" x="1297.333333333333" y="392"/>
+<text class="node" x="1321.333333333333" y="408">
 Term
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="1980.4" y="392"/>
-<text class="node" x="2012.4" y="408">
+<line x1="1509.333333333333" x2="1509.333333333333" y1="376" y2="392"/>
+<rect class="node" height="32" rx="5" ry="5" width="48" x="1485.333333333333" y="392"/>
+<text class="node" x="1509.333333333333" y="408">
 Term
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="2241.7333333333336" y="392"/>
-<text class="node" x="2273.7333333333336" y="408">
-Term
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="2447.0666666666666" y="392"/>
-<text class="node" x="2479.0666666666666" y="408">
-Term
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="2671.0666666666666" y="392"/>
-<text class="node" x="2703.0666666666666" y="408">
-Term
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="64" y="440"/>
-<text class="node" x="112" y="456">
+<line x1="137" x2="94" y1="424" y2="440"/>
+<rect class="node" height="32" rx="5" ry="5" width="72" x="58" y="440"/>
+<text class="node" x="94" y="456">
 Atomic
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="176" y="440"/>
-<text class="node" x="224" y="456">
-Suffix
+<line x1="137" x2="180" y1="424" y2="440"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="36" x="162" y="440"/>
+<text class="leaf" x="180" y="456">
+*
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="404.1333333333333" y="440"/>
-<text class="node" x="452.1333333333333" y="456">
+<line x1="356.3333333333333" x2="313.3333333333333" y1="424" y2="440"/>
+<rect class="node" height="32" rx="5" ry="5" width="72" x="277.3333333333333" y="440"/>
+<text class="node" x="313.3333333333333" y="456">
 Atomic
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="516.1333333333333" y="440"/>
-<text class="node" x="564.1333333333333" y="456">
-Suffix
+<line x1="356.3333333333333" x2="399.3333333333333" y1="424" y2="440"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="36" x="381.3333333333333" y="440"/>
+<text class="leaf" x="399.3333333333333" y="456">
+*
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="721.8666666666668" y="440"/>
-<text class="node" x="769.8666666666668" y="456">
-Prefix
+<line x1="528.6666666666666" x2="485.66666666666663" y1="424" y2="440"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="36" x="467.66666666666663" y="440"/>
+<text class="leaf" x="485.66666666666663" y="456">
+^
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="833.8666666666668" y="440"/>
-<text class="node" x="881.8666666666668" y="456">
+<line x1="528.6666666666666" x2="571.6666666666666" y1="424" y2="440"/>
+<rect class="node" height="32" rx="5" ry="5" width="72" x="535.6666666666666" y="440"/>
+<text class="node" x="571.6666666666666" y="456">
 Atomic
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="1067.6000000000001" y="440"/>
-<text class="node" x="1115.6000000000001" y="456">
+<line x1="741.6666666666666" x2="741.6666666666666" y1="424" y2="440"/>
+<rect class="node" height="32" rx="5" ry="5" width="72" x="705.6666666666666" y="440"/>
+<text class="node" x="741.6666666666666" y="456">
 Atomic
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="1264.0000000000002" y="440"/>
-<text class="node" x="1312.0000000000002" y="456">
+<line x1="929.6666666666665" x2="929.6666666666665" y1="424" y2="440"/>
+<rect class="node" height="32" rx="5" ry="5" width="72" x="893.6666666666665" y="440"/>
+<text class="node" x="929.6666666666665" y="456">
 Atomic
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="1376.0000000000002" y="440"/>
-<text class="node" x="1424.0000000000002" y="456">
-Suffix
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="1460.4" y="440"/>
-<text class="node" x="1508.4" y="456">
+<line x1="1148.9999999999998" x2="1105.9999999999998" y1="424" y2="440"/>
+<rect class="node" height="32" rx="5" ry="5" width="72" x="1069.9999999999998" y="440"/>
+<text class="node" x="1105.9999999999998" y="456">
 Atomic
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="1572.4" y="440"/>
-<text class="node" x="1620.4" y="456">
-Suffix
+<line x1="1148.9999999999998" x2="1191.9999999999998" y1="424" y2="440"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="36" x="1173.9999999999998" y="440"/>
+<text class="leaf" x="1191.9999999999998" y="456">
+?
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="1740.4" y="440"/>
-<text class="node" x="1788.4" y="456">
+<line x1="1321.333333333333" x2="1321.333333333333" y1="424" y2="440"/>
+<rect class="node" height="32" rx="5" ry="5" width="72" x="1285.333333333333" y="440"/>
+<text class="node" x="1321.333333333333" y="456">
 Atomic
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="1964.4" y="440"/>
-<text class="node" x="2012.4" y="456">
+<line x1="1509.333333333333" x2="1509.333333333333" y1="424" y2="440"/>
+<rect class="node" height="32" rx="5" ry="5" width="72" x="1473.333333333333" y="440"/>
+<text class="node" x="1509.333333333333" y="456">
 Atomic
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="2169.7333333333336" y="440"/>
-<text class="node" x="2217.7333333333336" y="456">
-Atomic
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="2281.7333333333336" y="440"/>
-<text class="node" x="2329.7333333333336" y="456">
-Suffix
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="2431.0666666666666" y="440"/>
-<text class="node" x="2479.0666666666666" y="456">
-Atomic
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="2655.0666666666666" y="440"/>
-<text class="node" x="2703.0666666666666" y="456">
-Atomic
-</text>
-<rect class="leaf" height="32" rx="5" ry="5" width="208" x="8" y="488"/>
-<text class="leaf" x="112" y="504">
+<line x1="94" x2="94" y1="472" y2="488"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="156" x="16" y="488"/>
+<text class="leaf" x="94" y="504">
 DecoratorCall
 </text>
-<rect class="leaf" height="32" rx="5" ry="5" width="192" x="356.1333333333333" y="488"/>
-<text class="leaf" x="452.1333333333333" y="504">
+<line x1="313.3333333333333" x2="313.3333333333333" y1="472" y2="488"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="144" x="241.33333333333331" y="488"/>
+<text class="leaf" x="313.3333333333333" y="504">
 ModifierCall
 </text>
-<rect class="leaf" height="32" rx="5" ry="5" width="128" x="817.8666666666668" y="488"/>
-<text class="leaf" x="881.8666666666668" y="504">
+<line x1="571.6666666666666" x2="571.6666666666666" y1="472" y2="488"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="96" x="523.6666666666666" y="488"/>
+<text class="leaf" x="571.6666666666666" y="504">
 KW_CLASS
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="240" x="995.6000000000001" y="488"/>
-<text class="node" x="1115.6000000000001" y="504">
+<line x1="741.6666666666666" x2="741.6666666666666" y1="472" y2="488"/>
+<rect class="node" height="32" rx="5" ry="5" width="180" x="651.6666666666666" y="488"/>
+<text class="node" x="741.6666666666666" y="504">
 GroupExpression
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="240" x="1192.0000000000002" y="488"/>
-<text class="node" x="1312.0000000000002" y="504">
-GroupExpression
-</text>
-<rect class="leaf" height="32" rx="5" ry="5" width="144" x="1436.4" y="488"/>
-<text class="leaf" x="1508.4" y="504">
-OP_REMARK
-</text>
-<rect class="leaf" height="32" rx="5" ry="5" width="160" x="1708.4" y="488"/>
-<text class="leaf" x="1788.4" y="504">
-ClassBlock
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="144" x="1940.4" y="488"/>
-<text class="node" x="2012.4" y="504">
+<line x1="929.6666666666665" x2="929.6666666666665" y1="472" y2="488"/>
+<rect class="node" height="32" rx="5" ry="5" width="108" x="875.6666666666665" y="488"/>
+<text class="node" x="929.6666666666665" y="504">
 StringRaw
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="144" x="2145.7333333333336" y="488"/>
-<text class="node" x="2217.7333333333336" y="504">
+<line x1="1105.9999999999998" x2="1105.9999999999998" y1="472" y2="488"/>
+<rect class="node" height="32" rx="5" ry="5" width="108" x="1051.9999999999998" y="488"/>
+<text class="node" x="1105.9999999999998" y="504">
 StringRaw
 </text>
-<rect class="leaf" height="32" rx="5" ry="5" width="160" x="2399.0666666666666" y="488"/>
-<text class="leaf" x="2479.0666666666666" y="504">
+<line x1="1321.333333333333" x2="1321.333333333333" y1="472" y2="488"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="120" x="1261.333333333333" y="488"/>
+<text class="leaf" x="1321.333333333333" y="504">
 Expression
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="144" x="2631.0666666666666" y="488"/>
-<text class="node" x="2703.0666666666666" y="504">
+<line x1="1509.333333333333" x2="1509.333333333333" y1="472" y2="488"/>
+<rect class="node" height="32" rx="5" ry="5" width="108" x="1455.333333333333" y="488"/>
+<text class="node" x="1509.333333333333" y="504">
 StringRaw
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="160" x="1035.6000000000001" y="536"/>
-<text class="node" x="1115.6000000000001" y="552">
+<line x1="741.6666666666666" x2="741.6666666666666" y1="520" y2="536"/>
+<rect class="node" height="32" rx="5" ry="5" width="120" x="681.6666666666666" y="536"/>
+<text class="node" x="741.6666666666666" y="552">
 Expression
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="160" x="1232.0000000000002" y="536"/>
-<text class="node" x="1312.0000000000002" y="552">
-Expression
-</text>
-<rect class="leaf" height="32" rx="5" ry="5" width="48" x="1988.4" y="536"/>
-<text class="leaf" x="2012.4" y="552">
+<line x1="929.6666666666665" x2="929.6666666666665" y1="520" y2="536"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="36" x="911.6666666666665" y="536"/>
+<text class="leaf" x="929.6666666666665" y="552">
 {
 </text>
-<rect class="leaf" height="32" rx="5" ry="5" width="48" x="2193.7333333333336" y="536"/>
-<text class="leaf" x="2217.7333333333336" y="552">
+<line x1="1105.9999999999998" x2="1105.9999999999998" y1="520" y2="536"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="36" x="1087.9999999999998" y="536"/>
+<text class="leaf" x="1105.9999999999998" y="552">
 |
 </text>
-<rect class="leaf" height="32" rx="5" ry="5" width="48" x="2679.0666666666666" y="536"/>
-<text class="leaf" x="2703.0666666666666" y="552">
+<line x1="1509.333333333333" x2="1509.333333333333" y1="520" y2="536"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="36" x="1491.333333333333" y="536"/>
+<text class="leaf" x="1509.333333333333" y="552">
 }
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="224" x="1003.6000000000001" y="584"/>
-<text class="node" x="1115.6000000000001" y="600">
+<line x1="741.6666666666666" x2="741.6666666666666" y1="568" y2="584"/>
+<rect class="node" height="32" rx="5" ry="5" width="168" x="657.6666666666666" y="584"/>
+<text class="node" x="741.6666666666666" y="600">
 ExpressionHard
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="224" x="1200.0000000000002" y="584"/>
-<text class="node" x="1312.0000000000002" y="600">
-ExpressionHard
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="224" x="1003.6000000000001" y="632"/>
-<text class="node" x="1115.6000000000001" y="648">
+<line x1="741.6666666666666" x2="741.6666666666666" y1="616" y2="632"/>
+<rect class="node" height="32" rx="5" ry="5" width="168" x="657.6666666666666" y="632"/>
+<text class="node" x="741.6666666666666" y="648">
 ExpressionSoft
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="224" x="1200.0000000000002" y="632"/>
-<text class="node" x="1312.0000000000002" y="648">
-ExpressionSoft
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="1011.6000000000001" y="680"/>
-<text class="node" x="1115.6000000000001" y="696">
+<line x1="741.6666666666666" x2="741.6666666666666" y1="664" y2="680"/>
+<rect class="node" height="32" rx="5" ry="5" width="156" x="663.6666666666666" y="680"/>
+<text class="node" x="741.6666666666666" y="696">
 ExpressionTag
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="1096.0000000000002" y="680"/>
-<text class="node" x="1200.0000000000002" y="696">
-ExpressionTag
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="208" x="1320.0000000000002" y="680"/>
-<text class="node" x="1424.0000000000002" y="696">
-ExpressionTag
-</text>
-<rect class="leaf" height="32" rx="5" ry="5" width="64" x="1043.6000000000001" y="728"/>
-<text class="leaf" x="1075.6000000000001" y="744">
+<line x1="741.6666666666666" x2="701.6666666666666" y1="712" y2="728"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="48" x="677.6666666666666" y="728"/>
+<text class="leaf" x="701.6666666666666" y="744">
 name
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="1123.6000000000001" y="728"/>
-<text class="node" x="1155.6000000000001" y="744">
+<line x1="741.6666666666666" x2="781.6666666666666" y1="712" y2="728"/>
+<rect class="node" height="32" rx="5" ry="5" width="48" x="757.6666666666666" y="728"/>
+<text class="node" x="781.6666666666666" y="744">
 Term
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="1168.0000000000002" y="728"/>
-<text class="node" x="1200.0000000000002" y="744">
-Term
-</text>
-<rect class="leaf" height="32" rx="5" ry="5" width="64" x="1352.0000000000002" y="728"/>
-<text class="leaf" x="1384.0000000000002" y="744">
-cast
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="64" x="1432.0000000000002" y="728"/>
-<text class="node" x="1464.0000000000002" y="744">
-Term
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="1107.6000000000001" y="776"/>
-<text class="node" x="1155.6000000000001" y="792">
+<line x1="781.6666666666666" x2="781.6666666666666" y1="760" y2="776"/>
+<rect class="node" height="32" rx="5" ry="5" width="72" x="745.6666666666666" y="776"/>
+<text class="node" x="781.6666666666666" y="792">
 Atomic
 </text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="1152.0000000000002" y="776"/>
-<text class="node" x="1200.0000000000002" y="792">
-Atomic
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="96" x="1416.0000000000002" y="776"/>
-<text class="node" x="1464.0000000000002" y="792">
-Atomic
-</text>
-<rect class="leaf" height="32" rx="5" ry="5" width="160" x="1075.6000000000001" y="824"/>
-<text class="leaf" x="1155.6000000000001" y="840">
+<line x1="781.6666666666666" x2="781.6666666666666" y1="808" y2="824"/>
+<rect class="leaf" height="32" rx="5" ry="5" width="120" x="721.6666666666666" y="824"/>
+<text class="leaf" x="781.6666666666666" y="840">
 Identifier
-</text>
-<rect class="node" height="32" rx="5" ry="5" width="144" x="1128.0000000000002" y="824"/>
-<text class="node" x="1200.0000000000002" y="840">
-StringRaw
-</text>
-<rect class="leaf" height="32" rx="5" ry="5" width="160" x="1384.0000000000002" y="824"/>
-<text class="leaf" x="1464.0000000000002" y="840">
-Identifier
-</text>
-<rect class="leaf" height="32" rx="5" ry="5" width="48" x="1176.0000000000002" y="872"/>
-<text class="leaf" x="1200.0000000000002" y="888">
-->
 </text>
 <style>
+svg line {
+    stroke: black;
+}
+
+svg rect {
+    fill: black;
+    stroke: none;
+    /*stroke-width: 0.2;*/
+}
+
+svg rect.node {
+    /*fill: #ff5246*/
+}
+
+svg rect.leaf {
+    fill: #77c63d
+}
+
 svg text {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Adjusted", "Segoe UI", "Liberation Sans", sans-serif;
     color: aliceblue;
+    fill: white;
     text-anchor: middle;
     dominant-baseline: middle;
 }
@@ -415,18 +398,5 @@ svg text.leaf {
 
 }
 
-svg rect {
-    /*fill: none;*/
-    stroke: none;
-    /*stroke-width: 0.2;*/
-}
-
-svg rect.node {
-    fill: #ff5246
-}
-
-svg rect.leaf {
-    fill: #77c63d
-}
 </style>
 </svg>

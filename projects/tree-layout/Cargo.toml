@@ -1,10 +1,10 @@
 [package]
 name = "tree-layout"
-version = "0.0.0"
+version = "0.0.1"
 authors = ["Sean Marshallsay <srm.1708@gmail.com>"]
 keywords = ["tree", "layout"]
 categories = ["algorithms"]
-description = "A Rust library for laying out aesthetically pleasing trees (the data structure, not the plant)."
+description = "Get the arrangement layout of the tree diagram."
 repository = "https://github.com/ygg-lang/yggdrasil-viewer"
 license = "MIT"
 readme = "readme.md"
@@ -15,7 +15,7 @@ hashbrown = "0.14.2"
 
 [dependencies.shape-core]
 version = "0.1.16"
-path = 'C:\Users\Dell\CLionProjects\shape-rs\projects\shape-core'
+#path = 'C:\Users\Dell\CLionProjects\shape-rs\projects\shape-core'
 
 [dev-dependencies]
 petgraph = "0.6.4"
