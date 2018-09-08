@@ -7,19 +7,20 @@ use svg::{
 };
 use yggdrasil_rt::{TokenPair, TokenTree, YggdrasilRule};
 
-use tree_layout::{layout, Line, NodeInfo, Point, TreeBox, TreeData, TreeNode};
+use tree_layout::{layout, Line, NodeInfo, Point, TreeBox};
+
+/// Plot a svg structure
+#[derive(Debug, Default)]
+pub struct SvgPlotter {
+    color: String,
+}
 
 #[derive(Debug)]
-pub struct SvgTree<'i, R>
+struct SvgTree<'i, R>
 where
     R: YggdrasilRule,
 {
     cst: TokenTree<'i, R>,
-}
-
-#[derive(Debug, Default)]
-pub struct SvgPlotter {
-    color: String,
 }
 
 impl<'i, R> NodeInfo<TokenPair<'i, R>> for SvgTree<'i, R>
@@ -98,6 +99,7 @@ where
 }
 
 impl SvgPlotter {
+    /// Draw a svg
     pub fn draw<R>(&self, tree: TokenTree<R>) -> SVG
     where
         R: YggdrasilRule,

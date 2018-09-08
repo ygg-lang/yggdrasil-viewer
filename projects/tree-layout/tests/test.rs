@@ -1,32 +1,36 @@
-extern crate petgraph;
-extern crate reingold_tilford;
+#![feature(return_position_impl_trait_in_trait)]
 
-use petgraph::graph;
+use std::collections::BTreeMap;
+
+use petgraph::{graph, graph::NodeIndex};
+use shape_core::Point;
+
+use tree_layout::{layout, NodeInfo, TreeBox};
 
 struct Graph(graph::Graph<usize, ()>);
 
-impl NodeInfo<graph::NodeIndex> for Graph {
-    type Key = graph::NodeIndex;
+impl NodeInfo<NodeIndex> for Graph {
+    type Key = NodeIndex;
 
-    fn key(&self, node: graph::NodeIndex) -> Self::Key {
+    fn key(&self, node: NodeIndex) -> Self::Key {
         node
     }
 
-    fn children(&self, node: graph::NodeIndex) -> SmallVec<graph::NodeIndex> {
-        self.0.neighbors(node).collect()
+    fn children(&self, node: NodeIndex) -> impl Iterator<Item = NodeIndex> {
+        self.0.neighbors(node)
     }
 
-    fn dimensions(&self, _: graph::NodeIndex) -> Dimensions {
-        Dimensions::all(0.5)
+    fn dimensions(&self, _: NodeIndex) -> TreeBox {
+        TreeBox::square(0.5)
     }
 
-    fn border(&self, _: graph::NodeIndex) -> Dimensions {
-        Dimensions::all(1.5)
+    fn border(&self, _: NodeIndex) -> TreeBox {
+        TreeBox::square(1.5)
     }
 }
 
 impl Graph {
-    fn new() -> (Graph, graph::NodeIndex) {
+    fn new() -> (Graph, NodeIndex) {
         let mut graph = graph::Graph::new();
         let root = graph.add_node(0);
 
@@ -46,20 +50,20 @@ impl Graph {
 #[test]
 fn petgraph() {
     let (graph, root) = Graph::new();
-    let layout = layout(&graph, root);
+    let layout = layout(&graph, root).into_iter().map(|a| (a.data.key, a.data.center())).collect::<BTreeMap<_, _>>();
 
     let expected = [
-        (graph::NodeIndex::new(0), Coordinate { x: 10.0, y: 2.0 }),
-        (graph::NodeIndex::new(1), Coordinate { x: 14.0, y: 6.0 }),
-        (graph::NodeIndex::new(2), Coordinate { x: 6.0, y: 6.0 }),
-        (graph::NodeIndex::new(3), Coordinate { x: 14.0, y: 10.0 }),
-        (graph::NodeIndex::new(4), Coordinate { x: 10.0, y: 10.0 }),
-        (graph::NodeIndex::new(5), Coordinate { x: 6.0, y: 10.0 }),
-        (graph::NodeIndex::new(6), Coordinate { x: 2.0, y: 10.0 }),
+        (NodeIndex::new(0), Point { x: 10.0, y: 2.0 }),
+        (NodeIndex::new(1), Point { x: 14.0, y: 6.0 }),
+        (NodeIndex::new(2), Point { x: 6.0, y: 6.0 }),
+        (NodeIndex::new(3), Point { x: 14.0, y: 10.0 }),
+        (NodeIndex::new(4), Point { x: 10.0, y: 10.0 }),
+        (NodeIndex::new(5), Point { x: 6.0, y: 10.0 }),
+        (NodeIndex::new(6), Point { x: 2.0, y: 10.0 }),
     ]
     .iter()
     .cloned()
-    .collect::<std::collections::HashMap<graph::NodeIndex<u32>, _>>();
+    .collect::<BTreeMap<NodeIndex<u32>, _>>();
 
     assert_eq!(layout, expected);
 }
@@ -80,16 +84,16 @@ impl<'n> NodeInfo<&'n Node> for Tree {
         node.id
     }
 
-    fn children(&self, node: &'n Node) -> SmallVec<&'n Node> {
-        node.children.iter().collect()
+    fn children(&self, node: &'n Node) -> impl Iterator<Item = &'n Node> {
+        node.children.iter()
     }
 
-    fn dimensions(&self, _: &'n Node) -> Dimensions {
-        Dimensions::all(0.5)
+    fn dimensions(&self, _: &'n Node) -> TreeBox {
+        TreeBox::square(0.5)
     }
 
-    fn border(&self, _: &'n Node) -> Dimensions {
-        Dimensions { top: 1.5, right: 3.5, bottom: 1.5, left: 3.5 }
+    fn border(&self, _: &'n Node) -> TreeBox {
+        TreeBox { top: 1.5, right: 3.5, bottom: 1.5, left: 3.5 }
     }
 }
 
@@ -137,24 +141,24 @@ impl Node {
 #[test]
 fn ptc() {
     let root = Node::new();
-    let layout = layout(&Tree, &root);
+    let layout = layout(&Tree, &root).into_iter().map(|a| (a.data.key, a.data.center())).collect::<BTreeMap<_, _>>();
 
     let expected = [
-        (0, Coordinate { x: 18.0, y: 2.0 }),
-        (1, Coordinate { x: 18.0, y: 6.0 }),
-        (2, Coordinate { x: 8.0, y: 10.0 }),
-        (3, Coordinate { x: 28.0, y: 10.0 }),
-        (4, Coordinate { x: 4.0, y: 14.0 }),
-        (5, Coordinate { x: 12.0, y: 14.0 }),
-        (6, Coordinate { x: 20.0, y: 14.0 }),
-        (7, Coordinate { x: 28.0, y: 14.0 }),
-        (8, Coordinate { x: 36.0, y: 14.0 }),
-        (9, Coordinate { x: 4.0, y: 18.0 }),
-        (10, Coordinate { x: 16.0, y: 18.0 }),
-        (11, Coordinate { x: 24.0, y: 18.0 }),
-        (12, Coordinate { x: 16.0, y: 22.0 }),
-        (13, Coordinate { x: 24.0, y: 22.0 }),
-        (14, Coordinate { x: 32.0, y: 22.0 }),
+        (0, Point { x: 18.0, y: 2.0 }),
+        (1, Point { x: 18.0, y: 6.0 }),
+        (2, Point { x: 8.0, y: 10.0 }),
+        (3, Point { x: 28.0, y: 10.0 }),
+        (4, Point { x: 4.0, y: 14.0 }),
+        (5, Point { x: 12.0, y: 14.0 }),
+        (6, Point { x: 20.0, y: 14.0 }),
+        (7, Point { x: 28.0, y: 14.0 }),
+        (8, Point { x: 36.0, y: 14.0 }),
+        (9, Point { x: 4.0, y: 18.0 }),
+        (10, Point { x: 16.0, y: 18.0 }),
+        (11, Point { x: 24.0, y: 18.0 }),
+        (12, Point { x: 16.0, y: 22.0 }),
+        (13, Point { x: 24.0, y: 22.0 }),
+        (14, Point { x: 32.0, y: 22.0 }),
     ]
     .iter()
     .cloned()

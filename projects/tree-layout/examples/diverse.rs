@@ -1,6 +1,6 @@
-extern crate reingold_tilford;
+#![feature(return_position_impl_trait_in_trait)]
 
-mod utils;
+use tree_layout::{layout, NodeInfo, TreeBox};
 
 #[derive(Debug, Clone)]
 pub struct Tree;
@@ -18,16 +18,16 @@ impl<'n> NodeInfo<&'n Node> for Tree {
         node.id
     }
 
-    fn children(&self, node: &'n Node) -> SmallVec<&'n Node> {
-        node.children.iter().collect()
+    fn children(&self, node: &'n Node) -> impl Iterator<Item = &'n Node> {
+        node.children.iter()
     }
 
-    fn dimensions(&self, _: &'n Node) -> Dimensions {
-        Dimensions::all(0.5)
+    fn dimensions(&self, _: &'n Node) -> TreeBox {
+        TreeBox::square(0.5)
     }
 
-    fn border(&self, _: &'n Node) -> Dimensions {
-        Dimensions { top: 1.5, right: 3.5, bottom: 1.5, left: 3.5 }
+    fn border(&self, _: &'n Node) -> TreeBox {
+        TreeBox { top: 1.5, right: 3.5, bottom: 1.5, left: 3.5 }
     }
 }
 
@@ -122,5 +122,5 @@ fn tree() -> Node {
 fn main() {
     let root = tree();
     let layout = layout(&Tree, &root);
-    utils::display(&Tree, &root, &layout, labeller);
+    println!("{:#?}", layout)
 }

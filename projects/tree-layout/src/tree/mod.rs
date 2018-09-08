@@ -1,4 +1,3 @@
-use shape_core::{Line, Point};
 use std::vec::IntoIter;
 
 /// A vector backed tree implementation used to essentially cache the user's tree.

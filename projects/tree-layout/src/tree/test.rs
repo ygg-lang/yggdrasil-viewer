@@ -46,7 +46,7 @@ fn tree() -> TreeLayout<usize> {
 fn new() {
     let tree = tree();
 
-    assert_eq!(tree.0.len(), 9);
+    assert_eq!(tree.arena.len(), 9);
 }
 
 #[test]
