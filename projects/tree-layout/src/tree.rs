@@ -70,16 +70,16 @@ impl<D> TreeNode<D> {
     }
 }
 
-pub fn layout<N, T>(tree: &T, root: N) -> TreeLayout<TreeData<<T as NodeInfo<N>>::Index>>
+pub fn layout<N, T>(tree: &T, root: &N) -> TreeLayout<TreeData<<T as NodeInfo<N>>::Index>>
     where
         T: NodeInfo<N>,
-        N: Copy,
+        N: Clone,
 {
-    let mut tree = TreeLayout::new(tree, root, |t, n| TreeData {
-        key: t.query(n),
+    let mut tree = TreeLayout::new(tree, root.clone(), |t, n| TreeData {
+        key: t.query(n.clone()),
         position: Point::new(0.0, 0.0),
         module: 0.0,
-        dimensions: t.dimensions(n),
+        dimensions: t.dimensions(n.clone()),
         border: t.border(n),
     });
     if let Some(root) = tree.root() {
@@ -93,10 +93,10 @@ pub fn layout<N, T>(tree: &T, root: N) -> TreeLayout<TreeData<<T as NodeInfo<N>>
     }
 }
 
-pub fn layout_position<N, T>(tree: &T, root: N) -> HashMap<T::Index, Point<f64>>
+pub fn layout_position<N, T>(tree: &T, root: &N) -> HashMap<T::Index, Point<f64>>
     where
         T: NodeInfo<N>,
-        N: Copy
+        N: Clone
 {
     let layout = layout(tree, root);
     layout.into_iter().map(|TreeNode { data: d, .. }| (d.key, Point { x: d.position.x, y: d.position.y })).collect()
@@ -251,27 +251,27 @@ impl<D> TreeLayout<D> {
     pub fn new<F, N, T>(user_tree: &T, root: N, data: F) -> Self
         where
             F: Fn(&T, N) -> D,
-            N: Copy,
+            N: Clone,
             T: NodeInfo<N>,
     {
         let mut tree = Vec::new();
-        tree.push(TreeNode { data: data(user_tree, root), order: 0, depth: 0, parent: None, children: Vec::new() });
+        tree.push(TreeNode { data: data(user_tree, root.clone()), order: 0, depth: 0, parent: None, children: Vec::new() });
         let mut queue = VecDeque::new();
         queue.push_back((0, root));
         while let Some((parent, node)) = queue.pop_front() {
             let index = tree.len();
-            for (i, child) in user_tree.children(node).into_iter().enumerate() {
+            for (i, child) in user_tree.children(node.clone()).into_iter().enumerate() {
                 let index = index + i;
                 let depth = tree[parent].depth + 1;
                 tree[parent].children.push(index);
                 tree.push(TreeNode {
-                    data: data(user_tree, child),
+                    data: data(user_tree, child.clone()),
                     order: i,
                     depth,
                     parent: Some(parent),
                     children: Vec::new(),
                 });
-                queue.push_back((index, child));
+                queue.push_back((index, child.clone()));
             }
         }
         TreeLayout { arena: tree }
