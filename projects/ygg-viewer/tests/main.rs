@@ -1,6 +1,5 @@
 use yggdrasil_parser::{bootstrap::BootstrapRule, BootstrapParser};
 use yggdrasil_rt::YggdrasilParser;
-
 use yggdrasil_viewer::SvgPlotter;
 
 #[test]
@@ -13,7 +12,7 @@ fn test_classes() {
     let plotter = SvgPlotter::default();
     let text = r##"
 class ClassStatement {
-    DecoratorCall* ModifierCall* ^KW_CLASS (name:Identifier) ('->' cast:Identifier)? OP_REMARK? ClassBlock
+    DecoratorCall* ModifierCall* ^KW_CLASS (name:Identifier)
 }
 class ClassBlock {
     '{' '|'? Expression '}'
