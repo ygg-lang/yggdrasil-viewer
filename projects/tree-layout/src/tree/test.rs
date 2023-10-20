@@ -14,8 +14,8 @@ impl<'n> NodeInfo<&'n UserNode> for UserTree {
         node.id
     }
 
-    fn children(&self, node: &'n UserNode) -> Vec<&'n UserNode> {
-        node.children.iter().collect()
+    fn children(&self, node: &'n UserNode) -> impl Iterator<Item = &'n UserNode> {
+        node.children.iter()
     }
 }
 
@@ -38,8 +38,8 @@ fn user_tree() -> UserNode {
     }
 }
 
-fn tree() -> Tree<usize> {
-    Tree::new(&UserTree, &user_tree(), |_, n| n.id)
+fn tree() -> TreeLayout<usize> {
+    TreeLayout::new(&UserTree, &user_tree(), |_, n| n.id)
 }
 
 #[test]
