@@ -1,5 +1,5 @@
 use shape_core::Rectangle;
-use tree_view::{layout, NodeInfo};
+use tree_layout::{layout_position, NodeInfo};
 
 struct Tree;
 
@@ -59,6 +59,6 @@ fn tree() -> Node {
 
 fn main() {
     let node = tree();
-    let layout = layout(&Tree, &node);
+    let layout = layout_position(&Tree, &node);
     println!("{:#?}", layout)
 }

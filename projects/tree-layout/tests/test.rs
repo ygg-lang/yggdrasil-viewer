@@ -1,7 +1,7 @@
 use hashbrown::HashMap;
 use petgraph::{graph, graph::NodeIndex};
 use shape_core::{Point, Rectangle};
-use tree_view::{layout_position, NodeInfo};
+use tree_layout::{layout_position, NodeInfo};
 
 struct Graph(graph::Graph<usize, ()>);
 impl NodeInfo<NodeIndex> for Graph {

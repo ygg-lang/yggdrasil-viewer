@@ -4,17 +4,15 @@ extern crate alloc;
 
 use core::hash::Hash;
 
-use shape_core::Rectangle;
-
 pub use crate::tree::{layout, layout_position};
 
 mod tree;
-
+pub use shape_core::Rectangle;
 #[allow(unused_variables)]
 pub trait NodeInfo<N>
 where
     Self::Index: Eq + Hash,
-    N: Copy,
+    N: Clone,
 {
     type Index;
     type Children: IntoIterator<Item = N>;

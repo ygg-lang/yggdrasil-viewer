@@ -1,14 +1,14 @@
 [package]
-name = "tree-view"
+name = "tree-layout"
 version = "0.0.0"
 authors = ["Sean Marshallsay <srm.1708@gmail.com>"]
-edition = "2021"
-description = "A Rust library for laying out aesthetically pleasing trees (the data structure, not the plant)."
-repository = "https://gitlab.com/seamsay/reingold-tilford.git"
-license = "MIT"
-readme = "readme.md"
 keywords = ["tree", "layout"]
 categories = ["algorithms"]
+description = "A Rust library for laying out aesthetically pleasing trees (the data structure, not the plant)."
+repository = "https://github.com/ygg-lang/yggdrasil-viewer"
+license = "MIT"
+readme = "readme.md"
+edition = "2021"
 
 [dependencies]
 hashbrown = "0.14.2"
