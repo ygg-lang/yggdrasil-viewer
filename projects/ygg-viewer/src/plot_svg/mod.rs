@@ -2,12 +2,12 @@ use std::cmp::max;
 
 use shape_svg::ToSVG;
 use svg::{
-    node::element::{Rectangle, Text, SVG},
+    node::element::{Text, SVG},
     Document,
 };
 use yggdrasil_rt::{TokenPair, TokenTree, YggdrasilRule};
 
-use tree_layout::{layout, NodeInfo, TreeBox, TreeData, TreeNode};
+use tree_layout::{layout, NodeInfo, Point, TreeBox};
 
 #[derive(Debug)]
 pub struct SvgTree<'i, R>
@@ -38,10 +38,10 @@ where
 
     fn dimensions(&self, node: TokenPair<'i, R>) -> TreeBox {
         let chars = width_hint(node);
-        TreeBox::rectangle(chars * 16.0, 32.0)
+        TreeBox::rectangle(chars * 8.0, 16.0)
     }
     fn border(&self, _: TokenPair<'i, R>) -> TreeBox {
-        TreeBox::square(20.0)
+        TreeBox::square(8.0)
     }
 }
 
@@ -67,25 +67,30 @@ where
     R: YggdrasilRule,
 {
     fn as_svg(&self) -> SVG {
-        let mut document = Document::new().set("viewBox", (0, 0, 3000, 3000));
+        let mut document = Document::new();
         let root = self.cst.clone().into_iter().next().unwrap();
         let layout = layout(self, root);
+        let mut max = Point::default();
         for node in layout {
-            let area = node.data.boundary().to_svg().set("fill", "none").set("stroke", "black").set("stroke-width", 0.1);
-            document = document.add(area);
+            let area = node.data.boundary();
+            if area.max.x > max.x {
+                max.x = area.max.x;
+            }
+            if area.max.y > max.y {
+                max.y = area.max.y;
+            }
             let pair = node.data.key.clone();
-            let mut text = Text::new()
-                .set("x", node.data.center().x - width_hint(pair.clone()) * 4.0)
-                .set("y", node.data.boundary().min.y + 24.0);
+            let mut text = Text::new().set("x", area.min.x + area.width() / 2.0).set("y", area.min.y + area.height() / 2.0);
             if pair.has_child() {
-                text = text.add(svg::node::Text::new(format!("{:?}", pair.get_rule())));
+                text = text.add(svg::node::Text::new(format!("{:?}", pair.get_rule()))).set("class", "node");
+                document = document.add(area.to_svg().set("rx", 5).set("ry", 5).set("class", "node"));
             }
             else {
-                text = text.add(svg::node::Text::new(format!("{}", pair.get_string())));
+                text = text.add(svg::node::Text::new(format!("{}", pair.get_string()))).set("class", "leaf");
+                document = document.add(area.to_svg().set("rx", 5).set("ry", 5).set("class", "leaf"));
             }
             document = document.add(text);
         }
-
-        document
+        document.add(svg::node::element::Style::new(include_str!("style.css"))).set("viewBox", (0, 0, max.x, max.y))
     }
 }

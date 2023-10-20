@@ -2,7 +2,7 @@
 mod tree;
 
 pub use crate::tree::{TreeLayout, TreeNode};
-use shape_core::Point;
+use shape_core::Rectangle;
 use std::{collections::HashMap, hash::Hash};
 #[derive(Clone, Copy, Debug)]
 pub struct TreeBox {
@@ -11,6 +11,7 @@ pub struct TreeBox {
     pub bottom: f64,
     pub left: f64,
 }
+pub use shape_core::Point;
 
 impl TreeBox {
     pub fn square(size: f64) -> TreeBox {
@@ -109,6 +110,18 @@ impl<K> TreeData<K> {
     fn right(&self) -> f64 {
         self.x + self.right_space()
     }
+
+    pub fn center(&self) -> Point<f64> {
+        Point { x: self.x, y: self.y }
+    }
+
+    pub fn boundary(&self) -> Rectangle<f64> {
+        Rectangle::from_center(
+            Point::new(self.x, self.y),
+            self.dimensions.left + self.dimensions.right,
+            self.dimensions.top + self.dimensions.bottom,
+        )
+    }
 }
 
 /// Returns the coordinates for the _centre_ of each node.
@@ -123,12 +136,12 @@ impl<K> TreeData<K> {
 /// nodes to be aligned by their centre. If your tree has some nodes at a given depth which are
 /// significantly larger than others and you want to avoid large gaps between rows then a more
 /// general graph layout algorithm is required.
-pub fn layout<N, T>(tree: &T, root: N) -> HashMap<T::Key, Point<f64>>
+pub fn layout<N, T>(tree: &T, root: N) -> TreeLayout<TreeData<<T as NodeInfo<N>>::Key>>
 where
     N: Clone,
     T: NodeInfo<N>,
 {
-    let mut tree = tree::TreeLayout::new(tree, root, |t, n| TreeData {
+    let mut tree = TreeLayout::new(tree, root, |t, n| TreeData {
         key: t.key(n.clone()),
 
         x: 0.0,
@@ -146,14 +159,14 @@ where
         ensure_positive_x(&mut tree, root);
         finalise_x(&mut tree, root);
 
-        tree.into_iter().map(|tree::TreeNode { data: d, .. }| (d.key, Point { x: d.x, y: d.y })).collect()
+        tree
     }
     else {
         Default::default()
     }
 }
 
-fn initialise_y<K>(tree: &mut tree::TreeLayout<TreeData<K>>, root: usize) {
+fn initialise_y<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
     let mut next_row = vec![root];
 
     while !next_row.is_empty() {
@@ -180,7 +193,7 @@ fn initialise_y<K>(tree: &mut tree::TreeLayout<TreeData<K>>, root: usize) {
     }
 }
 
-fn initialise_x<K>(tree: &mut tree::TreeLayout<TreeData<K>>, root: usize) {
+fn initialise_x<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
     for node in tree.post_order(root) {
         if tree[node].is_leaf() {
             tree[node].data.x = if let Some(sibling) = tree.previous_sibling(node) { tree[sibling].data.right() } else { 0.0 }
@@ -207,7 +220,7 @@ fn initialise_x<K>(tree: &mut tree::TreeLayout<TreeData<K>>, root: usize) {
     }
 }
 
-fn fix_overlaps<K>(tree: &mut tree::TreeLayout<TreeData<K>>, right: usize) {
+fn fix_overlaps<K>(tree: &mut TreeLayout<TreeData<K>>, right: usize) {
     fn max_depth(l: &HashMap<usize, f64>, r: &HashMap<usize, f64>) -> usize {
         if let Some(l) = l.keys().max() {
             if let Some(r) = r.keys().max() {
@@ -238,26 +251,26 @@ fn fix_overlaps<K>(tree: &mut tree::TreeLayout<TreeData<K>>, right: usize) {
     }
 }
 
-fn left_contour<K>(tree: &tree::TreeLayout<TreeData<K>>, node: usize) -> HashMap<usize, f64> {
+fn left_contour<K>(tree: &TreeLayout<TreeData<K>>, node: usize) -> HashMap<usize, f64> {
     contour(tree, node, min, |n| n.data.left())
 }
 
-fn right_contour<K>(tree: &tree::TreeLayout<TreeData<K>>, node: usize) -> HashMap<usize, f64> {
+fn right_contour<K>(tree: &TreeLayout<TreeData<K>>, node: usize) -> HashMap<usize, f64> {
     contour(tree, node, max, |n| n.data.right())
 }
 
-fn min<T: std::cmp::PartialOrd>(l: T, r: T) -> T {
+fn min<T: PartialOrd>(l: T, r: T) -> T {
     if l < r { l } else { r }
 }
 
-fn max<T: std::cmp::PartialOrd>(l: T, r: T) -> T {
+fn max<T: PartialOrd>(l: T, r: T) -> T {
     if l > r { l } else { r }
 }
 
-fn contour<C, E, K>(tree: &tree::TreeLayout<TreeData<K>>, node: usize, cmp: C, edge: E) -> HashMap<usize, f64>
+fn contour<C, E, K>(tree: &TreeLayout<TreeData<K>>, node: usize, cmp: C, edge: E) -> HashMap<usize, f64>
 where
     C: Fn(f64, f64) -> f64,
-    E: Fn(&tree::TreeNode<TreeData<K>>) -> f64,
+    E: Fn(&TreeNode<TreeData<K>>) -> f64,
 {
     let mut stack = vec![(0.0, node)];
     let mut contour = HashMap::new();
@@ -275,7 +288,7 @@ where
     contour
 }
 
-fn centre_nodes_between<K>(tree: &mut tree::TreeLayout<TreeData<K>>, left: usize, right: usize) {
+fn centre_nodes_between<K>(tree: &mut TreeLayout<TreeData<K>>, left: usize, right: usize) {
     let num_gaps = tree[right].order - tree[left].order;
 
     let space_per_gap = (tree[right].data.left() - tree[left].data.right()) / (num_gaps as f64);
@@ -295,7 +308,7 @@ fn centre_nodes_between<K>(tree: &mut tree::TreeLayout<TreeData<K>>, left: usize
     }
 }
 
-fn ensure_positive_x<K>(tree: &mut tree::TreeLayout<TreeData<K>>, root: usize) {
+fn ensure_positive_x<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
     let contour = left_contour(tree, root);
     let shift = -contour
         .values()
@@ -310,7 +323,7 @@ fn ensure_positive_x<K>(tree: &mut tree::TreeLayout<TreeData<K>>, root: usize) {
     tree[root].data.modifier += shift;
 }
 
-fn finalise_x<K>(tree: &mut tree::TreeLayout<TreeData<K>>, root: usize) {
+fn finalise_x<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
     for node in tree.breadth_first(root) {
         let shift = if let Some(parent) = tree[node].parent { tree[parent].data.modifier } else { 0.0 };
 
