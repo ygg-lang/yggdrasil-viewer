@@ -1,5 +1,5 @@
-use std::slice::Iter;
 use shape_core::Rectangle;
+use std::slice::Iter;
 use tree_layout::layout_position;
 use tree_view::{layout, NodeInfo};
 
@@ -19,7 +19,7 @@ impl<'n> NodeInfo<&'n Node> for Tree {
         node.id
     }
     fn children(&self, node: &'n Node) -> Self::Children {
-         node.children.iter()
+        node.children.iter()
     }
 
     fn dimensions(&self, _: &'n Node) -> Rectangle<f64> {
@@ -28,7 +28,6 @@ impl<'n> NodeInfo<&'n Node> for Tree {
 
     fn border(&self, _: &'n Node) -> Rectangle<f64> {
         Rectangle::from_origin(7, 3)
-
     }
 }
 

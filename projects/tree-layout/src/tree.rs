@@ -6,7 +6,7 @@ use alloc::{
 use core::ops::{Index, IndexMut};
 
 use hashbrown::HashMap;
-use shape_core::{Point, Rectangle};
+use shape_core::{Point, Rectangle, Shape2D};
 
 use crate::NodeInfo;
 
@@ -17,16 +17,16 @@ pub struct TreeLayout<D> {
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct TreeNode<D> {
-    data: D,
-    order: usize,
-    depth: usize,
+    pub data: D,
+    pub order: usize,
+    pub depth: usize,
     parent: Option<usize>,
     children: Vec<usize>,
 }
 
 #[derive(Clone, Debug)]
 pub struct TreeData<K> {
-    key: K,
+    pub key: K,
     position: Point<f64>,
     module: f64,
     dimensions: Rectangle<f64>,
@@ -59,6 +59,12 @@ impl<K> TreeData<K> {
     fn right(&self) -> f64 {
         self.position.x + self.right_space()
     }
+    pub fn center(&self) -> Point<f64> {
+        self.position
+    }
+    pub fn boundary(&self) -> Rectangle<f64> {
+        Rectangle::from_center(self.position, self.dimensions.width(), self.dimensions.height())
+    }
 }
 
 impl<D> TreeNode<D> {
@@ -71,9 +77,9 @@ impl<D> TreeNode<D> {
 }
 
 pub fn layout<N, T>(tree: &T, root: N) -> TreeLayout<TreeData<<T as NodeInfo<N>>::Index>>
-    where
-        T: NodeInfo<N>,
-        N: Clone,
+where
+    T: NodeInfo<N>,
+    N: Clone,
 {
     let mut tree = TreeLayout::new(tree, root, |t, n| TreeData {
         key: t.query(n.clone()),
@@ -88,21 +94,21 @@ pub fn layout<N, T>(tree: &T, root: N) -> TreeLayout<TreeData<<T as NodeInfo<N>>
         ensure_positive_x(&mut tree, root);
         finalise_x(&mut tree, root);
         tree
-    } else {
+    }
+    else {
         Default::default()
     }
 }
 
 /// root = root node
 pub fn layout_position<N, T>(tree: &T, root: N) -> HashMap<T::Index, Point<f64>>
-    where
-        T: NodeInfo<N>,
-        N: Clone
+where
+    T: NodeInfo<N>,
+    N: Clone,
 {
     let layout = layout(tree, root);
-    layout.into_iter().map(|TreeNode { data: d, .. }| (d.key, Point { x: d.position.x, y: d.position.y })).collect()
+    layout.into_iter().map(|TreeNode { data: d, .. }| (d.key, d.position)).collect()
 }
-
 
 fn initialise_y<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
     let mut next_row = vec![root];
@@ -131,7 +137,8 @@ fn initialise_x<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
             tree[node].data.position.x =
                 if let Some(sibling) = tree.previous_sibling(node) { tree[sibling].data.right() } else { 0.0 }
                     + tree[node].data.left_space();
-        } else {
+        }
+        else {
             let mid = {
                 let first = tree[*tree[node].children.first().expect("Only leaf nodes have no children.")].data.position.x;
                 let last = tree[*tree[node].children.last().expect("Only leaf nodes have no children.")].data.position.x;
@@ -141,7 +148,8 @@ fn initialise_x<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
             if let Some(sibling) = tree.previous_sibling(node) {
                 tree[node].data.position.x = tree[sibling].data.right() + tree[node].data.left_space();
                 tree[node].data.module = tree[node].data.position.x - mid;
-            } else {
+            }
+            else {
                 tree[node].data.position.x = mid;
             }
             fix_overlaps(tree, node);
@@ -193,9 +201,9 @@ fn max<T: PartialOrd>(l: T, r: T) -> T {
 }
 
 fn contour<C, E, K>(tree: &TreeLayout<TreeData<K>>, node: usize, cmp: C, edge: E) -> HashMap<usize, f64>
-    where
-        C: Fn(f64, f64) -> f64,
-        E: Fn(&TreeNode<TreeData<K>>) -> f64,
+where
+    C: Fn(f64, f64) -> f64,
+    E: Fn(&TreeNode<TreeData<K>>) -> f64,
 {
     let mut stack = vec![(0.0, node)];
     let mut contour = HashMap::new();
@@ -250,10 +258,10 @@ fn finalise_x<K>(tree: &mut TreeLayout<TreeData<K>>, root: usize) {
 
 impl<D> TreeLayout<D> {
     pub fn new<F, N, T>(user_tree: &T, root: N, data: F) -> Self
-        where
-            F: Fn(&T, N) -> D,
-            N: Clone,
-            T: NodeInfo<N>,
+    where
+        F: Fn(&T, N) -> D,
+        N: Clone,
+        T: NodeInfo<N>,
     {
         let mut tree = Vec::new();
         tree.push(TreeNode { data: data(user_tree, root.clone()), order: 0, depth: 0, parent: None, children: Vec::new() });
@@ -337,9 +345,7 @@ impl<D> TreeLayout<D> {
 
 impl<D> Default for TreeLayout<D> {
     fn default() -> Self {
-        Self {
-            arena: vec![],
-        }
+        Self { arena: vec![] }
     }
 }
 

@@ -32,13 +32,12 @@ impl<'n> NodeInfo<&'n Node> for Tree {
     }
 
     fn dimensions(&self, _: &'n Node) -> Rectangle<f64> {
-        Rectangle::from_origin(0.5,0.5)
+        Rectangle::from_origin(0.5, 0.5)
     }
 
     fn border(&self, _: &'n Node) -> Rectangle<f64> {
-        Rectangle::from_origin(7.0,3.0)
+        Rectangle::from_origin(7.0, 3.0)
     }
-
 }
 
 fn tree() -> Node {
