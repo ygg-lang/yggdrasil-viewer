@@ -20,7 +20,10 @@ fn test_classes() {
     let cst = BootstrapParser::parse_cst(text, BootstrapRule::ClassStatement).unwrap();
     println!("Short Form:\n{}", cst);
     let tree = plotter.draw(cst);
-    println!("{:#?}", tree.position())
+    for node in tree.position() {
+        node.data
+
+    }
 
 
 
