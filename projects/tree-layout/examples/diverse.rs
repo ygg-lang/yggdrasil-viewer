@@ -1,7 +1,6 @@
-use shape_core::Rectangle;
-use std::slice::Iter;
-use tree_layout::layout_position;
-use tree_view::{layout, NodeInfo};
+extern crate reingold_tilford;
+
+mod utils;
 
 #[derive(Debug, Clone)]
 pub struct Tree;
@@ -12,22 +11,23 @@ pub struct Node {
     pub children: Vec<Node>,
 }
 
-impl<'n> NodeInfo<&'n Node> for Tree {
-    type Index = usize;
-    type Children = Iter<'n, Node>;
-    fn query(&self, node: &'n Node) -> Self::Index {
+impl<'n> reingold_tilford::NodeInfo<&'n Node> for Tree {
+    type Key = usize;
+
+    fn key(&self, node: &'n Node) -> Self::Key {
         node.id
     }
-    fn children(&self, node: &'n Node) -> Self::Children {
-        node.children.iter()
+
+    fn children(&self, node: &'n Node) -> reingold_tilford::SmallVec<&'n Node> {
+        node.children.iter().collect()
     }
 
-    fn dimensions(&self, _: &'n Node) -> Rectangle<f64> {
-        Rectangle::from_origin(0.5, 0.5)
+    fn dimensions(&self, _: &'n Node) -> reingold_tilford::Dimensions {
+        reingold_tilford::Dimensions::all(0.5)
     }
 
-    fn border(&self, _: &'n Node) -> Rectangle<f64> {
-        Rectangle::from_origin(7, 3)
+    fn border(&self, _: &'n Node) -> reingold_tilford::Dimensions {
+        reingold_tilford::Dimensions { top: 1.5, right: 3.5, bottom: 1.5, left: 3.5 }
     }
 }
 
@@ -121,6 +121,6 @@ fn tree() -> Node {
 
 fn main() {
     let root = tree();
-    let layout = layout_position(&Tree, &root);
-    println!("{:?}", layout)
+    let layout = reingold_tilford::layout(&Tree, &root);
+    utils::display(&Tree, &root, &layout, labeller);
 }
