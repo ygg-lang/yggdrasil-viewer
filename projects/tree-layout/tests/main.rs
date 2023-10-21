@@ -3,6 +3,7 @@
 extern crate test;
 
 mod aesthetic_rules;
+mod binary;
 mod generator;
 mod layout_bench;
 mod layout_test;

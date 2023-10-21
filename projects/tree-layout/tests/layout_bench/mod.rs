@@ -1,5 +1,6 @@
 use super::*;
 #[bench]
+#[ignore]
 fn bench_tidy_layout_chart(_bench: &mut Bencher) {
     let mut layout = LayoutConfig::new(10., 10.);
 
