@@ -1,4 +1,4 @@
-use std::{hash::BuildHasher, ptr::NonNull};
+use std::ptr::NonNull;
 
 use num::Float;
 use tinyset::SetUsize;
@@ -7,23 +7,22 @@ use crate::{node::TidyData, utils::nocheck_mut, Coordinate, Node};
 
 use super::linked_y_list::LinkedYList;
 
-pub struct TidyLayout {
-    pub parent_child_margin: Coordinate,
+pub struct LayoutConfig {
+    /// margin between parent and child
+    pub margin: Coordinate,
     pub peer_margin: Coordinate,
     pub is_layered: bool,
-    /// this is only for layered layout
+    /// only for layered layout
     pub depth_to_y: Vec<Coordinate>,
 }
 
-const TEST: usize = 123123231;
-
-impl TidyLayout {
+impl LayoutConfig {
     pub fn new(parent_child_margin: Coordinate, peer_margin: Coordinate) -> Self {
-        TidyLayout { parent_child_margin, peer_margin, is_layered: false, depth_to_y: vec![] }
+        LayoutConfig { margin: parent_child_margin, peer_margin, is_layered: false, depth_to_y: vec![] }
     }
 
     pub fn new_layered(parent_child_margin: Coordinate, peer_margin: Coordinate) -> Self {
-        TidyLayout { parent_child_margin, peer_margin, is_layered: true, depth_to_y: vec![] }
+        LayoutConfig { margin: parent_child_margin, peer_margin, is_layered: true, depth_to_y: vec![] }
     }
 }
 
@@ -96,7 +95,7 @@ impl Contour {
                 self.current = node.tidy().thread_right;
             }
             if self.current.is_some() {
-                let node = self.node();
+                let _ = self.node();
             }
         }
     }
@@ -155,7 +154,7 @@ impl Node {
     }
 }
 
-impl TidyLayout {
+impl LayoutConfig {
     fn separate(&mut self, node: &mut Node, child_index: usize, mut y_list: LinkedYList) -> LinkedYList {
         // right contour of the left
         let mut left = Contour::new(false, &node.children[child_index - 1]);
@@ -246,7 +245,7 @@ impl TidyLayout {
         else {
             let depth_to_y = &mut self.depth_to_y;
             depth_to_y.clear();
-            let margin = self.parent_child_margin;
+            let margin = self.margin;
             root.bfs_traversal_with_depth_mut(|node, depth| {
                 while depth >= depth_to_y.len() {
                     depth_to_y.push(0.);
@@ -258,8 +257,7 @@ impl TidyLayout {
                 }
 
                 let parent = node.parent().unwrap();
-                depth_to_y[depth] =
-                    Float::max(depth_to_y[depth], depth_to_y[depth - 1] + parent.height + self.parent_child_margin);
+                depth_to_y[depth] = Float::max(depth_to_y[depth], depth_to_y[depth - 1] + parent.height + margin);
             });
             root.pre_order_traversal_with_depth_mut(|node, depth| {
                 node.y = depth_to_y[depth];
@@ -270,7 +268,7 @@ impl TidyLayout {
     fn set_y(&mut self, node: &mut Node) {
         node.y = if let Some(parent) = node.parent {
             let parent_bottom = unsafe { parent.as_ref().bottom() };
-            parent_bottom + self.parent_child_margin
+            parent_bottom + self.margin
         }
         else {
             0.
@@ -349,7 +347,7 @@ impl TidyLayout {
     }
 }
 
-impl TidyLayout {
+impl LayoutConfig {
     pub fn layout(&mut self, root: &mut Node) {
         root.pre_order_traversal_mut(init_node);
         self.set_y_recursive(root);
@@ -392,7 +390,7 @@ impl TidyLayout {
     }
 
     pub fn parent_child_margin(&self) -> Coordinate {
-        self.parent_child_margin
+        self.margin
     }
 
     pub fn peer_margin(&self) -> Coordinate {
@@ -459,7 +457,7 @@ mod test {
 
     #[test]
     fn test_tidy_layout() {
-        let mut tidy = TidyLayout::new(1., 1.);
+        let mut tidy = LayoutConfig::new(1., 1.);
         let mut root = Node::new(0, 1., 1.);
         let first_child = Node::new_with_child(1, 1., 1., Node::new_with_child(10, 1., 1., Node::new(100, 1., 1.)));
         root.append_child(first_child);

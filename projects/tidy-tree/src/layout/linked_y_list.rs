@@ -1,5 +1,4 @@
 use crate::Coordinate;
-use std::collections::LinkedList;
 
 pub struct LinkedYList {
     pub index: usize,

@@ -1,39 +1,38 @@
-#![allow(dead_code, unused_imports, unused_variables)]
+// #![allow(dead_code, unused_imports, unused_variables)]
 
 mod iter;
 mod layout;
 mod node;
 mod utils;
 pub use iter::Iter;
-use layout::BoundingBox;
-pub use layout::TidyLayout;
+pub use layout::LayoutConfig;
 pub use node::Node;
-use std::{any::Any, collections::HashMap, ptr::NonNull};
+use std::{collections::HashMap, ptr::NonNull};
 
 pub type Coordinate = f64;
 
-pub struct TidyTree {
+pub struct TreeLayout {
     root: Node,
     layered: bool,
-    layout: TidyLayout,
+    layout: LayoutConfig,
     map: HashMap<usize, NonNull<Node>>,
 }
 
-impl TidyTree {
+impl TreeLayout {
     pub fn with_tidy_layout(parent_child_margin: Coordinate, peer_margin: Coordinate) -> Self {
-        TidyTree {
+        TreeLayout {
             layered: false,
             root: Default::default(),
-            layout: TidyLayout::new(parent_child_margin, peer_margin),
+            layout: LayoutConfig::new(parent_child_margin, peer_margin),
             map: HashMap::new(),
         }
     }
 
     pub fn with_layered_tidy(parent_child_margin: Coordinate, peer_margin: Coordinate) -> Self {
-        TidyTree {
+        TreeLayout {
             layered: true,
             root: Default::default(),
-            layout: TidyLayout::new_layered(parent_child_margin, peer_margin),
+            layout: LayoutConfig::new_layered(parent_child_margin, peer_margin),
             map: HashMap::new(),
         }
     }
@@ -42,16 +41,14 @@ impl TidyTree {
         if layered == self.layered {
             return;
         }
-
         let parent_child_margin = self.layout.parent_child_margin();
         let peer_margin = self.layout.peer_margin();
         match layered {
-            true => self.layout = TidyLayout::new_layered(parent_child_margin, peer_margin),
+            true => self.layout = LayoutConfig::new_layered(parent_child_margin, peer_margin),
             false => {
-                self.layout = TidyLayout::new(parent_child_margin, peer_margin);
+                self.layout = LayoutConfig::new(parent_child_margin, peer_margin);
             }
         }
-
         self.layered = layered;
     }
 
@@ -66,10 +63,8 @@ impl TidyTree {
             self.map.insert(id, (&self.root).into());
             return;
         }
-
         let mut parent = *self.map.get(&parent_id).unwrap();
         let parent = unsafe { parent.as_mut() };
-
         let ptr = parent.append_child(node);
         self.map.insert(id, ptr);
     }
@@ -78,7 +73,6 @@ impl TidyTree {
         if self.is_empty() {
             return;
         }
-
         if let Some(node) = self.map.get(&id) {
             let node = unsafe { &mut *node.as_ptr() };
             node.pre_order_traversal(|node| {
@@ -101,11 +95,10 @@ impl TidyTree {
         if self.is_empty() {
             return;
         }
-
         self.layout.layout(&mut self.root);
     }
 
-    pub fn get_pos(&self) -> Vec<Coordinate> {
+    pub fn get_position(&self) -> Vec<Coordinate> {
         let mut ans = vec![];
         for (id, node) in self.map.iter() {
             let node = unsafe { node.as_ref() };
@@ -113,7 +106,6 @@ impl TidyTree {
             ans.push(node.x);
             ans.push(node.y);
         }
-
         ans
     }
 }

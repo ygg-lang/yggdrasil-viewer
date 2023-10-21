@@ -1,7 +1,10 @@
 [package]
 name = "tree-layout"
 version = "0.0.2"
-authors = ["Sean Marshallsay <srm.1708@gmail.com>"]
+authors = [
+    "Sean Marshallsay <srm.1708@gmail.com>",
+    "Zixuan Chen <remch183@outlook.com>"
+]
 keywords = ["tree", "layout"]
 categories = ["algorithms"]
 description = "Get the arrangement layout of the tree diagram."

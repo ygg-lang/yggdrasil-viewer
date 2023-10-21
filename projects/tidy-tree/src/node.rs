@@ -16,12 +16,10 @@ pub struct TidyData {
     /// this.extreme_right == this.children[-1].extreme_right
     /// ```
     pub extreme_right: Option<NonNull<Node>>,
-
     /// Cached change of x position.
     pub shift_acceleration: Coordinate,
     /// Cached change of x position
     pub shift_change: Coordinate,
-
     /// this.x = parent.x + modifier_to_subtree
     pub modifier_to_subtree: Coordinate,
     /// this.x + modifier_thread_left == thread_left.x

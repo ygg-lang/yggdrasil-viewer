@@ -1,7 +1,4 @@
-use num::Float;
-
-use crate::{node::Node, Coordinate};
-use std::cmp::{max, min};
+use crate::Coordinate;
 
 /// <img src="https://i.ibb.co/BLCfz0g/image.png" width="300" alt="Relative position"/>
 ///

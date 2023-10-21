@@ -1,12 +1,13 @@
 use std::{panic::catch_unwind, ptr::NonNull};
 
-mod aesthetic_rules;
-mod gen;
-use gen::*;
+use crate::{
+    aesthetic_rules,
+    generator::{gen_node, gen_tree},
+};
 use rand::prelude::*;
-use tidy_tree::{Coordinate, Node, TidyLayout};
+use tidy_tree::{Coordinate, LayoutConfig, Node};
 
-pub fn test_layout(layout: &mut TidyLayout) {
+pub fn test_layout(layout: &mut LayoutConfig) {
     let mut rng = StdRng::seed_from_u64(1001);
     for _ in 0..100 {
         let mut tree = gen_tree(&mut rng, 100);
@@ -22,7 +23,7 @@ pub fn test_layout(layout: &mut TidyLayout) {
     }
 }
 
-pub fn test_partial_layout(layout: &mut TidyLayout) {
+pub fn test_partial_layout(layout: &mut LayoutConfig) {
     let mut rng = StdRng::seed_from_u64(2001);
     for _ in 0..10 {
         let mut tree = gen_tree(&mut rng, 10);
@@ -50,7 +51,7 @@ pub fn test_partial_layout(layout: &mut TidyLayout) {
     }
 }
 
-pub fn align_partial_layout_with_full_layout(layout: &mut TidyLayout) {
+pub fn align_partial_layout_with_full_layout(layout: &mut LayoutConfig) {
     let mut rng = StdRng::seed_from_u64(1001);
     for _i in 0..10 {
         let mut tree = gen_tree(&mut rng, 100);
@@ -104,13 +105,13 @@ mod test {
 
     #[test]
     fn test_tidy_layout() {
-        let mut layout = TidyLayout::new(10., 10.);
+        let mut layout = LayoutConfig::new(10., 10.);
         test_layout(&mut layout);
     }
 
     #[test]
     fn test_tidy_layout2() {
-        let mut tidy = TidyLayout::new(1., 1.);
+        let mut tidy = LayoutConfig::new(1., 1.);
         let mut root = Node::new(0, 1., 1.);
         let first_child = Node::new_with_child(1, 1., 1., Node::new_with_child(10, 2., 1., Node::new(100, 1., 1.)));
         root.append_child(first_child);
@@ -126,7 +127,7 @@ mod test {
 
     #[test]
     fn test_tidy_layout3() {
-        let mut tidy = TidyLayout::new(1., 1.);
+        let mut tidy = LayoutConfig::new(1., 1.);
         let mut root = Node::new(0, 8., 7.);
         root.append_child(Node::new_with_children(
             1,
@@ -144,14 +145,14 @@ mod test {
 
     #[test]
     fn test_tidy_partial_layout() {
-        let mut layout = TidyLayout::new(10., 10.);
+        let mut layout = LayoutConfig::new(10., 10.);
         test_partial_layout(&mut layout);
         align_partial_layout_with_full_layout(&mut layout);
     }
 
     #[test]
     fn test_layered_tidy_layout() {
-        let mut layout = TidyLayout::new_layered(10., 10.);
+        let mut layout = LayoutConfig::new_layered(10., 10.);
         test_layout(&mut layout);
         test_partial_layout(&mut layout);
     }
