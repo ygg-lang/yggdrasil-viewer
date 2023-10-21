@@ -43,35 +43,6 @@ pub fn check_y_position_in_same_level(root: &Node) {
     })
 }
 
-pub fn assert_no_crossed_lines(root: &Node) {
-    let mut lines: Vec<Line> = vec![];
-    // println!("{}", &root.str());
-    root.post_order_traversal(|node| {
-        for child in node.children.iter() {
-            let line = Line {
-                from: Point {
-                    x: node.x,
-                    y: node.y + node.height,
-                },
-                to: Point {
-                    x: child.x,
-                    y: child.y,
-                },
-            };
-            for other in lines.iter() {
-                assert!(
-                    !line.intersect(other) || line.connected_to(other),
-                    "{:#?} and {:#?} intersect",
-                    line,
-                    other
-                );
-            }
-
-            lines.push(line);
-        }
-    });
-}
-
 pub fn assert_symmetric(root: &Node, layout: &mut dyn Layout) {
     let mut mirrored = mirror(root);
     layout.layout(&mut mirrored);
