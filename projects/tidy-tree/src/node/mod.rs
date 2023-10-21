@@ -1,21 +1,22 @@
+use shape_core::Point;
 use std::{collections::VecDeque, ptr::NonNull};
 
 use crate::{layout::BoundingBox, Coordinate};
 
 #[derive(Debug)]
 pub struct TidyData {
-    pub thread_left: Option<NonNull<TidyNode>>,
-    pub thread_right: Option<NonNull<TidyNode>>,
+    pub thread_left: Option<NonNull<LayoutNode>>,
+    pub thread_right: Option<NonNull<LayoutNode>>,
     /// ```text
     /// this.extreme_left == this.thread_left.extreme_left ||
     /// this.extreme_left == this.children[0].extreme_left
     /// ```
-    pub extreme_left: Option<NonNull<TidyNode>>,
+    pub extreme_left: Option<NonNull<LayoutNode>>,
     /// ```text
     /// this.extreme_right == this.thread_right.extreme_right ||
     /// this.extreme_right == this.children[-1].extreme_right
     /// ```
-    pub extreme_right: Option<NonNull<TidyNode>>,
+    pub extreme_right: Option<NonNull<LayoutNode>>,
     /// Cached change of x position.
     pub shift_acceleration: Coordinate,
     /// Cached change of x position
@@ -33,31 +34,29 @@ pub struct TidyData {
 }
 
 #[derive(Debug)]
-pub struct TidyNode {
+pub struct LayoutNode {
     pub id: usize,
     pub width: Coordinate,
     pub height: Coordinate,
-    pub x: Coordinate,
-    pub y: Coordinate,
+    pub point: Point<Coordinate>,
     /// node x position relative to its parent
     pub relative_x: Coordinate,
     /// node y position relative to its parent
     pub relative_y: Coordinate,
     pub bbox: BoundingBox,
-    pub parent: Option<NonNull<TidyNode>>,
+    pub parent: Option<NonNull<LayoutNode>>,
     /// Children need boxing to get a stable addr in the heap
-    pub children: Vec<Box<TidyNode>>,
+    pub children: Vec<Box<LayoutNode>>,
     pub tidy: Option<Box<TidyData>>,
 }
 
-impl Clone for TidyNode {
+impl Clone for LayoutNode {
     fn clone(&self) -> Self {
         let mut root = Self {
             id: self.id,
             width: self.width,
             height: self.height,
-            x: self.x,
-            y: self.y,
+            point: self.point,
             relative_x: self.relative_x,
             relative_y: self.relative_y,
             bbox: self.bbox.clone(),
@@ -79,16 +78,15 @@ impl Clone for TidyNode {
     }
 }
 
-impl Default for TidyNode {
+impl Default for LayoutNode {
     fn default() -> Self {
         Self {
             id: usize::MAX,
-            width: 0.,
-            height: 0.,
-            x: 0.,
-            y: 0.,
-            relative_x: 0.,
-            relative_y: 0.,
+            width: 0.0,
+            height: 0.0,
+            point: Point::default(),
+            relative_x: 0.0,
+            relative_y: 0.0,
             children: vec![],
             parent: None,
             bbox: Default::default(),
@@ -97,21 +95,9 @@ impl Default for TidyNode {
     }
 }
 
-impl TidyNode {
+impl LayoutNode {
     pub fn new(id: usize, width: Coordinate, height: Coordinate) -> Self {
-        TidyNode {
-            id,
-            width,
-            height,
-            bbox: Default::default(),
-            x: 0.,
-            y: 0.,
-            relative_x: 0.,
-            relative_y: 0.,
-            children: vec![],
-            parent: None,
-            tidy: None,
-        }
+        LayoutNode { id, width, height, ..Default::default() }
     }
 
     pub fn depth(&self) -> usize {
@@ -134,7 +120,7 @@ impl TidyNode {
     }
 
     pub fn bottom(&self) -> Coordinate {
-        self.height + self.y
+        self.height + self.point.y
     }
 
     pub fn tidy_mut(&mut self) -> &mut TidyData {
@@ -166,13 +152,13 @@ impl TidyNode {
     }
 
     pub fn new_with_child(id: usize, width: Coordinate, height: Coordinate, child: Self) -> Self {
-        let mut node = TidyNode::new(id, width, height);
+        let mut node = LayoutNode::new(id, width, height);
         node.append_child(child);
         node
     }
 
     pub fn new_with_children(id: usize, width: Coordinate, height: Coordinate, children: Vec<Self>) -> Self {
-        let mut node = TidyNode::new(id, width, height);
+        let mut node = LayoutNode::new(id, width, height);
         for child in children {
             node.append_child(child);
         }
@@ -180,15 +166,15 @@ impl TidyNode {
     }
 
     pub fn intersects(&self, other: &Self) -> bool {
-        self.x - self.width / 2. < other.x + other.width / 2.
-            && self.x + self.width / 2. > other.x - other.width / 2.
-            && self.y < other.y + other.height
-            && self.y + self.height > other.y
+        self.point.x - self.width / 2.0 < other.point.x + other.width / 2.0
+            && self.point.x + self.width / 2.0 > other.point.x - other.width / 2.0
+            && self.point.y < other.point.y + other.height
+            && self.point.y + self.height > other.point.y
     }
 
     pub fn post_order_traversal<F>(&self, mut f: F)
     where
-        F: FnMut(&TidyNode),
+        F: FnMut(&LayoutNode),
     {
         let mut stack: Vec<(NonNull<Self>, bool)> = vec![(self.into(), true)];
         while let Some((mut node_ptr, is_first)) = stack.pop() {
@@ -207,7 +193,7 @@ impl TidyNode {
 
     pub fn post_order_traversal_mut<F>(&mut self, mut f: F)
     where
-        F: FnMut(&mut TidyNode),
+        F: FnMut(&mut LayoutNode),
     {
         let mut stack: Vec<(NonNull<Self>, bool)> = vec![(self.into(), true)];
         while let Some((mut node_ptr, is_first)) = stack.pop() {
@@ -226,7 +212,7 @@ impl TidyNode {
 
     pub fn pre_order_traversal<F>(&self, mut f: F)
     where
-        F: FnMut(&TidyNode),
+        F: FnMut(&LayoutNode),
     {
         let mut stack: Vec<NonNull<Self>> = vec![self.into()];
         while let Some(mut node) = stack.pop() {
@@ -240,7 +226,7 @@ impl TidyNode {
 
     pub fn pre_order_traversal_mut<F>(&mut self, mut f: F)
     where
-        F: FnMut(&mut TidyNode),
+        F: FnMut(&mut LayoutNode),
     {
         let mut stack: Vec<NonNull<Self>> = vec![self.into()];
         while let Some(mut node) = stack.pop() {
@@ -254,7 +240,7 @@ impl TidyNode {
 
     pub fn bfs_traversal_with_depth_mut<F>(&mut self, mut f: F)
     where
-        F: FnMut(&mut TidyNode, usize),
+        F: FnMut(&mut LayoutNode, usize),
     {
         let mut queue: VecDeque<(NonNull<Self>, usize)> = VecDeque::new();
         queue.push_back((self.into(), 0));
@@ -276,7 +262,7 @@ impl TidyNode {
 
     pub fn pre_order_traversal_with_depth_mut<F>(&mut self, mut f: F)
     where
-        F: FnMut(&mut TidyNode, usize),
+        F: FnMut(&mut LayoutNode, usize),
     {
         let mut stack: Vec<(NonNull<Self>, usize)> = vec![(self.into(), 0)];
         while let Some((mut node, depth)) = stack.pop() {
@@ -293,8 +279,8 @@ impl TidyNode {
         if self.tidy.is_some() {
             s.push_str(&format!(
                 "x: {}, y: {}, width: {}, height: {}, rx: {}, mod: {}, id: {}\n",
-                self.x,
-                self.y,
+                self.point.x,
+                self.point.y,
                 self.width,
                 self.height,
                 self.relative_x,
@@ -305,7 +291,7 @@ impl TidyNode {
         else {
             s.push_str(&format!(
                 "x: {}, y: {}, width: {}, height: {}, rx: {}, id: {}\n",
-                self.x, self.y, self.width, self.height, self.relative_x, self.id
+                self.point.x, self.point.y, self.width, self.height, self.relative_x, self.id
             ));
         }
         for child in self.children.iter() {

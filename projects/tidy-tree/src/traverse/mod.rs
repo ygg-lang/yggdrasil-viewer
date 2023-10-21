@@ -1,28 +1,28 @@
 #[cfg(test)]
 mod tests;
 
-use crate::TidyNode;
+use crate::LayoutNode;
 
 pub struct Traverse<'a> {
-    nodes: Vec<&'a TidyNode>,
+    nodes: Vec<&'a LayoutNode>,
 }
 
 impl<'a> Iterator for Traverse<'a> {
-    type Item = &'a TidyNode;
+    type Item = &'a LayoutNode;
 
     fn next(&mut self) -> Option<Self::Item> {
         self.nodes.pop()
     }
 }
 
-fn recursive_iter<'a>(node: &'a TidyNode, nodes: &mut Vec<&'a TidyNode>) {
+fn recursive_iter<'a>(node: &'a LayoutNode, nodes: &mut Vec<&'a LayoutNode>) {
     nodes.push(node);
     for child in node.children.iter() {
         recursive_iter(child, nodes);
     }
 }
 
-impl TidyNode {
+impl LayoutNode {
     #[inline]
     pub fn iter(&self) -> Traverse {
         let mut nodes = Vec::new();

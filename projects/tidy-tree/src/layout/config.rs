@@ -3,11 +3,11 @@ use std::ptr::NonNull;
 use num::Float;
 use tinyset::SetUsize;
 
-use crate::{node::TidyData, utils::erase_lifetime, Coordinate, TidyNode};
+use crate::{node::TidyData, utils::erase_lifetime, Coordinate, LayoutNode};
 
 use super::linked_y_list::LinkedYList;
 
-pub struct TidyLayout {
+pub struct LayoutConfig {
     /// margin between parent and child
     pub margin: Coordinate,
     pub peer_margin: Coordinate,
@@ -16,9 +16,9 @@ pub struct TidyLayout {
     pub depth_to_y: Vec<Coordinate>,
 }
 
-impl TidyLayout {
+impl LayoutConfig {
     pub fn new(margin: Coordinate, peer_margin: Coordinate) -> Self {
-        TidyLayout { margin, peer_margin, is_layered: false, depth_to_y: vec![] }
+        LayoutConfig { margin, peer_margin, is_layered: false, depth_to_y: vec![] }
     }
     pub fn with_layered(self, layered: bool) -> Self {
         Self { is_layered: layered, ..self }
@@ -27,16 +27,16 @@ impl TidyLayout {
 
 struct Contour {
     is_left: bool,
-    pub current: Option<NonNull<TidyNode>>,
+    pub current: Option<NonNull<LayoutNode>>,
     modifier_sum: Coordinate,
 }
 
 impl Contour {
-    pub fn new(is_left: bool, current: &TidyNode) -> Self {
+    pub fn new(is_left: bool, current: &LayoutNode) -> Self {
         Contour { is_left, current: Some(current.into()), modifier_sum: current.tidy().modifier_to_subtree }
     }
 
-    fn node(&self) -> &TidyNode {
+    fn node(&self) -> &LayoutNode {
         match self.current {
             Some(node) => {
                 let node = unsafe { node.as_ref() };
@@ -64,7 +64,7 @@ impl Contour {
         match self.current {
             Some(node) => {
                 let node = unsafe { node.as_ref() };
-                node.y + node.height
+                node.point.y + node.height
             }
             None => 0.,
         }
@@ -100,9 +100,9 @@ impl Contour {
     }
 }
 
-impl TidyNode {
+impl LayoutNode {
     fn set_extreme(&mut self) {
-        let self_ptr: NonNull<TidyNode> = self.into();
+        let self_ptr: NonNull<LayoutNode> = self.into();
         let tidy = self.tidy.as_mut().unwrap();
         if self.children.is_empty() {
             tidy.extreme_left = Some(self_ptr);
@@ -120,11 +120,11 @@ impl TidyNode {
         }
     }
 
-    fn extreme_left(&mut self) -> &mut TidyNode {
+    fn extreme_left(&mut self) -> &mut LayoutNode {
         unsafe { self.tidy.as_mut().unwrap().extreme_left.as_mut().unwrap().as_mut() }
     }
 
-    fn extreme_right(&mut self) -> &mut TidyNode {
+    fn extreme_right(&mut self) -> &mut LayoutNode {
         unsafe { self.tidy.as_mut().unwrap().extreme_right.as_mut().unwrap().as_mut() }
     }
 
@@ -153,8 +153,8 @@ impl TidyNode {
     }
 }
 
-impl TidyLayout {
-    fn separate(&mut self, node: &mut TidyNode, child_index: usize, mut y_list: LinkedYList) -> LinkedYList {
+impl LayoutConfig {
+    fn separate(&mut self, node: &mut LayoutNode, child_index: usize, mut y_list: LinkedYList) -> LinkedYList {
         // right contour of the left
         let mut left = Contour::new(false, &node.children[child_index - 1]);
         // left contour of the right
@@ -197,7 +197,7 @@ impl TidyLayout {
         y_list
     }
 
-    fn set_left_thread(&mut self, node: &mut TidyNode, current_index: usize, target: &TidyNode, modifier: Coordinate) {
+    fn set_left_thread(&mut self, node: &mut LayoutNode, current_index: usize, target: &LayoutNode, modifier: Coordinate) {
         let first = erase_lifetime!(node.children[0]);
         let current = &mut node.children[current_index];
         let diff = modifier - first.tidy_mut().modifier_extreme_left - first.tidy_mut().modifier_to_subtree;
@@ -209,7 +209,7 @@ impl TidyLayout {
             - first.tidy_mut().modifier_to_subtree;
     }
 
-    fn set_right_thread(&mut self, node: &mut TidyNode, current_index: usize, target: &TidyNode, modifier: Coordinate) {
+    fn set_right_thread(&mut self, node: &mut LayoutNode, current_index: usize, target: &LayoutNode, modifier: Coordinate) {
         let current = erase_lifetime!(node.children[current_index]);
         let diff = modifier - current.tidy_mut().modifier_extreme_right - current.tidy_mut().modifier_to_subtree;
         current.extreme_right().tidy_mut().thread_right = Some(target.into());
@@ -220,7 +220,7 @@ impl TidyLayout {
             prev.modifier_extreme_right + prev.modifier_to_subtree - current.tidy_mut().modifier_to_subtree;
     }
 
-    fn move_subtree(&mut self, node: &mut TidyNode, current_index: usize, from_index: usize, distance: Coordinate) {
+    fn move_subtree(&mut self, node: &mut LayoutNode, current_index: usize, from_index: usize, distance: Coordinate) {
         let child = &mut node.children[current_index];
         let child_tidy = child.tidy_mut();
         // debug_assert!(distance <= 1e6);
@@ -235,7 +235,7 @@ impl TidyLayout {
         }
     }
 
-    fn set_y_recursive(&mut self, root: &mut TidyNode) {
+    fn set_y_recursive(&mut self, root: &mut LayoutNode) {
         if !self.is_layered {
             root.pre_order_traversal_mut(|node| {
                 self.set_y(node);
@@ -251,7 +251,7 @@ impl TidyLayout {
                 }
 
                 if node.parent.is_none() || depth == 0 {
-                    node.y = 0.;
+                    node.point.y = 0.0;
                     return;
                 }
 
@@ -259,13 +259,13 @@ impl TidyLayout {
                 depth_to_y[depth] = Float::max(depth_to_y[depth], depth_to_y[depth - 1] + parent.height + margin);
             });
             root.pre_order_traversal_with_depth_mut(|node, depth| {
-                node.y = depth_to_y[depth];
+                node.point.y = depth_to_y[depth];
             })
         }
     }
 
-    fn set_y(&mut self, node: &mut TidyNode) {
-        node.y = if let Some(parent) = node.parent {
+    fn set_y(&mut self, node: &mut LayoutNode) {
+        node.point.y = if let Some(parent) = node.parent {
             let parent_bottom = unsafe { parent.as_ref().bottom() };
             parent_bottom + self.margin
         }
@@ -274,7 +274,7 @@ impl TidyLayout {
         };
     }
 
-    fn first_walk(&mut self, node: &mut TidyNode) {
+    fn first_walk(&mut self, node: &mut LayoutNode) {
         if node.children.is_empty() {
             node.set_extreme();
             return;
@@ -294,7 +294,7 @@ impl TidyLayout {
         node.set_extreme();
     }
 
-    fn first_walk_with_filter(&mut self, node: &mut TidyNode, set: &SetUsize) {
+    fn first_walk_with_filter(&mut self, node: &mut LayoutNode, set: &SetUsize) {
         if !set.contains(node as *const _ as usize) {
             invalidate_extreme_thread(node);
             return;
@@ -320,9 +320,9 @@ impl TidyLayout {
         node.set_extreme();
     }
 
-    fn second_walk(&mut self, node: &mut TidyNode, mut mod_sum: Coordinate) {
+    fn second_walk(&mut self, node: &mut LayoutNode, mut mod_sum: Coordinate) {
         mod_sum += node.tidy_mut().modifier_to_subtree;
-        node.x = node.relative_x + mod_sum;
+        node.point.x = node.relative_x + mod_sum;
         node.add_child_spacing();
 
         for child in node.children.iter_mut() {
@@ -330,14 +330,14 @@ impl TidyLayout {
         }
     }
 
-    fn second_walk_with_filter(&mut self, node: &mut TidyNode, mut mod_sum: Coordinate, set: &SetUsize) {
+    fn second_walk_with_filter(&mut self, node: &mut LayoutNode, mut mod_sum: Coordinate, set: &SetUsize) {
         mod_sum += node.tidy_mut().modifier_to_subtree;
         let new_x = node.relative_x + mod_sum;
-        if (new_x - node.x).abs() < 1e-8 && !set.contains(node as *const _ as usize) {
+        if (new_x - node.point.x).abs() < 1e-8 && !set.contains(node as *const _ as usize) {
             return;
         }
 
-        node.x = new_x;
+        node.point.x = new_x;
         node.add_child_spacing();
 
         for child in node.children.iter_mut() {
@@ -346,15 +346,15 @@ impl TidyLayout {
     }
 }
 
-impl TidyLayout {
-    pub fn layout(&mut self, root: &mut TidyNode) {
+impl LayoutConfig {
+    pub fn layout(&mut self, root: &mut LayoutNode) {
         root.pre_order_traversal_mut(init_node);
         self.set_y_recursive(root);
         self.first_walk(root);
         self.second_walk(root, 0.);
     }
 
-    pub fn partial_layout(&mut self, root: &mut crate::TidyNode, changed: &[std::ptr::NonNull<crate::TidyNode>]) {
+    pub fn partial_layout(&mut self, root: &mut crate::LayoutNode, changed: &[std::ptr::NonNull<crate::LayoutNode>]) {
         // not implemented for layered
         if self.is_layered {
             self.layout(root);
@@ -389,7 +389,7 @@ impl TidyLayout {
     }
 }
 
-fn init_node(node: &mut TidyNode) {
+fn init_node(node: &mut LayoutNode) {
     if node.tidy.is_some() {
         let tidy = node.tidy_mut();
         tidy.extreme_left = None;
@@ -420,13 +420,13 @@ fn init_node(node: &mut TidyNode) {
         }));
     }
 
-    node.x = 0.;
-    node.y = 0.;
+    node.point.x = 0.0;
+    node.point.y = 0.0;
     node.relative_x = 0.;
     node.relative_y = 0.;
 }
 
-fn invalidate_extreme_thread(node: &mut TidyNode) {
+fn invalidate_extreme_thread(node: &mut LayoutNode) {
     node.set_extreme();
     let e_left = node.extreme_left().tidy_mut();
     e_left.thread_left = None;
@@ -442,21 +442,23 @@ fn invalidate_extreme_thread(node: &mut TidyNode) {
 
 #[cfg(test)]
 mod test {
-    use crate::node::TidyNode;
+    use crate::node::LayoutNode;
 
     use super::*;
 
     #[test]
     fn test_tidy_layout() {
-        let mut tidy = TidyLayout::new(1., 1.);
-        let mut root = TidyNode::new(0, 1., 1.);
-        let first_child = TidyNode::new_with_child(1, 1., 1., TidyNode::new_with_child(10, 1., 1., TidyNode::new(100, 1., 1.)));
+        let mut tidy = LayoutConfig::new(1., 1.);
+        let mut root = LayoutNode::new(0, 1., 1.);
+        let first_child =
+            LayoutNode::new_with_child(1, 1., 1., LayoutNode::new_with_child(10, 1., 1., LayoutNode::new(100, 1., 1.)));
         root.append_child(first_child);
 
-        let second = TidyNode::new_with_child(2, 1., 1., TidyNode::new_with_child(11, 1., 1., TidyNode::new(101, 1., 1.)));
+        let second =
+            LayoutNode::new_with_child(2, 1., 1., LayoutNode::new_with_child(11, 1., 1., LayoutNode::new(101, 1., 1.)));
         root.append_child(second);
 
-        root.append_child(TidyNode::new(3, 1., 2.));
+        root.append_child(LayoutNode::new(3, 1., 2.));
         tidy.layout(&mut root);
         println!("{}", root.str());
     }

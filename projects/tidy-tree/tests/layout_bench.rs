@@ -2,10 +2,10 @@ use crate::generator;
 use rand::{prelude::StdRng, SeedableRng};
 use std::time::Instant;
 use test::bench::{black_box, Bencher};
-use tidy_tree::TidyLayout;
+use tidy_tree::LayoutConfig;
 #[bench]
 fn bench_tidy_layout_chart(_bench: &mut Bencher) {
-    let mut layout = TidyLayout::new(10., 10.);
+    let mut layout = LayoutConfig::new(10., 10.);
 
     let mut rng = StdRng::seed_from_u64(1001);
     let mut out = vec![];
@@ -19,7 +19,7 @@ fn bench_tidy_layout_chart(_bench: &mut Bencher) {
 
         if num % 100_000 == 0 {
             println!("{}", num);
-            assert_eq!(root.x, 0.);
+            assert_eq!(root.point.x, 0.0);
         }
     }
 
@@ -32,7 +32,7 @@ fn bench_tidy_layout_chart(_bench: &mut Bencher) {
 fn bench_tidy_layout(bench: &mut Bencher) {
     let mut rng = StdRng::seed_from_u64(1001);
     let mut tree = generator::gen_tree(&mut rng, 100_000);
-    let mut layout = TidyLayout::new(10., 10.);
+    let mut layout = LayoutConfig::new(10., 10.);
 
     bench.iter(black_box(|| {
         layout.layout(&mut tree);
@@ -43,7 +43,7 @@ fn bench_tidy_layout(bench: &mut Bencher) {
 fn bench_tidy_layout_large(bench: &mut Bencher) {
     let mut rng = StdRng::seed_from_u64(1001);
     let mut tree = generator::gen_tree(&mut rng, 1_000_000);
-    let mut layout = TidyLayout::new(10., 10.);
+    let mut layout = LayoutConfig::new(10., 10.);
     bench.iter(black_box(|| {
         layout.layout(&mut tree);
     }));
