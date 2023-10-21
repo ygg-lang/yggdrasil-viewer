@@ -5,9 +5,9 @@ use std::borrow::Cow;
 pub trait TreeInfo {
     type Node: Clone;
 
-    fn root(&self) -> Cow<Self::Node>;
+    fn root(&self) -> Self::Node;
 
-    fn children<'a>(&self, node: &'a Self::Node) -> impl Iterator<Item = Cow<'a, Self::Node>>;
+    fn children(&self, node: &Self::Node) -> impl Iterator<Item = Self::Node>;
 
     fn count(&self) -> usize {
         1

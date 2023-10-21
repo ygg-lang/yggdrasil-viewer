@@ -14,7 +14,7 @@ pub struct SvgPlotter {
     color: String,
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 struct SvgTree<'i, R>
 where
     R: YggdrasilRule,
@@ -28,19 +28,19 @@ where
 {
     type Node = TokenPair<'i, R>;
 
-    fn root(&self) -> Cow<Self::Node> {
-        Cow::Owned(self.cst.clone().into_iter().next().unwrap())
+    fn root(&self) -> Self::Node {
+        self.cst.clone().into_iter().next().unwrap()
     }
 
-    fn children<'a>(&self, node: &'a Self::Node) -> impl Iterator<Item = Cow<'a, Self::Node>> {
-        node.clone().into_inner().map(Cow::Owned)
+    fn children(&self, node: &Self::Node) -> impl Iterator<Item = Self::Node> {
+        node.clone().into_inner()
     }
 
-    fn width(&self, _: &Self::Node) -> Coordinate {
-        1.0
+    fn width(&self, node: &Self::Node) -> Coordinate {
+        20.0
     }
     fn height(&self, _: &Self::Node) -> Coordinate {
-        1.0
+        20.0
     }
 }
 
@@ -58,8 +58,8 @@ where
 {
     fn as_svg(&self) -> SVG {
         let mut document = Document::new();
-        println!("{:?}", self);
-        let root = TreeArena::build(self, &LayoutConfig::new(10.0, 10.0));
+
+        let root = TreeArena::build(self.clone(), &LayoutConfig::new(10.0, 10.0));
         let mut max = Point::default();
         for (node, pair) in root.into_iter() {
             let area = node.boundary();

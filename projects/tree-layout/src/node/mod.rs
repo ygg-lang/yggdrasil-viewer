@@ -211,7 +211,6 @@ impl LayoutNode {
             }
         }
     }
-
     pub fn pre_order_traversal<F>(&self, mut f: F)
     where
         F: FnMut(&LayoutNode),

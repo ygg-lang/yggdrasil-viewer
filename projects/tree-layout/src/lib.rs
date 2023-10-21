@@ -1,4 +1,5 @@
 #![feature(return_position_impl_trait_in_trait)]
+#![feature(iter_from_generator)]
 
 pub use crate::{
     arena::{ArenaIterator, TreeArena},
