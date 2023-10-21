@@ -3,7 +3,7 @@ use std::{hash::BuildHasher, ptr::NonNull};
 use num::Float;
 use tinyset::SetUsize;
 
-use crate::{geometry::Coordinate, node::TidyData, utils::nocheck_mut, Layout, Node};
+use crate::{node::TidyData, utils::nocheck_mut, Coordinate, Node};
 
 use super::linked_y_list::LinkedYList;
 
@@ -349,15 +349,15 @@ impl TidyLayout {
     }
 }
 
-impl Layout for TidyLayout {
-    fn layout(&mut self, root: &mut Node) {
+impl TidyLayout {
+    pub fn layout(&mut self, root: &mut Node) {
         root.pre_order_traversal_mut(init_node);
         self.set_y_recursive(root);
         self.first_walk(root);
         self.second_walk(root, 0.);
     }
 
-    fn partial_layout(&mut self, root: &mut crate::Node, changed: &[std::ptr::NonNull<crate::Node>]) {
+    pub fn partial_layout(&mut self, root: &mut crate::Node, changed: &[std::ptr::NonNull<crate::Node>]) {
         // not implemented for layered
         if self.is_layered {
             self.layout(root);
@@ -391,11 +391,11 @@ impl Layout for TidyLayout {
         self.second_walk_with_filter(root, 0., &set);
     }
 
-    fn parent_child_margin(&self) -> Coordinate {
+    pub fn parent_child_margin(&self) -> Coordinate {
         self.parent_child_margin
     }
 
-    fn peer_margin(&self) -> Coordinate {
+    pub fn peer_margin(&self) -> Coordinate {
         self.peer_margin
     }
 }

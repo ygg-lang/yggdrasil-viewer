@@ -1,6 +1,6 @@
 use std::ptr::NonNull;
 
-use tidy_tree::{geometry::*, Layout, Node};
+use tidy_tree::{Coordinate, Node, TidyLayout};
 
 pub fn assert_no_overlap_nodes(root: &Node) {
     let mut nodes: Vec<NonNull<Node>> = vec![];
@@ -43,7 +43,7 @@ pub fn check_y_position_in_same_level(root: &Node) {
     })
 }
 
-pub fn assert_symmetric(root: &Node, layout: &mut dyn Layout) {
+pub fn assert_symmetric(root: &Node, layout: &mut TidyLayout) {
     let mut mirrored = mirror(root);
     layout.layout(&mut mirrored);
     let mut point_origin: Vec<Coordinate> = vec![];

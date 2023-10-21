@@ -1,7 +1,7 @@
 use std::ptr::NonNull;
 
 use rand::prelude::*;
-use tidy_tree::{geometry::Coordinate, Node};
+use tidy_tree::{Coordinate, Node};
 
 pub fn gen_node(rng: &mut StdRng) -> Node {
     Node {

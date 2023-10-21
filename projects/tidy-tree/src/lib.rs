@@ -6,59 +6,53 @@ mod node;
 mod utils;
 pub use iter::Iter;
 use layout::BoundingBox;
-pub use layout::{Layout, TidyLayout};
+pub use layout::TidyLayout;
 pub use node::Node;
 use std::{any::Any, collections::HashMap, ptr::NonNull};
 
 pub type Coordinate = f64;
 
-#[derive(PartialEq, Eq)]
-pub enum LayoutType {
-    Tidy,
-    LayeredTidy,
-}
-
 pub struct TidyTree {
     root: Node,
-    layout_type: LayoutType,
-    layout: Box<dyn Layout>,
+    layered: bool,
+    layout: TidyLayout,
     map: HashMap<usize, NonNull<Node>>,
 }
 
 impl TidyTree {
     pub fn with_tidy_layout(parent_child_margin: Coordinate, peer_margin: Coordinate) -> Self {
         TidyTree {
-            layout_type: LayoutType::Tidy,
+            layered: false,
             root: Default::default(),
-            layout: Box::new(TidyLayout::new(parent_child_margin, peer_margin)),
+            layout: TidyLayout::new(parent_child_margin, peer_margin),
             map: HashMap::new(),
         }
     }
 
     pub fn with_layered_tidy(parent_child_margin: Coordinate, peer_margin: Coordinate) -> Self {
         TidyTree {
-            layout_type: LayoutType::Tidy,
+            layered: true,
             root: Default::default(),
-            layout: Box::new(TidyLayout::new_layered(parent_child_margin, peer_margin)),
+            layout: TidyLayout::new_layered(parent_child_margin, peer_margin),
             map: HashMap::new(),
         }
     }
 
-    pub fn change_layout(&mut self, layout_type: LayoutType) {
-        if layout_type == self.layout_type {
+    pub fn change_layout(&mut self, layered: bool) {
+        if layered == self.layered {
             return;
         }
 
         let parent_child_margin = self.layout.parent_child_margin();
         let peer_margin = self.layout.peer_margin();
-        match layout_type {
-            LayoutType::Tidy => {
-                self.layout = Box::new(TidyLayout::new(parent_child_margin, peer_margin));
+        match layered {
+            true => self.layout = TidyLayout::new_layered(parent_child_margin, peer_margin),
+            false => {
+                self.layout = TidyLayout::new(parent_child_margin, peer_margin);
             }
-            LayoutType::LayeredTidy => self.layout = Box::new(TidyLayout::new_layered(parent_child_margin, peer_margin)),
         }
 
-        self.layout_type = layout_type;
+        self.layered = layered;
     }
 
     pub fn is_empty(&self) -> bool {

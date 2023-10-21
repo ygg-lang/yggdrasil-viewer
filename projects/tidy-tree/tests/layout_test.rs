@@ -4,9 +4,9 @@ mod aesthetic_rules;
 mod gen;
 use gen::*;
 use rand::prelude::*;
-use tidy_tree::{geometry::Coordinate, Layout, Node, TidyLayout};
+use tidy_tree::{Coordinate, Node, TidyLayout};
 
-pub fn test_layout(layout: &mut dyn Layout) {
+pub fn test_layout(layout: &mut TidyLayout) {
     let mut rng = StdRng::seed_from_u64(1001);
     for _ in 0..100 {
         let mut tree = gen_tree(&mut rng, 100);
@@ -22,7 +22,7 @@ pub fn test_layout(layout: &mut dyn Layout) {
     }
 }
 
-pub fn test_partial_layout(layout: &mut dyn Layout) {
+pub fn test_partial_layout(layout: &mut TidyLayout) {
     let mut rng = StdRng::seed_from_u64(2001);
     for _ in 0..10 {
         let mut tree = gen_tree(&mut rng, 10);
@@ -50,7 +50,7 @@ pub fn test_partial_layout(layout: &mut dyn Layout) {
     }
 }
 
-pub fn align_partial_layout_with_full_layout(layout: &mut dyn Layout) {
+pub fn align_partial_layout_with_full_layout(layout: &mut TidyLayout) {
     let mut rng = StdRng::seed_from_u64(1001);
     for _i in 0..10 {
         let mut tree = gen_tree(&mut rng, 100);

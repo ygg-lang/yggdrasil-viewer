@@ -1,6 +1,6 @@
 use std::{collections::VecDeque, ptr::NonNull};
 
-use crate::{geometry::Coordinate, layout::BoundingBox};
+use crate::{layout::BoundingBox, Coordinate};
 
 #[derive(Debug)]
 pub struct TidyData {

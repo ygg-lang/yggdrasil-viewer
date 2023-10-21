@@ -1,6 +1,5 @@
+use crate::Coordinate;
 use std::collections::LinkedList;
-
-use crate::geometry::Coordinate;
 
 pub struct LinkedYList {
     pub index: usize,
