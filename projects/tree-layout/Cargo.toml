@@ -14,11 +14,9 @@ readme = "readme.md"
 edition = "2021"
 
 [dependencies]
-hashbrown = "0.14.2"
-
-[dependencies.shape-core]
-version = "0.1.16"
-#path = 'C:\Users\Dell\CLionProjects\shape-rs\projects\shape-core'
+num = "0.4.0"
+shape-core = "0.1.16"
+tinyset = "0.4.10"
 
 [dev-dependencies]
 petgraph = "0.6.4"
