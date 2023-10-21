@@ -4,18 +4,18 @@ use crate::{layout::BoundingBox, Coordinate};
 
 #[derive(Debug)]
 pub struct TidyData {
-    pub thread_left: Option<NonNull<Node>>,
-    pub thread_right: Option<NonNull<Node>>,
+    pub thread_left: Option<NonNull<TidyNode>>,
+    pub thread_right: Option<NonNull<TidyNode>>,
     /// ```text
     /// this.extreme_left == this.thread_left.extreme_left ||
     /// this.extreme_left == this.children[0].extreme_left
     /// ```
-    pub extreme_left: Option<NonNull<Node>>,
+    pub extreme_left: Option<NonNull<TidyNode>>,
     /// ```text
     /// this.extreme_right == this.thread_right.extreme_right ||
     /// this.extreme_right == this.children[-1].extreme_right
     /// ```
-    pub extreme_right: Option<NonNull<Node>>,
+    pub extreme_right: Option<NonNull<TidyNode>>,
     /// Cached change of x position.
     pub shift_acceleration: Coordinate,
     /// Cached change of x position
@@ -33,7 +33,7 @@ pub struct TidyData {
 }
 
 #[derive(Debug)]
-pub struct Node {
+pub struct TidyNode {
     pub id: usize,
     pub width: Coordinate,
     pub height: Coordinate,
@@ -44,13 +44,13 @@ pub struct Node {
     /// node y position relative to its parent
     pub relative_y: Coordinate,
     pub bbox: BoundingBox,
-    pub parent: Option<NonNull<Node>>,
+    pub parent: Option<NonNull<TidyNode>>,
     /// Children need boxing to get a stable addr in the heap
-    pub children: Vec<Box<Node>>,
+    pub children: Vec<Box<TidyNode>>,
     pub tidy: Option<Box<TidyData>>,
 }
 
-impl Clone for Node {
+impl Clone for TidyNode {
     fn clone(&self) -> Self {
         let mut root = Self {
             id: self.id,
@@ -79,7 +79,7 @@ impl Clone for Node {
     }
 }
 
-impl Default for Node {
+impl Default for TidyNode {
     fn default() -> Self {
         Self {
             id: usize::MAX,
@@ -97,9 +97,9 @@ impl Default for Node {
     }
 }
 
-impl Node {
+impl TidyNode {
     pub fn new(id: usize, width: Coordinate, height: Coordinate) -> Self {
-        Node {
+        TidyNode {
             id,
             width,
             height,
@@ -166,13 +166,13 @@ impl Node {
     }
 
     pub fn new_with_child(id: usize, width: Coordinate, height: Coordinate, child: Self) -> Self {
-        let mut node = Node::new(id, width, height);
+        let mut node = TidyNode::new(id, width, height);
         node.append_child(child);
         node
     }
 
     pub fn new_with_children(id: usize, width: Coordinate, height: Coordinate, children: Vec<Self>) -> Self {
-        let mut node = Node::new(id, width, height);
+        let mut node = TidyNode::new(id, width, height);
         for child in children {
             node.append_child(child);
         }
@@ -188,7 +188,7 @@ impl Node {
 
     pub fn post_order_traversal<F>(&self, mut f: F)
     where
-        F: FnMut(&Node),
+        F: FnMut(&TidyNode),
     {
         let mut stack: Vec<(NonNull<Self>, bool)> = vec![(self.into(), true)];
         while let Some((mut node_ptr, is_first)) = stack.pop() {
@@ -207,7 +207,7 @@ impl Node {
 
     pub fn post_order_traversal_mut<F>(&mut self, mut f: F)
     where
-        F: FnMut(&mut Node),
+        F: FnMut(&mut TidyNode),
     {
         let mut stack: Vec<(NonNull<Self>, bool)> = vec![(self.into(), true)];
         while let Some((mut node_ptr, is_first)) = stack.pop() {
@@ -226,7 +226,7 @@ impl Node {
 
     pub fn pre_order_traversal<F>(&self, mut f: F)
     where
-        F: FnMut(&Node),
+        F: FnMut(&TidyNode),
     {
         let mut stack: Vec<NonNull<Self>> = vec![self.into()];
         while let Some(mut node) = stack.pop() {
@@ -240,7 +240,7 @@ impl Node {
 
     pub fn pre_order_traversal_mut<F>(&mut self, mut f: F)
     where
-        F: FnMut(&mut Node),
+        F: FnMut(&mut TidyNode),
     {
         let mut stack: Vec<NonNull<Self>> = vec![self.into()];
         while let Some(mut node) = stack.pop() {
@@ -254,7 +254,7 @@ impl Node {
 
     pub fn bfs_traversal_with_depth_mut<F>(&mut self, mut f: F)
     where
-        F: FnMut(&mut Node, usize),
+        F: FnMut(&mut TidyNode, usize),
     {
         let mut queue: VecDeque<(NonNull<Self>, usize)> = VecDeque::new();
         queue.push_back((self.into(), 0));
@@ -276,7 +276,7 @@ impl Node {
 
     pub fn pre_order_traversal_with_depth_mut<F>(&mut self, mut f: F)
     where
-        F: FnMut(&mut Node, usize),
+        F: FnMut(&mut TidyNode, usize),
     {
         let mut stack: Vec<(NonNull<Self>, usize)> = vec![(self.into(), 0)];
         while let Some((mut node, depth)) = stack.pop() {

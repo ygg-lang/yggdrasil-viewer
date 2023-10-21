@@ -1,55 +1,49 @@
 // #![allow(dead_code, unused_imports, unused_variables)]
 
-mod iter;
 mod layout;
 mod node;
+mod traverse;
 mod utils;
-pub use iter::Iter;
-pub use layout::LayoutConfig;
-pub use node::Node;
+pub use layout::TidyLayout;
+pub use node::TidyNode;
 use std::{collections::HashMap, ptr::NonNull};
+pub use traverse::Traverse;
 
 pub type Coordinate = f64;
+pub const NULL_ID: usize = usize::MAX;
 
 pub struct TreeLayout {
-    root: Node,
+    root: TidyNode,
     layered: bool,
-    layout: LayoutConfig,
-    map: HashMap<usize, NonNull<Node>>,
+    layout: TidyLayout,
+    map: HashMap<usize, NonNull<TidyNode>>,
 }
 
 impl TreeLayout {
-    pub fn with_tidy_layout(parent_child_margin: Coordinate, peer_margin: Coordinate) -> Self {
+    pub fn new(margin: Coordinate, peer_margin: Coordinate) -> Self {
         TreeLayout {
             layered: false,
             root: Default::default(),
-            layout: LayoutConfig::new(parent_child_margin, peer_margin),
+            layout: TidyLayout::new(margin, peer_margin),
             map: HashMap::new(),
         }
     }
 
-    pub fn with_layered_tidy(parent_child_margin: Coordinate, peer_margin: Coordinate) -> Self {
+    pub fn new_layered(margin: Coordinate, peer_margin: Coordinate) -> Self {
         TreeLayout {
             layered: true,
             root: Default::default(),
-            layout: LayoutConfig::new_layered(parent_child_margin, peer_margin),
+            layout: TidyLayout::new(margin, peer_margin).with_layered(true),
             map: HashMap::new(),
         }
     }
 
-    pub fn change_layout(&mut self, layered: bool) {
-        if layered == self.layered {
-            return;
+    pub fn with_layered(mut self, layered: bool) -> Self {
+        if layered != self.layered {
+            self.layout = TidyLayout::new(self.layout.margin, self.layout.peer_margin).with_layered(layered);
+            self.layered = layered;
         }
-        let parent_child_margin = self.layout.parent_child_margin();
-        let peer_margin = self.layout.peer_margin();
-        match layered {
-            true => self.layout = LayoutConfig::new_layered(parent_child_margin, peer_margin),
-            false => {
-                self.layout = LayoutConfig::new(parent_child_margin, peer_margin);
-            }
-        }
-        self.layered = layered;
+        return self;
     }
 
     pub fn is_empty(&self) -> bool {
@@ -57,7 +51,7 @@ impl TreeLayout {
     }
 
     pub fn add_node(&mut self, id: usize, width: Coordinate, height: Coordinate, parent_id: usize) {
-        let node = Node::new(id, width, height);
+        let node = TidyNode::new(id, width, height);
         if self.is_empty() || parent_id == usize::MAX {
             self.root = node;
             self.map.insert(id, (&self.root).into());
@@ -109,5 +103,3 @@ impl TreeLayout {
         ans
     }
 }
-
-pub const NULL_ID: usize = usize::MAX;

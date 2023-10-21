@@ -5,9 +5,9 @@ use crate::{
     generator::{gen_node, gen_tree},
 };
 use rand::prelude::*;
-use tidy_tree::{Coordinate, LayoutConfig, Node};
+use tidy_tree::{Coordinate, TidyLayout, TidyNode};
 
-pub fn test_layout(layout: &mut LayoutConfig) {
+pub fn test_layout(layout: &mut TidyLayout) {
     let mut rng = StdRng::seed_from_u64(1001);
     for _ in 0..100 {
         let mut tree = gen_tree(&mut rng, 100);
@@ -23,12 +23,12 @@ pub fn test_layout(layout: &mut LayoutConfig) {
     }
 }
 
-pub fn test_partial_layout(layout: &mut LayoutConfig) {
+pub fn test_partial_layout(layout: &mut TidyLayout) {
     let mut rng = StdRng::seed_from_u64(2001);
     for _ in 0..10 {
         let mut tree = gen_tree(&mut rng, 10);
         layout.layout(&mut tree);
-        let mut nodes: Vec<NonNull<Node>> = vec![];
+        let mut nodes: Vec<NonNull<TidyNode>> = vec![];
         tree.pre_order_traversal(|node| nodes.push(node.into()));
         for _ in 0..100 {
             let new_node = insert_random_node(&mut rng, &nodes);
@@ -51,12 +51,12 @@ pub fn test_partial_layout(layout: &mut LayoutConfig) {
     }
 }
 
-pub fn align_partial_layout_with_full_layout(layout: &mut LayoutConfig) {
+pub fn align_partial_layout_with_full_layout(layout: &mut TidyLayout) {
     let mut rng = StdRng::seed_from_u64(1001);
     for _i in 0..10 {
         let mut tree = gen_tree(&mut rng, 100);
         layout.layout(&mut tree);
-        let mut nodes: Vec<NonNull<Node>> = vec![];
+        let mut nodes: Vec<NonNull<TidyNode>> = vec![];
         tree.pre_order_traversal(|node| nodes.push(node.into()));
         for times in 0..100 {
             let new_node = insert_random_node(&mut rng, &nodes);
@@ -84,7 +84,7 @@ pub fn align_partial_layout_with_full_layout(layout: &mut LayoutConfig) {
     }
 }
 
-fn change_random_node(rng: &mut StdRng, nodes: &[NonNull<Node>]) -> NonNull<Node> {
+fn change_random_node(rng: &mut StdRng, nodes: &[NonNull<TidyNode>]) -> NonNull<TidyNode> {
     let node_index = rng.gen_range(0..nodes.len());
     let node = unsafe { &mut *nodes[node_index].as_ptr() };
     node.width = rng.gen_range(1. ..100.);
@@ -92,7 +92,7 @@ fn change_random_node(rng: &mut StdRng, nodes: &[NonNull<Node>]) -> NonNull<Node
     nodes[node_index]
 }
 
-fn insert_random_node(rng: &mut StdRng, nodes: &[NonNull<Node>]) -> NonNull<Node> {
+fn insert_random_node(rng: &mut StdRng, nodes: &[NonNull<TidyNode>]) -> NonNull<TidyNode> {
     let node_index = rng.gen_range(0..nodes.len());
     let node = unsafe { &mut *nodes[node_index].as_ptr() };
     let new_node = gen_node(rng);
@@ -105,21 +105,21 @@ mod test {
 
     #[test]
     fn test_tidy_layout() {
-        let mut layout = LayoutConfig::new(10., 10.);
+        let mut layout = TidyLayout::new(10., 10.);
         test_layout(&mut layout);
     }
 
     #[test]
     fn test_tidy_layout2() {
-        let mut tidy = LayoutConfig::new(1., 1.);
-        let mut root = Node::new(0, 1., 1.);
-        let first_child = Node::new_with_child(1, 1., 1., Node::new_with_child(10, 2., 1., Node::new(100, 1., 1.)));
+        let mut tidy = TidyLayout::new(1., 1.);
+        let mut root = TidyNode::new(0, 1., 1.);
+        let first_child = TidyNode::new_with_child(1, 1., 1., TidyNode::new_with_child(10, 2., 1., TidyNode::new(100, 1., 1.)));
         root.append_child(first_child);
 
-        let second = Node::new_with_child(2, 1., 1., Node::new_with_child(11, 1., 1., Node::new(101, 1., 1.)));
+        let second = TidyNode::new_with_child(2, 1., 1., TidyNode::new_with_child(11, 1., 1., TidyNode::new(101, 1., 1.)));
         root.append_child(second);
 
-        root.append_child(Node::new(3, 1., 2.));
+        root.append_child(TidyNode::new(3, 1., 2.));
         tidy.layout(&mut root);
         // println!("{}", root.str());
         aesthetic_rules::assert_symmetric(&root, &mut tidy);
@@ -127,15 +127,15 @@ mod test {
 
     #[test]
     fn test_tidy_layout3() {
-        let mut tidy = LayoutConfig::new(1., 1.);
-        let mut root = Node::new(0, 8., 7.);
-        root.append_child(Node::new_with_children(
+        let mut tidy = TidyLayout::new(1.0, 1.);
+        let mut root = TidyNode::new(0, 8., 7.);
+        root.append_child(TidyNode::new_with_children(
             1,
             3.,
             9.,
-            vec![Node::new(10, 3., 8.), Node::new(10, 5., 5.), Node::new(10, 6., 8.)],
+            vec![TidyNode::new(10, 3., 8.), TidyNode::new(10, 5., 5.), TidyNode::new(10, 6., 8.)],
         ));
-        root.append_child(Node::new(3, 1., 1.));
+        root.append_child(TidyNode::new(3, 1., 1.));
 
         tidy.layout(&mut root);
         // println!("{}", root.str());
@@ -145,14 +145,14 @@ mod test {
 
     #[test]
     fn test_tidy_partial_layout() {
-        let mut layout = LayoutConfig::new(10., 10.);
+        let mut layout = TidyLayout::new(10.0, 10.0);
         test_partial_layout(&mut layout);
         align_partial_layout_with_full_layout(&mut layout);
     }
 
     #[test]
     fn test_layered_tidy_layout() {
-        let mut layout = LayoutConfig::new_layered(10., 10.);
+        let mut layout = TidyLayout::new(10.0, 10.0).with_layered(true);
         test_layout(&mut layout);
         test_partial_layout(&mut layout);
     }

@@ -1,8 +1,8 @@
-macro_rules! nocheck_mut {
+macro_rules! erase_lifetime {
     ($ptr:expr) => {{
         let temp: *mut _ = &mut $ptr;
         unsafe { &mut *temp }
     }};
 }
 
-pub(crate) use nocheck_mut;
+pub(crate) use erase_lifetime;

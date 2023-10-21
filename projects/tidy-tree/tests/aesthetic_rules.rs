@@ -1,9 +1,9 @@
 use std::ptr::NonNull;
 
-use tidy_tree::{Coordinate, LayoutConfig, Node};
+use tidy_tree::{Coordinate, TidyLayout, TidyNode};
 
-pub fn assert_no_overlap_nodes(root: &Node) {
-    let mut nodes: Vec<NonNull<Node>> = vec![];
+pub fn assert_no_overlap_nodes(root: &TidyNode) {
+    let mut nodes: Vec<NonNull<TidyNode>> = vec![];
     root.post_order_traversal(|node| {
         for other in nodes.iter() {
             let other = unsafe { other.as_ref() };
@@ -17,7 +17,7 @@ pub fn assert_no_overlap_nodes(root: &Node) {
     });
 }
 
-pub fn check_nodes_order(root: &Node) {
+pub fn check_nodes_order(root: &TidyNode) {
     root.pre_order_traversal(|node| {
         let mut prev = None;
         for child in node.children.iter() {
@@ -30,7 +30,7 @@ pub fn check_nodes_order(root: &Node) {
     })
 }
 
-pub fn check_y_position_in_same_level(root: &Node) {
+pub fn check_y_position_in_same_level(root: &TidyNode) {
     root.pre_order_traversal(|node| {
         let mut prev = None;
         for child in node.children.iter() {
@@ -43,7 +43,7 @@ pub fn check_y_position_in_same_level(root: &Node) {
     })
 }
 
-pub fn assert_symmetric(root: &Node, layout: &mut LayoutConfig) {
+pub fn assert_symmetric(root: &TidyNode, layout: &mut TidyLayout) {
     let mut mirrored = mirror(root);
     layout.layout(&mut mirrored);
     let mut point_origin: Vec<Coordinate> = vec![];
@@ -64,11 +64,11 @@ pub fn assert_symmetric(root: &Node, layout: &mut LayoutConfig) {
         }
     }
 
-    fn pre_order_traversal_rev<F>(node: &Node, mut f: F)
+    fn pre_order_traversal_rev<F>(node: &TidyNode, mut f: F)
     where
-        F: FnMut(&Node),
+        F: FnMut(&TidyNode),
     {
-        let mut stack: Vec<NonNull<Node>> = vec![node.into()];
+        let mut stack: Vec<NonNull<TidyNode>> = vec![node.into()];
         while let Some(mut node) = stack.pop() {
             let node = unsafe { node.as_mut() };
             f(node);
@@ -79,7 +79,7 @@ pub fn assert_symmetric(root: &Node, layout: &mut LayoutConfig) {
     }
 }
 
-fn mirror(root: &Node) -> Node {
+fn mirror(root: &TidyNode) -> TidyNode {
     let mut root = root.clone();
     root.post_order_traversal_mut(|node| {
         node.x = 0.;

@@ -1,10 +1,10 @@
 use std::ptr::NonNull;
 
 use rand::prelude::*;
-use tidy_tree::{Coordinate, Node};
+use tidy_tree::{Coordinate, TidyNode};
 
-pub fn gen_node(rng: &mut StdRng) -> Node {
-    Node {
+pub fn gen_node(rng: &mut StdRng) -> TidyNode {
+    TidyNode {
         id: rng.gen(),
         width: rng.gen_range(5..50) as Coordinate,
         height: rng.gen_range(5..50) as Coordinate,
@@ -19,9 +19,9 @@ pub fn gen_node(rng: &mut StdRng) -> Node {
     }
 }
 
-pub fn gen_tree(rng: &mut StdRng, num: usize) -> Box<Node> {
+pub fn gen_tree(rng: &mut StdRng, num: usize) -> Box<TidyNode> {
     let mut root = Box::new(gen_node(rng));
-    let mut nodes: Vec<NonNull<Node>> = vec![(&mut *root).into()];
+    let mut nodes: Vec<NonNull<TidyNode>> = vec![(&mut *root).into()];
     for _ in 0..num {
         let parent_index = rng.gen_range(0..nodes.len());
         let parent = unsafe { nodes[parent_index].as_mut() };
@@ -33,13 +33,13 @@ pub fn gen_tree(rng: &mut StdRng, num: usize) -> Box<Node> {
     root
 }
 
-pub fn prepare_tree(rng: &mut StdRng) -> (Box<Node>, Vec<NonNull<Node>>) {
+pub fn prepare_tree(rng: &mut StdRng) -> (Box<TidyNode>, Vec<NonNull<TidyNode>>) {
     let mut root = Box::new(gen_node(rng));
-    let nodes: Vec<NonNull<Node>> = vec![(&mut *root).into()];
+    let nodes: Vec<NonNull<TidyNode>> = vec![(&mut *root).into()];
     (root, nodes)
 }
 
-pub fn insert_new_to_tree(rng: &mut StdRng, num: usize, nodes: &mut Vec<NonNull<Node>>) {
+pub fn insert_new_to_tree(rng: &mut StdRng, num: usize, nodes: &mut Vec<NonNull<TidyNode>>) {
     for _ in 0..num {
         let parent_index = rng.gen_range(0..nodes.len());
         let parent = unsafe { nodes[parent_index].as_mut() };
