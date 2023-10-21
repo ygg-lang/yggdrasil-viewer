@@ -22,7 +22,7 @@ token {
 }
 "##;
     let cst = BootstrapParser::parse_cst(text, BootstrapRule::Root).unwrap();
-    println!("Short Form:\n{}", cst);
+    // println!("Short Form:\n{}", cst);
     let tree = plotter.draw(cst);
     svg::save("tests/bootstrap.svg", &tree).unwrap();
 }

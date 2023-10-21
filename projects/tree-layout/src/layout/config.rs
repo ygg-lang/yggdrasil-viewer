@@ -7,18 +7,20 @@ use crate::{node::LayoutData, utils::erase_lifetime, Coordinate, LayoutNode};
 
 use super::linked_y_list::LinkedYList;
 
+#[derive(Clone)]
 pub struct LayoutConfig {
     /// margin between parent and child
     pub margin: Coordinate,
     pub peer_margin: Coordinate,
     pub is_layered: bool,
+    pub is_transpose: bool,
     /// only for layered layout
     pub depth_to_y: Vec<Coordinate>,
 }
 
 impl LayoutConfig {
     pub fn new(margin: Coordinate, peer_margin: Coordinate) -> Self {
-        LayoutConfig { margin, peer_margin, is_layered: false, depth_to_y: vec![] }
+        LayoutConfig { margin, peer_margin, is_layered: false, is_transpose: false, depth_to_y: vec![] }
     }
     pub fn with_layered(self, layered: bool) -> Self {
         Self { is_layered: layered, ..self }

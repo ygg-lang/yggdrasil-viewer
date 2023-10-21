@@ -1,13 +1,12 @@
-use std::cmp::max;
+use std::{borrow::Cow, cmp::max};
 
 use shape_svg::ToSVG;
 use svg::{
     node::element::{Text, SVG},
     Document,
 };
+use tree_layout::{Coordinate, LayoutConfig, Line, Point, TreeArena, TreeInfo};
 use yggdrasil_rt::{TokenPair, TokenTree, YggdrasilRule};
-
-use tree_layout::{layout, Line, NodeInfo, Point, TreeBox};
 
 /// Plot a svg structure
 #[derive(Debug, Default)]
@@ -23,26 +22,25 @@ where
     cst: TokenTree<'i, R>,
 }
 
-impl<'i, R> NodeInfo<TokenPair<'i, R>> for SvgTree<'i, R>
+impl<'i, R> TreeInfo for SvgTree<'i, R>
 where
     R: YggdrasilRule,
 {
-    type Key = TokenPair<'i, R>;
+    type Node = TokenPair<'i, R>;
 
-    fn key(&self, node: TokenPair<'i, R>) -> Self::Key {
-        node
+    fn root(&self) -> Cow<Self::Node> {
+        Cow::Owned(self.cst.clone().into_iter().next().unwrap())
     }
 
-    fn children(&self, node: TokenPair<'i, R>) -> impl Iterator<Item = TokenPair<'i, R>> {
-        node.into_inner().filter(|s| !s.get_rule().is_ignore())
+    fn children<'a>(&self, node: &'a Self::Node) -> impl Iterator<Item = Cow<'a, Self::Node>> {
+        node.clone().into_inner().map(Cow::Owned)
     }
 
-    fn dimensions(&self, node: TokenPair<'i, R>) -> TreeBox {
-        let chars = width_hint(node);
-        TreeBox::rectangle(chars * 6.0, 16.0)
+    fn width(&self, _: &Self::Node) -> Coordinate {
+        1.0
     }
-    fn border(&self, _: TokenPair<'i, R>) -> TreeBox {
-        TreeBox::rectangle(16.0, 8.0)
+    fn height(&self, _: &Self::Node) -> Coordinate {
+        1.0
     }
 }
 
@@ -60,28 +58,27 @@ where
 {
     fn as_svg(&self) -> SVG {
         let mut document = Document::new();
-        let root = self.cst.clone().into_iter().next().unwrap();
-        let layout = layout(self, root);
+        println!("{:?}", self);
+        let root = TreeArena::build(self, &LayoutConfig::new(10.0, 10.0));
         let mut max = Point::default();
-        for node in layout.clone() {
-            let area = node.data.boundary();
+        for (node, pair) in root.into_iter() {
+            let area = node.boundary();
             if area.max.x > max.x {
                 max.x = area.max.x;
             }
             if area.max.y > max.y {
                 max.y = area.max.y;
             }
-            let pair = node.data.key.clone();
 
-            match layout.find_parent(&node) {
-                Some(s) => {
-                    let parent_box = s.data.boundary();
-                    let parent_lower = Point { x: (parent_box.min.x + parent_box.max.x) / 2.0, y: parent_box.max.y };
-                    let this_upper = Point { x: (area.min.x + area.max.x) / 2.0, y: area.min.y };
-                    document = document.add(Line::new(parent_lower, this_upper).to_svg())
-                }
-                None => {}
-            }
+            // match root.find_parent(&node) {
+            //     Some(s) => {
+            //         let parent_box = s.data.boundary();
+            //         let parent_lower = Point { x: (parent_box.min.x + parent_box.max.x) / 2.0, y: parent_box.max.y };
+            //         let this_upper = Point { x: (area.min.x + area.max.x) / 2.0, y: area.min.y };
+            //         document = document.add(Line::new(parent_lower, this_upper).to_svg())
+            //     }
+            //     None => {}
+            // }
 
             let mut text = Text::new().set("x", area.min.x + area.width() / 2.0).set("y", area.min.y + area.height() / 2.0);
             if pair.has_child(false) {

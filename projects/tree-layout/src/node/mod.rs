@@ -1,5 +1,6 @@
-use shape_core::Point;
 use std::{collections::VecDeque, ptr::NonNull};
+
+use shape_core::{Point, Rectangle};
 
 use crate::{layout::BoundingBox, Coordinate};
 
@@ -125,6 +126,10 @@ impl LayoutNode {
         }
         depth
     }
+    pub fn boundary(&self) -> Rectangle<Coordinate> {
+        Rectangle::new(self.point.x - self.width / 2.0, self.point.y, self.width, self.height)
+    }
+
     pub fn bottom(&self) -> Coordinate {
         self.height + self.point.y
     }

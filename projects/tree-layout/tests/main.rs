@@ -1,5 +1,5 @@
 #![feature(test)]
-#![allow(soft_unstable)]
+#![allow(soft_unstable, unused)]
 extern crate test;
 
 mod aesthetic_rules;

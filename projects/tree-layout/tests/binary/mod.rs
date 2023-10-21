@@ -1,14 +1,22 @@
-use super::*;
-use tree_layout::NodeInfo;
+use tree_layout::{TreeArena, TreeInfo};
 
+use super::*;
+
+#[derive(Clone, Debug)]
 pub struct BinaryTree {
     root: BinaryNode,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct BinaryNode {
     left: Option<Box<Self>>,
     right: Option<Box<Self>>,
+}
+
+impl BinaryTree {
+    pub fn random(seed: u64, p: f64) -> Self {
+        Self { root: BinaryNode::random(seed, p) }
+    }
 }
 
 impl BinaryNode {
@@ -26,14 +34,24 @@ impl BinaryNode {
     }
 }
 
-impl NodeInfo<BinaryNode> for BinaryTree {
-    type Key = ();
+impl TreeInfo for BinaryTree {
+    type Node = BinaryNode;
 
-    fn key(&self, _: &BinaryNode) -> Self::Key {
-        ()
+    fn root(&self) -> &Self::Node {
+        &self.root
     }
 
-    fn children(&self, node: &BinaryNode) -> impl Iterator<Item = BinaryNode> {
-        node.left.iter().chain(node.right.iter()).map(|x| (**x).clone())
+    fn children<'a>(&self, node: &'a Self::Node) -> impl Iterator<Item = &'a Self::Node> {
+        node.left.iter().chain(node.right.iter()).map(move |x| &**x)
+    }
+}
+
+#[test]
+fn test() {
+    let tree = BinaryTree::random(10086, 0.4);
+    let arena = TreeArena::build(&BinaryTree::random(224, 0.4), &LayoutConfig::new(20.0, 20.0));
+    println!("{:?}", tree);
+    for i in arena.into_iter() {
+        println!("{:?}", i);
     }
 }
