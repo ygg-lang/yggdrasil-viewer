@@ -19,4 +19,5 @@ shape-core = "0.1.16"
 tinyset = "0.4.10"
 
 [dev-dependencies]
+rand = "0.8.5"
 petgraph = "0.6.4"
