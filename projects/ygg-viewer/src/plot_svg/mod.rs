@@ -5,7 +5,7 @@ use svg::{
     node::element::{Text, SVG},
     Document,
 };
-use tree_layout::{Coordinate, LayoutConfig, Line, Point, TreeArena, TreeInfo};
+use tree_layout::{Coordinate, LayoutConfig, Line, Point, Rectangle, TreeArena, TreeInfo};
 use yggdrasil_rt::{TokenPair, TokenTree, YggdrasilRule};
 
 /// Plot a svg structure
@@ -33,18 +33,25 @@ where
     }
 
     fn children(&self, node: &Self::Node) -> impl Iterator<Item = Self::Node> {
-        node.clone().into_inner()
+        let mut out = vec![];
+        for pair in node.clone().into_inner() {
+            if pair.get_rule().is_ignore() {
+                continue;
+            };
+            out.push(pair)
+        }
+        out.into_iter()
     }
 
     fn width(&self, node: &Self::Node) -> Coordinate {
-        20.0
+        width_hint(node) * 16.0
     }
     fn height(&self, _: &Self::Node) -> Coordinate {
         20.0
     }
 }
 
-fn width_hint<R>(node: TokenPair<R>) -> f64
+fn width_hint<R>(node: &TokenPair<R>) -> f64
 where
     R: YggdrasilRule,
 {
@@ -60,15 +67,11 @@ where
         let mut document = Document::new();
 
         let root = TreeArena::build(self.clone(), &LayoutConfig::new(10.0, 10.0));
-        let mut max = Point::default();
+        let mut old = Rectangle::empty();
         for (node, pair) in root.into_iter() {
+            println!("{:?}: {}", pair.get_rule(), pair.as_str());
             let area = node.boundary();
-            if area.max.x > max.x {
-                max.x = area.max.x;
-            }
-            if area.max.y > max.y {
-                max.y = area.max.y;
-            }
+            old &= area;
 
             // match root.find_parent(&node) {
             //     Some(s) => {
@@ -91,7 +94,9 @@ where
             }
             document = document.add(text);
         }
-        document.add(svg::node::element::Style::new(include_str!("style.css"))).set("viewBox", (0, 0, max.x, max.y))
+        document
+            .add(svg::node::element::Style::new(include_str!("style.css")))
+            .set("viewBox", (old.min.x, old.min.y, old.max.x, old.max.y))
     }
 }
 

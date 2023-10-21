@@ -15,8 +15,11 @@ edition = "2021"
 
 [dependencies]
 num = "0.4.0"
-shape-core = "0.1.16"
 tinyset = "0.4.10"
+
+[dependencies.shape-core]
+version = "0.1.*"
+path = 'C:\Users\Dell\CLionProjects\shape-rs\projects\shape-core'
 
 [dev-dependencies]
 rand = "0.8.5"

@@ -8,16 +8,18 @@ pub struct TreeArena<T: TreeInfo> {
 
 impl<T: TreeInfo> TreeArena<T> {
     pub fn build(tree: T, layout: &LayoutConfig) -> Self {
+        let mut counter = 0;
         let mut out = Self { arena: Vec::with_capacity(tree.count()), root: Default::default(), tree: Default::default() };
-        out.root = out.insert_node(tree.root(), &tree);
+        out.root = out.insert_node(tree.root(), &tree, &mut counter);
         let mut config = layout.clone();
         config.layout(&mut out.root);
         out
     }
-    fn insert_node(&mut self, parent: T::Node, tree: &T) -> LayoutNode {
-        let mut node = LayoutNode::new(self.arena.len(), tree.width(&parent), tree.height(&parent));
+    fn insert_node(&mut self, parent: T::Node, tree: &T, count: &mut usize) -> LayoutNode {
+        let mut node = LayoutNode::new(*count, tree.width(&parent), tree.height(&parent));
+        *count += 1;
         for child in tree.children(&parent) {
-            node.append_child(self.insert_node(child, tree));
+            node.append_child(self.insert_node(child, tree, count));
         }
         self.arena.push(parent);
         node
