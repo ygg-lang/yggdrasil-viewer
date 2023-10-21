@@ -1,6 +1,6 @@
 use std::vec::IntoIter;
 
-/// A vector backed tree implementation used to essentially cache the user's tree.
+/// A vector backed layered implementation used to essentially cache the user's layered.
 use crate::NodeInfo;
 
 #[cfg(test)]

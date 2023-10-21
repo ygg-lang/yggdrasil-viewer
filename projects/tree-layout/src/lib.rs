@@ -1,12 +1,12 @@
-#![feature(return_position_impl_trait_in_trait)]
-
 use std::{collections::HashMap, hash::Hash};
 
 pub use shape_core::{Line, Point, Rectangle};
 
-pub use crate::tree::{TreeLayout, TreeNode};
+pub use crate::layered::{TreeLayout, TreeNode};
 
-mod tree;
+mod layered;
+
+mod free;
 
 #[derive(Clone, Copy, Debug)]
 pub struct TreeBox {
@@ -48,8 +48,8 @@ where
     /// This value is generic over units (but all nodes must use the same unit) and the layout that
     /// this crate calculates will be given in terms of this unit. For example if you give this
     /// value in pixels then the layout will be given in terms of number of pixels from the left of
-    /// the tree. Alternatively you might want to give this value in terms of the proportion of the
-    /// width of your window (though note that this does not guarantee that the tree will fit in
+    /// the layered. Alternatively you might want to give this value in terms of the proportion of the
+    /// width of your window (though note that this does not guarantee that the layered will fit in
     /// your window).
     ///
     /// # Default
@@ -128,14 +128,14 @@ impl<K> TreeData<K> {
 
 /// Returns the coordinates for the _centre_ of each node.
 ///
-/// The origin of the coordinate system will be at the top left of the tree. The coordinates take
+/// The origin of the coordinate system will be at the top left of the layered. The coordinates take
 /// into account the width of the left-most node and shift everything so that the left-most border
 /// of the left-most node is at 0 on the x-axis.
 ///
 /// # Important
 ///
 /// This algorithm _does_ account for the height of nodes but this is only to allow each row of
-/// nodes to be aligned by their centre. If your tree has some nodes at a given depth which are
+/// nodes to be aligned by their centre. If your layered has some nodes at a given depth which are
 /// significantly larger than others and you want to avoid large gaps between rows then a more
 /// general graph layout algorithm is required.
 pub fn layout<N, T>(tree: &T, root: N) -> TreeLayout<TreeData<<T as NodeInfo<N>>::Key>>
@@ -277,7 +277,7 @@ fn centre_nodes_between<K>(tree: &mut TreeLayout<TreeData<K>>, left: usize, righ
         let i = i + 1;
 
         let old_x = tree[sibling].data.x;
-        // HINT: We traverse the tree in post-order so we should never be moving anything to the
+        // HINT: We traverse the layered in post-order so we should never be moving anything to the
         //       left.
         // TODO: Have some kind of `move_node` method that checks things like this?
         let new_x = max(old_x, tree[left].data.right() + space_per_gap * (i as f64));

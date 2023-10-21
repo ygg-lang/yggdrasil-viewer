@@ -1,5 +1,3 @@
-#![feature(return_position_impl_trait_in_trait)]
-
 use tree_layout::{layout, NodeInfo, TreeBox};
 
 #[derive(Debug, Clone)]
