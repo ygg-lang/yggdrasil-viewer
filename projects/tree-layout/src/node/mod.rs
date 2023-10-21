@@ -127,7 +127,13 @@ impl LayoutNode {
         depth
     }
     pub fn boundary(&self) -> Rectangle<Coordinate> {
-        Rectangle::new(self.point.x - self.width / 2.0, self.point.y, self.width, self.height)
+        Rectangle::from_center(self.point, self.width, self.height)
+    }
+    pub fn top_center(&self) -> Point<Coordinate> {
+        Point { x: self.point.x, y: self.point.y - self.height }
+    }
+    pub fn bottom_center(&self) -> Point<Coordinate> {
+        Point { x: self.point.x, y: self.point.y + self.height }
     }
 
     pub fn bottom(&self) -> Coordinate {

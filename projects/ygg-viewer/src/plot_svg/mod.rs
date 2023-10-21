@@ -44,7 +44,7 @@ where
     }
 
     fn width(&self, node: &Self::Node) -> Coordinate {
-        width_hint(node) * 16.0
+        width_hint(node) * 12.0
     }
     fn height(&self, _: &Self::Node) -> Coordinate {
         20.0
@@ -65,24 +65,16 @@ where
 {
     fn as_svg(&self) -> SVG {
         let mut document = Document::new();
-
-        let root = TreeArena::build(self.clone(), &LayoutConfig::new(10.0, 10.0));
-        let mut old = Rectangle::empty();
+        let root = TreeArena::build(self.clone(), &LayoutConfig::new(12.0, 4.0).with_layered(true));
+        let mut bbox = Rectangle::empty();
         for (node, pair) in root.into_iter() {
-            println!("{:?}: {}", pair.get_rule(), pair.as_str());
             let area = node.boundary();
-            old &= area;
-
-            // match root.find_parent(&node) {
-            //     Some(s) => {
-            //         let parent_box = s.data.boundary();
-            //         let parent_lower = Point { x: (parent_box.min.x + parent_box.max.x) / 2.0, y: parent_box.max.y };
-            //         let this_upper = Point { x: (area.min.x + area.max.x) / 2.0, y: area.min.y };
-            //         document = document.add(Line::new(parent_lower, this_upper).to_svg())
-            //     }
-            //     None => {}
-            // }
-
+            bbox &= area;
+            /// draw line
+            match root.get_link(&node) {
+                Some(line) => document = document.add(line.to_svg()),
+                None => {}
+            }
             let mut text = Text::new().set("x", area.min.x + area.width() / 2.0).set("y", area.min.y + area.height() / 2.0);
             if pair.has_child(false) {
                 text = text.add(svg::node::Text::new(format!("{:?}", pair.get_rule()))).set("class", "node");
@@ -96,7 +88,7 @@ where
         }
         document
             .add(svg::node::element::Style::new(include_str!("style.css")))
-            .set("viewBox", (old.min.x, old.min.y, old.max.x, old.max.y))
+            .set("viewBox", (bbox.min.x, bbox.min.y, bbox.width(), bbox.height()))
     }
 }
 

@@ -14,12 +14,6 @@ fn test_classes() {
 class ClassStatement {
     DecoratorCall* ModifierCall* ^KW_CLASS (name:Identifier)
 }
-class ClassBlock {
-    '{' '|'? Expression '}'
-}
-token {
-    OP_REMARK: '^'
-}
 "##;
     let cst = BootstrapParser::parse_cst(text, BootstrapRule::Root).unwrap();
     // println!("Short Form:\n{}", cst);
