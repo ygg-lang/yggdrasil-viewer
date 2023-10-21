@@ -1,7 +1,7 @@
 use num::Float;
 
 use super::Layout;
-use crate::{geometry::Coord, node::Node};
+use crate::{geometry::Coordinate, node::Node};
 use std::cmp::{max, min};
 
 /// <img src="https://i.ibb.co/BLCfz0g/image.png" width="300" alt="Relative position"/>
@@ -9,8 +9,8 @@ use std::cmp::{max, min};
 /// Relative position illustration
 #[derive(Debug, Clone)]
 pub struct BoundingBox {
-    pub total_width: Coord,
-    pub total_height: Coord,
+    pub total_width: Coordinate,
+    pub total_height: Coordinate,
 }
 
 impl Default for BoundingBox {

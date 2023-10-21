@@ -4,7 +4,7 @@ mod aesthetic_rules;
 mod gen;
 use gen::*;
 use rand::prelude::*;
-use tidy_tree::{geometry::Coord, Layout, Node, TidyLayout};
+use tidy_tree::{geometry::Coordinate, Layout, Node, TidyLayout};
 
 pub fn test_layout(layout: &mut dyn Layout) {
     let mut rng = StdRng::seed_from_u64(1001);
@@ -62,9 +62,9 @@ pub fn align_partial_layout_with_full_layout(layout: &mut dyn Layout) {
             let changed_node = change_random_node(&mut rng, &nodes);
             layout.partial_layout(&mut tree, &[new_node, changed_node]);
             // let partial_str = tree.str();
-            let partial_x: Vec<Coord> = tree.iter().map(|node| node.x).collect();
+            let partial_x: Vec<Coordinate> = tree.iter().map(|node| node.x).collect();
             layout.layout(&mut tree);
-            let full_x: Vec<Coord> = tree.iter().map(|node| node.x).collect();
+            let full_x: Vec<Coordinate> = tree.iter().map(|node| node.x).collect();
             for i in 0..partial_x.len() {
                 if (full_x[i] - partial_x[i]).abs() > 1e-6 {
                     println!("NEW_NODE: {}", unsafe { new_node.as_ref().str() });

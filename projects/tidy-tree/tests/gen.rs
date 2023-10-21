@@ -1,13 +1,13 @@
 use std::ptr::NonNull;
 
 use rand::prelude::*;
-use tidy_tree::{geometry::Coord, Node};
+use tidy_tree::{geometry::Coordinate, Node};
 
 pub fn gen_node(rng: &mut StdRng) -> Node {
     Node {
         id: rng.gen(),
-        width: rng.gen_range(5..50) as Coord,
-        height: rng.gen_range(5..50) as Coord,
+        width: rng.gen_range(5..50) as Coordinate,
+        height: rng.gen_range(5..50) as Coordinate,
         x: 0.,
         y: 0.,
         relative_x: 0.,

@@ -1,16 +1,16 @@
 #![allow(dead_code, unused_imports, unused_variables)]
-pub mod geometry;
+
 mod iter;
 mod layout;
 mod node;
 mod utils;
 pub use iter::Iter;
-use std::{any::Any, collections::HashMap, ptr::NonNull};
-
-use geometry::Coord;
 use layout::BoundingBox;
 pub use layout::{Layout, TidyLayout};
 pub use node::Node;
+use std::{any::Any, collections::HashMap, ptr::NonNull};
+
+pub type Coordinate = f64;
 
 #[derive(PartialEq, Eq)]
 pub enum LayoutType {
@@ -26,7 +26,7 @@ pub struct TidyTree {
 }
 
 impl TidyTree {
-    pub fn with_tidy_layout(parent_child_margin: Coord, peer_margin: Coord) -> Self {
+    pub fn with_tidy_layout(parent_child_margin: Coordinate, peer_margin: Coordinate) -> Self {
         TidyTree {
             layout_type: LayoutType::Tidy,
             root: Default::default(),
@@ -35,7 +35,7 @@ impl TidyTree {
         }
     }
 
-    pub fn with_layered_tidy(parent_child_margin: Coord, peer_margin: Coord) -> Self {
+    pub fn with_layered_tidy(parent_child_margin: Coordinate, peer_margin: Coordinate) -> Self {
         TidyTree {
             layout_type: LayoutType::Tidy,
             root: Default::default(),
@@ -65,7 +65,7 @@ impl TidyTree {
         self.root.id == usize::MAX
     }
 
-    pub fn add_node(&mut self, id: usize, width: Coord, height: Coord, parent_id: usize) {
+    pub fn add_node(&mut self, id: usize, width: Coordinate, height: Coordinate, parent_id: usize) {
         let node = Node::new(id, width, height);
         if self.is_empty() || parent_id == usize::MAX {
             self.root = node;
@@ -94,7 +94,7 @@ impl TidyTree {
         }
     }
 
-    pub fn data(&mut self, id: &[usize], width: &[Coord], height: &[Coord], parent_id: &[usize]) {
+    pub fn data(&mut self, id: &[usize], width: &[Coordinate], height: &[Coordinate], parent_id: &[usize]) {
         for (i, &id) in id.iter().enumerate() {
             let width = width[i];
             let height = height[i];
@@ -111,11 +111,11 @@ impl TidyTree {
         self.layout.layout(&mut self.root);
     }
 
-    pub fn get_pos(&self) -> Vec<Coord> {
+    pub fn get_pos(&self) -> Vec<Coordinate> {
         let mut ans = vec![];
         for (id, node) in self.map.iter() {
             let node = unsafe { node.as_ref() };
-            ans.push((*id) as Coord);
+            ans.push((*id) as Coordinate);
             ans.push(node.x);
             ans.push(node.y);
         }

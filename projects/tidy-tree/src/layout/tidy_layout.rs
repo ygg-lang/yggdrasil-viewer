@@ -3,26 +3,26 @@ use std::{hash::BuildHasher, ptr::NonNull};
 use num::Float;
 use tinyset::SetUsize;
 
-use crate::{geometry::Coord, node::TidyData, utils::nocheck_mut, Layout, Node};
+use crate::{geometry::Coordinate, node::TidyData, utils::nocheck_mut, Layout, Node};
 
 use super::linked_y_list::LinkedYList;
 
 pub struct TidyLayout {
-    pub parent_child_margin: Coord,
-    pub peer_margin: Coord,
+    pub parent_child_margin: Coordinate,
+    pub peer_margin: Coordinate,
     pub is_layered: bool,
     /// this is only for layered layout
-    pub depth_to_y: Vec<Coord>,
+    pub depth_to_y: Vec<Coordinate>,
 }
 
 const TEST: usize = 123123231;
 
 impl TidyLayout {
-    pub fn new(parent_child_margin: Coord, peer_margin: Coord) -> Self {
+    pub fn new(parent_child_margin: Coordinate, peer_margin: Coordinate) -> Self {
         TidyLayout { parent_child_margin, peer_margin, is_layered: false, depth_to_y: vec![] }
     }
 
-    pub fn new_layered(parent_child_margin: Coord, peer_margin: Coord) -> Self {
+    pub fn new_layered(parent_child_margin: Coordinate, peer_margin: Coordinate) -> Self {
         TidyLayout { parent_child_margin, peer_margin, is_layered: true, depth_to_y: vec![] }
     }
 }
@@ -30,7 +30,7 @@ impl TidyLayout {
 struct Contour {
     is_left: bool,
     pub current: Option<NonNull<Node>>,
-    modifier_sum: Coord,
+    modifier_sum: Coordinate,
 }
 
 impl Contour {
@@ -52,17 +52,17 @@ impl Contour {
         self.current.is_none()
     }
 
-    pub fn left(&self) -> Coord {
+    pub fn left(&self) -> Coordinate {
         let node = self.node();
         self.modifier_sum + node.relative_x - node.width / 2.
     }
 
-    pub fn right(&self) -> Coord {
+    pub fn right(&self) -> Coordinate {
         let node = self.node();
         self.modifier_sum + node.relative_x + node.width / 2.
     }
 
-    pub fn bottom(&self) -> Coord {
+    pub fn bottom(&self) -> Coordinate {
         match self.current {
             Some(node) => {
                 let node = unsafe { node.as_ref() };
@@ -199,7 +199,7 @@ impl TidyLayout {
         y_list
     }
 
-    fn set_left_thread(&mut self, node: &mut Node, current_index: usize, target: &Node, modifier: Coord) {
+    fn set_left_thread(&mut self, node: &mut Node, current_index: usize, target: &Node, modifier: Coordinate) {
         let first = nocheck_mut!(node.children[0]);
         let current = &mut node.children[current_index];
         let diff = modifier - first.tidy_mut().modifier_extreme_left - first.tidy_mut().modifier_to_subtree;
@@ -211,7 +211,7 @@ impl TidyLayout {
             - first.tidy_mut().modifier_to_subtree;
     }
 
-    fn set_right_thread(&mut self, node: &mut Node, current_index: usize, target: &Node, modifier: Coord) {
+    fn set_right_thread(&mut self, node: &mut Node, current_index: usize, target: &Node, modifier: Coordinate) {
         let current = nocheck_mut!(node.children[current_index]);
         let diff = modifier - current.tidy_mut().modifier_extreme_right - current.tidy_mut().modifier_to_subtree;
         current.extreme_right().tidy_mut().thread_right = Some(target.into());
@@ -222,7 +222,7 @@ impl TidyLayout {
             prev.modifier_extreme_right + prev.modifier_to_subtree - current.tidy_mut().modifier_to_subtree;
     }
 
-    fn move_subtree(&mut self, node: &mut Node, current_index: usize, from_index: usize, distance: Coord) {
+    fn move_subtree(&mut self, node: &mut Node, current_index: usize, from_index: usize, distance: Coordinate) {
         let child = &mut node.children[current_index];
         let child_tidy = child.tidy_mut();
         // debug_assert!(distance <= 1e6);
@@ -230,7 +230,7 @@ impl TidyLayout {
 
         // distribute extra space to nodes between from_index to current_index
         if from_index != current_index - 1 {
-            let index_diff = (current_index - from_index) as Coord;
+            let index_diff = (current_index - from_index) as Coordinate;
             node.children[from_index + 1].tidy_mut().shift_acceleration += distance / index_diff;
             node.children[current_index].tidy_mut().shift_acceleration -= distance / index_diff;
             node.children[current_index].tidy_mut().shift_change -= distance - distance / index_diff;
@@ -323,7 +323,7 @@ impl TidyLayout {
         node.set_extreme();
     }
 
-    fn second_walk(&mut self, node: &mut Node, mut mod_sum: Coord) {
+    fn second_walk(&mut self, node: &mut Node, mut mod_sum: Coordinate) {
         mod_sum += node.tidy_mut().modifier_to_subtree;
         node.x = node.relative_x + mod_sum;
         node.add_child_spacing();
@@ -333,7 +333,7 @@ impl TidyLayout {
         }
     }
 
-    fn second_walk_with_filter(&mut self, node: &mut Node, mut mod_sum: Coord, set: &SetUsize) {
+    fn second_walk_with_filter(&mut self, node: &mut Node, mut mod_sum: Coordinate, set: &SetUsize) {
         mod_sum += node.tidy_mut().modifier_to_subtree;
         let new_x = node.relative_x + mod_sum;
         if (new_x - node.x).abs() < 1e-8 && !set.contains(node as *const _ as usize) {
@@ -391,11 +391,11 @@ impl Layout for TidyLayout {
         self.second_walk_with_filter(root, 0., &set);
     }
 
-    fn parent_child_margin(&self) -> Coord {
+    fn parent_child_margin(&self) -> Coordinate {
         self.parent_child_margin
     }
 
-    fn peer_margin(&self) -> Coord {
+    fn peer_margin(&self) -> Coordinate {
         self.peer_margin
     }
 }

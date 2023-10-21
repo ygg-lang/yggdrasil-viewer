@@ -46,8 +46,8 @@ pub fn check_y_position_in_same_level(root: &Node) {
 pub fn assert_symmetric(root: &Node, layout: &mut dyn Layout) {
     let mut mirrored = mirror(root);
     layout.layout(&mut mirrored);
-    let mut point_origin: Vec<Coord> = vec![];
-    let mut point_mirrored: Vec<Coord> = vec![];
+    let mut point_origin: Vec<Coordinate> = vec![];
+    let mut point_mirrored: Vec<Coordinate> = vec![];
     root.pre_order_traversal(|node| {
         point_origin.push(node.x);
     });

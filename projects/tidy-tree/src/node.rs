@@ -1,6 +1,6 @@
 use std::{collections::VecDeque, ptr::NonNull};
 
-use crate::{geometry::Coord, layout::BoundingBox};
+use crate::{geometry::Coordinate, layout::BoundingBox};
 
 #[derive(Debug)]
 pub struct TidyData {
@@ -18,33 +18,33 @@ pub struct TidyData {
     pub extreme_right: Option<NonNull<Node>>,
 
     /// Cached change of x position.
-    pub shift_acceleration: Coord,
+    pub shift_acceleration: Coordinate,
     /// Cached change of x position
-    pub shift_change: Coord,
+    pub shift_change: Coordinate,
 
     /// this.x = parent.x + modifier_to_subtree
-    pub modifier_to_subtree: Coord,
+    pub modifier_to_subtree: Coordinate,
     /// this.x + modifier_thread_left == thread_left.x
-    pub modifier_thread_left: Coord,
+    pub modifier_thread_left: Coordinate,
     /// this.x + modifier_thread_right == thread_right.x
-    pub modifier_thread_right: Coord,
+    pub modifier_thread_right: Coordinate,
     /// this.x + modifier_extreme_left == extreme_left.x
-    pub modifier_extreme_left: Coord,
+    pub modifier_extreme_left: Coordinate,
     /// this.x + modifier_extreme_right == extreme_right.x
-    pub modifier_extreme_right: Coord,
+    pub modifier_extreme_right: Coordinate,
 }
 
 #[derive(Debug)]
 pub struct Node {
     pub id: usize,
-    pub width: Coord,
-    pub height: Coord,
-    pub x: Coord,
-    pub y: Coord,
+    pub width: Coordinate,
+    pub height: Coordinate,
+    pub x: Coordinate,
+    pub y: Coordinate,
     /// node x position relative to its parent
-    pub relative_x: Coord,
+    pub relative_x: Coordinate,
     /// node y position relative to its parent
-    pub relative_y: Coord,
+    pub relative_y: Coordinate,
     pub bbox: BoundingBox,
     pub parent: Option<NonNull<Node>>,
     /// Children need boxing to get a stable addr in the heap
@@ -100,7 +100,7 @@ impl Default for Node {
 }
 
 impl Node {
-    pub fn new(id: usize, width: Coord, height: Coord) -> Self {
+    pub fn new(id: usize, width: Coordinate, height: Coordinate) -> Self {
         Node {
             id,
             width,
@@ -135,7 +135,7 @@ impl Node {
         unsafe { self.parent.map(|node| node.as_ref()) }
     }
 
-    pub fn bottom(&self) -> Coord {
+    pub fn bottom(&self) -> Coordinate {
         self.height + self.y
     }
 
@@ -167,13 +167,13 @@ impl Node {
         ptr
     }
 
-    pub fn new_with_child(id: usize, width: Coord, height: Coord, child: Self) -> Self {
+    pub fn new_with_child(id: usize, width: Coordinate, height: Coordinate, child: Self) -> Self {
         let mut node = Node::new(id, width, height);
         node.append_child(child);
         node
     }
 
-    pub fn new_with_children(id: usize, width: Coord, height: Coord, children: Vec<Self>) -> Self {
+    pub fn new_with_children(id: usize, width: Coordinate, height: Coordinate, children: Vec<Self>) -> Self {
         let mut node = Node::new(id, width, height);
         for child in children {
             node.append_child(child);
@@ -303,7 +303,8 @@ impl Node {
                 self.tidy().modifier_to_subtree,
                 self.id
             ));
-        } else {
+        }
+        else {
             s.push_str(&format!(
                 "x: {}, y: {}, width: {}, height: {}, rx: {}, id: {}\n",
                 self.x, self.y, self.width, self.height, self.relative_x, self.id
