@@ -56,9 +56,9 @@ pub fn align_partial_layout_with_full_layout(layout: &mut LayoutConfig) {
             let changed_node = change_random_node(&mut rng, &nodes);
             layout.partial_layout(&mut tree, &[new_node, changed_node]);
             // let partial_str = tree.str();
-            let partial_x: Vec<Coordinate> = tree.iter().map(|node| node.point.x).collect();
+            let partial_x: Vec<Coordinate> = tree.iter().map(|node| node.center.x).collect();
             layout.layout(&mut tree);
-            let full_x: Vec<Coordinate> = tree.iter().map(|node| node.point.x).collect();
+            let full_x: Vec<Coordinate> = tree.iter().map(|node| node.center.x).collect();
             for i in 0..partial_x.len() {
                 if (full_x[i] - partial_x[i]).abs() > 1e-6 {
                     println!("NEW_NODE: {}", unsafe { new_node.as_ref().str() });

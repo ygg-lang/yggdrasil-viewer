@@ -91,8 +91,8 @@ impl TreeLayout {
         for (id, node) in self.map.iter() {
             let node = unsafe { node.as_ref() };
             ans.push((*id) as Coordinate);
-            ans.push(node.point.x);
-            ans.push(node.point.y);
+            ans.push(node.center.x);
+            ans.push(node.center.y);
         }
         ans
     }

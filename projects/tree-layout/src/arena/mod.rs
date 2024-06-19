@@ -27,9 +27,7 @@ impl<T: TreeInfo> TreeArena<T> {
 
     pub fn get_link(&self, child: &LayoutNode) -> Option<Line<Coordinate>> {
         let parent = unsafe { child.parent?.as_ref() };
-        let parent_lower = Point { x: parent.point.x, y: (parent.point.y + parent.height / 2.0) };
-        let this_upper = Point { x: child.point.x, y: (child.point.y - child.height / 2.0) };
-        Some(Line::new(parent_lower, this_upper))
+        Some(Line::new(parent.bottom_center(), child.top_center()))
     }
 }
 

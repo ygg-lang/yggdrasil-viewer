@@ -5,13 +5,20 @@ use svg::{
     node::element::{Text, SVG},
     Document,
 };
-use tree_layout::{Coordinate, LayoutConfig, Line, Point, Rectangle, TreeArena, TreeInfo};
 use yggdrasil_rt::{TokenPair, TokenTree, YggdrasilRule};
 
+use tree_layout::{Coordinate, LayoutConfig, Rectangle, TreeArena, TreeInfo};
+
 /// Plot a svg structure
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct SvgPlotter {
-    color: String,
+    style: Cow<'static, str>,
+}
+
+impl Default for SvgPlotter {
+    fn default() -> Self {
+        Self { style: include_str!("style.css").into() }
+    }
 }
 
 #[derive(Clone, Debug)]
@@ -20,6 +27,7 @@ where
     R: YggdrasilRule,
 {
     cst: TokenTree<'i, R>,
+    svg: Document,
 }
 
 impl<'i, R> TreeInfo for SvgTree<'i, R>
@@ -63,8 +71,8 @@ impl<'i, R> SvgTree<'i, R>
 where
     R: YggdrasilRule,
 {
-    fn as_svg(&self) -> SVG {
-        let mut document = Document::new();
+    fn write_svg(&mut self, plot: &SvgPlotter) -> SVG {
+        let mut document = Document::new().add(svg::node::element::Style::new(plot.style.to_string()));
         let root = TreeArena::build(self.clone(), &LayoutConfig::new(12.0, 4.0).with_layered(true));
         let mut bbox = Rectangle::empty();
         for (node, pair) in root.into_iter() {
@@ -75,7 +83,7 @@ where
                 Some(line) => document = document.add(line.to_svg()),
                 None => {}
             }
-            let mut text = Text::new().set("x", area.min.x + area.width() / 2.0).set("y", area.min.y + area.height() / 2.0);
+            let mut text = Text::new().set("x", area.center().x).set("y", area.center().y);
             if pair.has_child(false) {
                 text = text.add(svg::node::Text::new(format!("{:?}", pair.get_rule()))).set("class", "node");
                 document = document.add(area.to_svg().set("rx", 5).set("ry", 5).set("class", "node"));
@@ -86,9 +94,7 @@ where
             }
             document = document.add(text);
         }
-        document
-            .add(svg::node::element::Style::new(include_str!("style.css")))
-            .set("viewBox", (bbox.min.x, bbox.min.y, bbox.width(), bbox.height()))
+        document.set("viewBox", (bbox.min.x, bbox.min.y, bbox.width(), bbox.height()))
     }
 }
 
@@ -98,6 +104,6 @@ impl SvgPlotter {
     where
         R: YggdrasilRule,
     {
-        SvgTree { cst: tree }.as_svg()
+        SvgTree { cst: tree, svg: Document::new() }.write_svg(self)
     }
 }

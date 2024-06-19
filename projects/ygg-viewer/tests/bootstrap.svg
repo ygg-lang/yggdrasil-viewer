@@ -1,9 +1,45 @@
 <svg viewBox="-219.5 -10 688 544" xmlns="http://www.w3.org/2000/svg">
+<style>
+svg line {
+    stroke: black;
+}
+
+svg rect {
+    fill: black;
+    stroke: none;
+    /*stroke-width: 0.2;*/
+}
+
+svg rect.node {
+    /*fill: #ff5246*/
+}
+
+svg rect.leaf {
+    fill: #77c63d
+}
+
+svg text {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Adjusted", "Segoe UI", "Liberation Sans", sans-serif;
+    color: aliceblue;
+    fill: white;
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+svg text.node {
+
+}
+
+svg text.leaf {
+
+}
+
+</style>
 <rect class="node" height="20" rx="5" ry="5" width="48" x="-24" y="-10"/>
 <text class="node" x="0" y="0">
 Root
 </text>
-<line x1="0" x2="0" y1="0" y2="2"/>
+<line x1="0" x2="0" y1="0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000695146122050683" y2="2"/>
 <rect class="node" height="20" rx="5" ry="5" width="108" x="-54" y="2"/>
 <text class="node" x="0" y="12">
 Statement
@@ -178,40 +214,4 @@ Atomic
 <text class="leaf" x="404.5" y="524">
 Identifier
 </text>
-<style>
-svg line {
-    stroke: black;
-}
-
-svg rect {
-    fill: black;
-    stroke: none;
-    /*stroke-width: 0.2;*/
-}
-
-svg rect.node {
-    /*fill: #ff5246*/
-}
-
-svg rect.leaf {
-    fill: #77c63d
-}
-
-svg text {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Adjusted", "Segoe UI", "Liberation Sans", sans-serif;
-    color: aliceblue;
-    fill: white;
-    text-anchor: middle;
-    dominant-baseline: middle;
-}
-
-svg text.node {
-
-}
-
-svg text.leaf {
-
-}
-
-</style>
 </svg>

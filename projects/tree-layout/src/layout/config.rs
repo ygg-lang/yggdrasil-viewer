@@ -66,7 +66,7 @@ impl Contour {
         match self.current {
             Some(node) => {
                 let node = unsafe { node.as_ref() };
-                node.point.y + node.height
+                node.center.y + node.height
             }
             None => 0.,
         }
@@ -253,7 +253,7 @@ impl LayoutConfig {
                 }
 
                 if node.parent.is_none() || depth == 0 {
-                    node.point.y = 0.0;
+                    node.center.y = 0.0;
                     return;
                 }
 
@@ -261,14 +261,14 @@ impl LayoutConfig {
                 depth_to_y[depth] = Float::max(depth_to_y[depth], depth_to_y[depth - 1] + parent.height + margin);
             });
             root.pre_order_traversal_with_depth_mut(|node, depth| {
-                node.point.y = depth_to_y[depth];
+                node.center.y = depth_to_y[depth];
             })
         }
     }
 
     fn set_y(&mut self, node: &mut LayoutNode) {
-        node.point.y = if let Some(parent) = node.parent {
-            let parent_bottom = unsafe { parent.as_ref().bottom() };
+        node.center.y = if let Some(parent) = node.parent {
+            let parent_bottom = unsafe { parent.as_ref().lowest_y() };
             parent_bottom + self.margin
         }
         else {
@@ -283,11 +283,11 @@ impl LayoutConfig {
         }
 
         self.first_walk(node.children.first_mut().unwrap());
-        let mut y_list = LinkedYList::new(0, node.children[0].extreme_right().bottom());
+        let mut y_list = LinkedYList::new(0, node.children[0].extreme_right().lowest_y());
         for i in 1..node.children.len() {
             let current_child = node.children.get_mut(i).unwrap();
             self.first_walk(current_child);
-            let max_y = current_child.extreme_left().bottom();
+            let max_y = current_child.extreme_left().lowest_y();
             y_list = self.separate(node, i, y_list);
             y_list = y_list.update(i, max_y);
         }
@@ -308,12 +308,12 @@ impl LayoutConfig {
         }
 
         self.first_walk_with_filter(node.children.first_mut().unwrap(), set);
-        let mut y_list = LinkedYList::new(0, node.children[0].extreme_right().bottom());
+        let mut y_list = LinkedYList::new(0, node.children[0].extreme_right().lowest_y());
         for i in 1..node.children.len() {
             let current_child = node.children.get_mut(i).unwrap();
             current_child.mut_layout().modifier_to_subtree = -current_child.relative_x;
             self.first_walk_with_filter(current_child, set);
-            let max_y = current_child.extreme_left().bottom();
+            let max_y = current_child.extreme_left().lowest_y();
             y_list = self.separate(node, i, y_list);
             y_list = y_list.update(i, max_y);
         }
@@ -324,7 +324,7 @@ impl LayoutConfig {
 
     fn second_walk(&mut self, node: &mut LayoutNode, mut mod_sum: Coordinate) {
         mod_sum += node.mut_layout().modifier_to_subtree;
-        node.point.x = node.relative_x + mod_sum;
+        node.center.x = node.relative_x + mod_sum;
         node.add_child_spacing();
 
         for child in node.children.iter_mut() {
@@ -335,11 +335,11 @@ impl LayoutConfig {
     fn second_walk_with_filter(&mut self, node: &mut LayoutNode, mut mod_sum: Coordinate, set: &SetUsize) {
         mod_sum += node.mut_layout().modifier_to_subtree;
         let new_x = node.relative_x + mod_sum;
-        if (new_x - node.point.x).abs() < 1e-8 && !set.contains(node as *const _ as usize) {
+        if (new_x - node.center.x).abs() < 1e-8 && !set.contains(node as *const _ as usize) {
             return;
         }
 
-        node.point.x = new_x;
+        node.center.x = new_x;
         node.add_child_spacing();
 
         for child in node.children.iter_mut() {
@@ -422,8 +422,8 @@ fn init_node(node: &mut LayoutNode) {
         }));
     }
 
-    node.point.x = 0.0;
-    node.point.y = 0.0;
+    node.center.x = 0.0;
+    node.center.y = 0.0;
     node.relative_x = 0.;
     node.relative_y = 0.;
 }

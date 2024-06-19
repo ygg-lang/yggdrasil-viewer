@@ -16,7 +16,7 @@ fn bench_tidy_layout_chart(_bench: &mut Bencher) {
 
         if num % 100_000 == 0 {
             println!("{}", num);
-            assert_eq!(root.point.x, 0.0);
+            assert_eq!(root.center.x, 0.0);
         }
     }
 

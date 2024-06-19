@@ -20,10 +20,10 @@ pub fn check_nodes_order(root: &LayoutNode) {
         let mut prev = None;
         for child in node.children.iter() {
             if let Some(prev) = prev {
-                assert!(prev < child.point.x);
+                assert!(prev < child.center.x);
             }
 
-            prev = Some(child.point.x);
+            prev = Some(child.center.x);
         }
     })
 }
@@ -33,10 +33,10 @@ pub fn check_y_position_in_same_level(root: &LayoutNode) {
         let mut prev = None;
         for child in node.children.iter() {
             if let Some(prev) = prev {
-                assert_eq!(prev, child.point.y);
+                assert_eq!(prev, child.center.y);
             }
 
-            prev = Some(child.point.y);
+            prev = Some(child.center.y);
         }
     })
 }
@@ -47,10 +47,10 @@ pub fn assert_symmetric(root: &LayoutNode, layout: &mut LayoutConfig) {
     let mut point_origin: Vec<Coordinate> = vec![];
     let mut point_mirrored: Vec<Coordinate> = vec![];
     root.pre_order_traversal(|node| {
-        point_origin.push(node.point.x);
+        point_origin.push(node.center.x);
     });
     pre_order_traversal_rev(&mirrored, |node| {
-        point_mirrored.push(node.point.x);
+        point_mirrored.push(node.center.x);
     });
 
     assert_eq!(point_origin.len(), point_mirrored.len());
@@ -80,8 +80,8 @@ pub fn assert_symmetric(root: &LayoutNode, layout: &mut LayoutConfig) {
 fn mirror(root: &LayoutNode) -> LayoutNode {
     let mut root = root.clone();
     root.post_order_traversal_mut(|node| {
-        node.point.x = 0.0;
-        node.point.y = 0.0;
+        node.center.x = 0.0;
+        node.center.y = 0.0;
         node.relative_x = 0.0;
         node.relative_y = 0.0;
         let n = node.children.len();

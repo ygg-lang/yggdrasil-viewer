@@ -11,7 +11,7 @@ pub struct LayoutNode {
     pub id: usize,
     pub width: Coordinate,
     pub height: Coordinate,
-    pub point: Point<Coordinate>,
+    pub center: Point<Coordinate>,
     /// node x position relative to its parent
     pub relative_x: Coordinate,
     /// node y position relative to its parent
@@ -59,7 +59,7 @@ impl Clone for LayoutNode {
             id: self.id,
             width: self.width,
             height: self.height,
-            point: self.point,
+            center: self.center,
             relative_x: self.relative_x,
             relative_y: self.relative_y,
             bbox: self.bbox.clone(),
@@ -87,7 +87,7 @@ impl Default for LayoutNode {
             id: usize::MAX,
             width: 0.0,
             height: 0.0,
-            point: Point::default(),
+            center: Point::default(),
             relative_x: 0.0,
             relative_y: 0.0,
             children: vec![],
@@ -127,17 +127,16 @@ impl LayoutNode {
         depth
     }
     pub fn boundary(&self) -> Rectangle<Coordinate> {
-        Rectangle::from_center(self.point, self.width, self.height)
+        Rectangle::from_center(self.center, self.width, self.height)
     }
     pub fn top_center(&self) -> Point<Coordinate> {
-        Point { x: self.point.x, y: self.point.y - self.height }
+        Point { x: self.center.x, y: self.center.y - self.height / 2.0 }
     }
     pub fn bottom_center(&self) -> Point<Coordinate> {
-        Point { x: self.point.x, y: self.point.y + self.height }
+        Point { x: self.center.x, y: self.center.y + self.height / 2.0 }
     }
-
-    pub fn bottom(&self) -> Coordinate {
-        self.height + self.point.y
+    pub fn lowest_y(&self) -> Coordinate {
+        self.center.y + self.height
     }
     pub fn get_parent(&self) -> Option<&Self> {
         unsafe { self.parent.map(|node| node.as_ref()) }
@@ -174,10 +173,10 @@ impl LayoutNode {
     }
 
     pub fn intersects(&self, other: &Self) -> bool {
-        self.point.x - self.width / 2.0 < other.point.x + other.width / 2.0
-            && self.point.x + self.width / 2.0 > other.point.x - other.width / 2.0
-            && self.point.y < other.point.y + other.height
-            && self.point.y + self.height > other.point.y
+        self.center.x - self.width / 2.0 < other.center.x + other.width / 2.0
+            && self.center.x + self.width / 2.0 > other.center.x - other.width / 2.0
+            && self.center.y < other.center.y + other.height
+            && self.center.y + self.height > other.center.y
     }
 
     pub fn post_order_traversal<F>(&self, mut f: F)
@@ -286,8 +285,8 @@ impl LayoutNode {
         if self.layout_data.is_some() {
             s.push_str(&format!(
                 "x: {}, y: {}, width: {}, height: {}, rx: {}, mod: {}, id: {}\n",
-                self.point.x,
-                self.point.y,
+                self.center.x,
+                self.center.y,
                 self.width,
                 self.height,
                 self.relative_x,
@@ -298,7 +297,7 @@ impl LayoutNode {
         else {
             s.push_str(&format!(
                 "x: {}, y: {}, width: {}, height: {}, rx: {}, id: {}\n",
-                self.point.x, self.point.y, self.width, self.height, self.relative_x, self.id
+                self.center.x, self.center.y, self.width, self.height, self.relative_x, self.id
             ));
         }
         for child in self.children.iter() {
